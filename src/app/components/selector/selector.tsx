@@ -1,4 +1,6 @@
-function Selector({ children }) {
+import "../../css/style.css";
+
+function Selector({ children }: any) {
     return (
         <>
             <meta charSet="UTF-8" />
