@@ -1,4 +1,4 @@
-import "../../css/style.css";
+import styles from "./selector.module.css";
 import TimeScale from "../timeScale/timeScale";
 
 function Selector({ children }: { children: React.ReactNode }) {
@@ -11,11 +11,11 @@ function Selector({ children }: { children: React.ReactNode }) {
                 content="width=device-width, initial-scale=1.0"
             />
             <title>Skypro</title>
-            <div className="wrapper">
-                <div className="container">
-                    <main className="main">{children}</main>
+            <div className={styles.wrapper}>
+                <div className={styles.container}>
+                    <main className={styles.main}>{children}</main>
                     <TimeScale />
-                    <footer className="footer" />
+                    <footer />
                 </div>
             </div>
         </>
