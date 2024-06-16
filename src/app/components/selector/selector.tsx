@@ -1,6 +1,6 @@
 import "../../css/style.css";
 
-function Selector({ children }: any) {
+function Selector({ children }: { children: React.ReactNode }) {
     return (
         <>
             <meta charSet="UTF-8" />

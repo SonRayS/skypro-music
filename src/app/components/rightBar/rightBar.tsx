@@ -1,5 +1,4 @@
 import Image from "next/image";
-import "../../css/style.css";
 
 function RightBar() {
     return (
@@ -19,7 +18,7 @@ function RightBar() {
                             <a className="sidebar__link" href="#">
                                 <Image
                                     className="sidebar__img"
-                                    src="/img/playlist01.png"
+                                    src="/img/playlist02.png"
                                     alt="day's playlist"
                                     width={250}
                                     height={170}
