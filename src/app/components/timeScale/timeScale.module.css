@@ -112,25 +112,25 @@
     fill: #a53939;
 }
 
-.player__btn-nextSvg {
+.player__btnNextSvg {
     width: 15px;
     height: 14px;
     fill: inherit;
     stroke: #d9d9d9;
 }
 
-.player__btn-repeat {
+.player__btnRepeat {
     margin-right: 24px;
 }
 
-.player__btn-repeatSvg {
+.player__btnRepeatSvg {
     width: 18px;
     height: 12px;
     fill: transparent;
     stroke: #696969;
 }
 
-.player__btn-shuffle {
+.player__btnShuffle {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -139,7 +139,7 @@
     align-items: center;
 }
 
-.player__btn-shuffleSvg {
+.player__btnShuffleSvg {
     width: 19px;
     height: 12px;
     fill: transparent;
@@ -300,9 +300,21 @@
     width: 109px;
 }
 
+._btnText:hover {
+    border-color: #d9b6ff;
+    color: #d9b6ff;
+    cursor: pointer;
+}
+
 ._btnIcon:hover svg {
     fill: transparent;
     stroke: #acacac;
+    cursor: pointer;
+}
+
+._btnText:active {
+    border-color: #ad61ff;
+    color: #ad61ff;
     cursor: pointer;
 }
 

@@ -1,4 +1,5 @@
 import styles from "./timeScale.module.css";
+import GetTimeControls from "./timePlayerControls/timePlayerControls";
 
 function TimeScale() {
     const classNames = require("classnames");
@@ -14,52 +15,8 @@ function TimeScale() {
                                 styles.player
                             )}
                         >
-                            <div className={styles.player__controls}>
-                                <div className={styles.player__btnPrev}>
-                                    <svg className={styles.player__btnPrevSvg}>
-                                        <use href="img/icon/sprite.svg#iconPrev" />
-                                    </svg>
-                                </div>
-                                <div
-                                    className={classNames(
-                                        styles.player__btnPlay,
-                                        styles._btn
-                                    )}
-                                >
-                                    <svg className={styles.player__btnPlaySvg}>
-                                        <use href="img/icon/sprite.svg#iconPlay" />
-                                    </svg>
-                                </div>
-                                <div className={styles.player__btnNext}>
-                                    <svg className={styles.player__btnNextSvg}>
-                                        <use href="img/icon/sprite.svg#icon-next" />
-                                    </svg>
-                                </div>
-                                <div
-                                    className={classNames(
-                                        styles.player__btnRepeat,
-                                        styles._btnIcon
-                                    )}
-                                >
-                                    <svg
-                                        className={styles.player__btnRepeatSvg}
-                                    >
-                                        <use href="img/icon/sprite.svg#icon-repeat" />
-                                    </svg>
-                                </div>
-                                <div
-                                    className={classNames(
-                                        styles.player__btnShuffle,
-                                        styles._btnIcon
-                                    )}
-                                >
-                                    <svg
-                                        className={styles.player__btnShuffleSvg}
-                                    >
-                                        <use href="img/icon/sprite.svg#iconShuffle" />
-                                    </svg>
-                                </div>
-                            </div>
+                            <GetTimeControls />
+
                             <div
                                 className={classNames(
                                     styles.player__trackPlay,
@@ -69,7 +26,7 @@ function TimeScale() {
                                 <div className={styles.trackPlay__contain}>
                                     <div className={styles.trackPlay__image}>
                                         <svg className={styles.trackPlay__svg}>
-                                            <use href="img/icon/sprite.svg#icon-note" />
+                                            <use href="/img/icon/sprite.svg#icon-note" />
                                         </svg>
                                     </div>
                                     <div className={styles.trackPlay__author}>
@@ -119,7 +76,7 @@ function TimeScale() {
                                                 styles.trackPlay__dislikeSvg
                                             }
                                         >
-                                            <use href="img/icon/sprite.svg#icon-dislike" />
+                                            <use href="/img/icon/sprite.svg#icon-dislike" />
                                         </svg>
                                     </div>
                                 </div>
@@ -134,7 +91,7 @@ function TimeScale() {
                             <div className={styles.volume__content}>
                                 <div className={styles.volume__image}>
                                     <svg className={styles.volume__svg}>
-                                        <use href="img/icon/sprite.svg#icon-volume" />
+                                        <use href="/img/icon/sprite.svg#icon-volume" />
                                     </svg>
                                 </div>
                                 <div
