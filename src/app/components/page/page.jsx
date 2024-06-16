@@ -1,6 +1,6 @@
 import Selector from "../selector/selector.tsx";
 import Header from "../headerMenu/headerMenu.tsx";
-import Body from "../body/body.tsx";
+import Body from "../body/bodyMainComponent/bodyMainComponent.tsx";
 import RightBar from "../rightBar/rightBar.tsx";
 
 function MainPage() {
