@@ -1,8 +1,10 @@
+import styles from "./timeScale.style.css";
+
 function TimeScale() {
     return (
-        <div className="bar">
-            <div className="bar__content">
-                <div className="bar__player-progress" />
+        <div className={styles.bar}>
+            <div className={styles.bar__content}>
+                <div className={styles.bar__player} />
                 <div className="bar__player-block">
                     <div className="bar__player player">
                         <div className="player__controls">
