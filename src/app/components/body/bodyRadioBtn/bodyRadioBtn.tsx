@@ -25,7 +25,7 @@ function RadioBtn() {
             </div>
             <div
                 className={classNames(
-                    styles.filterButton,
+                    styles.filter__button,
                     styles.buttonGenre,
                     styles._btnText
                 )}

@@ -7,12 +7,12 @@ function GetTimeControls() {
         <div className={styles.player__controls}>
             <div className={styles.player__btnPrev}>
                 <svg className={styles.player__btnPrevSvg}>
-                    <use href="/img/icon/sprite.svg#iconPrev" />
+                    <use href="/img/icon/sprite.svg#icon-prev" />
                 </svg>
             </div>
             <div className={classNames(styles.player__btnPlay, styles._btn)}>
                 <svg className={styles.player__btnPlaySvg}>
-                    <use href="/img/icon/sprite.svg#iconPlay" />
+                    <use href="/img/icon/sprite.svg#icon-play" />
                 </svg>
             </div>
             <div className={styles.player__btnNext}>
@@ -37,7 +37,7 @@ function GetTimeControls() {
                 )}
             >
                 <svg className={styles.player__btnShuffleSvg}>
-                    <use href="/img/icon/sprite.svg#iconShuffle" />
+                    <use href="/img/icon/sprite.svg#icon-shuffle" />
                 </svg>
             </div>
         </div>
