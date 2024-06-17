@@ -83,7 +83,6 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    margin-left: 60px;
 }
 
 .trackPlayImage {
@@ -155,7 +154,6 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    margin-left: 26%;
 }
 
 .trackPlayLike,
