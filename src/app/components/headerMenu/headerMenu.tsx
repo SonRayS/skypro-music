@@ -1,37 +1,42 @@
 import Image from "next/image";
+import styles from "./headerMenu.module.css";
 
 export default function Header() {
+    const classNames = require("classnames");
     return (
         <>
-            <nav className="main__nav nav">
-                <div className="nav__logo logo">
+            <nav className={classNames(styles.main__nav, styles.nav)}>
+                <div className={classNames(styles.nav__logo, styles.logo)}>
                     <Image
-                        className="logo__image"
+                        className={styles.logo__image}
                         src="/img/logo.png"
                         alt="Logo"
                         width={250}
                         height={170}
                     />
                 </div>
-                <div className="nav__burger burger">
-                    <span className="burger__line" />
-                    <span className="burger__line" />
-                    <span className="burger__line" />
+                <div className={classNames(styles.nav__burger, styles.burger)}>
+                    <span className={styles.burger__line} />
+                    <span className={styles.burger__line} />
+                    <span className={styles.burger__line} />
                 </div>
-                <div className="nav__menu menu">
-                    <ul className="menu__list">
-                        <li className="menu__item">
-                            <a href="#" className="menu__link">
+                <div className={classNames(styles.nav__menu, styles.menu)}>
+                    <ul className={styles.menu__list}>
+                        <li className={styles.menu__item}>
+                            <a href="#" className={styles.menu__link}>
                                 Главное
                             </a>
                         </li>
-                        <li className="menu__item">
-                            <a href="#" className="menu__link">
+                        <li className={styles.menu__item}>
+                            <a href="#" className={styles.menu__link}>
                                 Мой плейлист
                             </a>
                         </li>
-                        <li className="menu__item">
-                            <a href="../signin.html" className="menu__link">
+                        <li className={styles.menu__item}>
+                            <a
+                                href="../signin.html"
+                                className={styles.menu__link}
+                            >
                                 Войти
                             </a>
                         </li>

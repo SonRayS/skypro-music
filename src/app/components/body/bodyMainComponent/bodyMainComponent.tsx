@@ -1,56 +1,82 @@
 import Search from "../bodySearch/bodySearch";
 import RadioBtn from "../bodyRadioBtn/bodyRadioBtn";
 import TrackHeader from "../bodyTrackHeder/bodyTrackHeder";
+import styles from "./bodyMainComponent.module.css";
 
 function Body() {
+    const classNames = require("classnames");
     return (
         <>
-            <div className="main__centerblock centerblock">
+            <div
+                className={classNames(
+                    styles.main__centerBlock,
+                    styles.centerBlock
+                )}
+            >
                 <Search />
-                <h2 className="centerblock__h2">Треки</h2>
+                <h2 className={styles.centerBlock__h2}>Треки</h2>
                 <RadioBtn />
-                <div className="centerblock__content playlist-content">
+                <div
+                    className={classNames(
+                        styles.centerBlock__content,
+                        styles.playlistContent
+                    )}
+                >
                     <TrackHeader />
-                    <div className="content__playlist playlist">
-                        <div className="playlist__item">
-                            <div className="playlist__track track">
-                                <div className="track__title">
-                                    <div className="track__title-image">
-                                        <svg className="track__title-svg">
+                    <div
+                        className={classNames(
+                            styles.content__playlist,
+                            styles.playlist
+                        )}
+                    >
+                        <div className={styles.playlist__item}>
+                            <div
+                                className={classNames(
+                                    styles.playlist__track,
+                                    styles.track
+                                )}
+                            >
+                                <div className={styles.track__title}>
+                                    <div className={styles.track__titleImage}>
+                                        <svg className={styles.track__titleSvg}>
                                             <use href="img/icon/sprite.svg#icon-note" />
                                         </svg>
                                     </div>
-                                    <div className="track__title-text">
+                                    <div className={styles.track__titleText}>
                                         <a
-                                            className="track__title-link"
+                                            className={styles.track__titleLink}
                                             href="http://"
                                         >
                                             Guilt{" "}
-                                            <span className="track__title-span" />
+                                            <span
+                                                className={
+                                                    styles.track__titleSpan
+                                                }
+                                            />
                                         </a>
                                     </div>
                                 </div>
-                                <div className="track__author">
+                                <div className={styles.track__author}>
                                     <a
-                                        className="track__author-link"
+                                        className={styles.track__authorLink}
                                         href="http://"
                                     >
                                         Nero
                                     </a>
                                 </div>
-                                <div className="track__album">
+                                <div className={styles.track__album}>
                                     <a
-                                        className="track__album-link"
+                                        className={styles.track__albumLink}
                                         href="http://"
                                     >
                                         Welcome Reality
                                     </a>
                                 </div>
-                                <div className="track__time">
-                                    <svg className="track__time-svg">
+                                <div className={styles.track__time}>
+                                    <svg className={styles.track__timeSvg}>
                                         <use href="img/icon/sprite.svg#icon-like" />
                                     </svg>
-                                    <span className="track__time-text">
+                                    <span className={styles.track__timeText}>
                                         4:44
                                     </span>
                                 </div>

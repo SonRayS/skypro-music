@@ -1,14 +1,37 @@
+import styles from "./bodyRadioBtn.module.css";
+
 function RadioBtn() {
+    const classNames = require("classnames");
     return (
-        <div className="centerblock__filter filter">
-            <div className="filter__title">Искать по:</div>
-            <div className="filter__button button-author _btn-text">
+        <div className={classNames(styles.centerBlock__filter, styles.filter)}>
+            <div className={styles.filter__title}>Искать по:</div>
+            <div
+                className={classNames(
+                    styles.filter__button,
+                    styles.buttonAuthor,
+                    styles._btnText
+                )}
+            >
                 исполнителю
             </div>
-            <div className="filter__button button-year _btn-text">
+            <div
+                className={classNames(
+                    styles.filter__button,
+                    styles.buttonYear,
+                    styles._btnText
+                )}
+            >
                 году выпуска
             </div>
-            <div className="filter__button button-genre _btn-text">жанру</div>
+            <div
+                className={classNames(
+                    styles.filterButton,
+                    styles.buttonGenre,
+                    styles._btnText
+                )}
+            >
+                жанру
+            </div>
         </div>
     );
 }

@@ -1,11 +1,30 @@
+import styles from "./bodyTrackHeder.module.css";
+
 function TrackHeader() {
+    const classNames = require("classnames");
     return (
-        <div className="content__title playlist-title">
-            <div className="playlist-title__col col01">Трек</div>
-            <div className="playlist-title__col col02">Исполнитель</div>
-            <div className="playlist-title__col col03">Альбом</div>
-            <div className="playlist-title__col col04">
-                <svg className="playlist-title__svg">
+        <div
+            className={classNames(styles.content__title, styles.playlistTitle)}
+        >
+            <div
+                className={classNames(styles.playlistTitle__col, styles.col01)}
+            >
+                Трек
+            </div>
+            <div
+                className={classNames(styles.playlistTitle__col, styles.col02)}
+            >
+                Исполнитель
+            </div>
+            <div
+                className={classNames(styles.playlistTitle__col, styles.col03)}
+            >
+                Альбом
+            </div>
+            <div
+                className={classNames(styles.playlistTitle__col, styles.col04)}
+            >
+                <svg className={styles.playlistTitle__svg}>
                     <use href="img/icon/sprite.svg#icon-watch" />
                 </svg>
             </div>

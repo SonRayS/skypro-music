@@ -1,11 +1,14 @@
+import styles from "./bodySearch.module.css";
+
 function Search() {
+    const classNames = require("classnames");
     return (
-        <div className="centerblock__search search">
-            <svg className="search__svg">
+        <div className={classNames(styles.centerBlock__search, styles.search)}>
+            <svg className={styles.search__svg}>
                 <use href="/img/icon/sprite.svg#icon-search" />
             </svg>
             <input
-                className="search__text"
+                className={styles.search__text}
                 type="search"
                 placeholder="Поиск"
                 name="search"
