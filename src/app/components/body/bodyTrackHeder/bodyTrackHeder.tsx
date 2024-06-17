@@ -3,28 +3,18 @@ import classNames from "classnames";
 
 function TrackHeader() {
     return (
-        <div
-            className={classNames(styles.content__title, styles.playlistTitle)}
-        >
-            <div
-                className={classNames(styles.playlistTitle__col, styles.col01)}
-            >
+        <div className={classNames(styles.contentTitle, styles.playlistTitle)}>
+            <div className={classNames(styles.playlistTitleCol, styles.col01)}>
                 Трек
             </div>
-            <div
-                className={classNames(styles.playlistTitle__col, styles.col02)}
-            >
+            <div className={classNames(styles.playlistTitleCol, styles.col02)}>
                 Исполнитель
             </div>
-            <div
-                className={classNames(styles.playlistTitle__col, styles.col03)}
-            >
+            <div className={classNames(styles.playlistTitleCol, styles.col03)}>
                 Альбом
             </div>
-            <div
-                className={classNames(styles.playlistTitle__col, styles.col04)}
-            >
-                <svg className={styles.playlistTitle__svg}>
+            <div className={classNames(styles.playlistTitleCol, styles.col04)}>
+                <svg className={styles.playlistTitleSvg}>
                     <use href="img/icon/sprite.svg#icon-watch" />
                 </svg>
             </div>

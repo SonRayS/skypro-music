@@ -1,4 +1,4 @@
-.filter__title {
+.filterTitle {
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -6,7 +6,7 @@
     margin-right: 15px;
 }
 
-.filter__button {
+.filterButton {
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -16,7 +16,7 @@
     padding: 6px 20px;
 }
 
-.filter__button:not(:last-child) {
+.filterButton:not(:last-child) {
     margin-right: 10px;
 }
 
@@ -32,7 +32,7 @@
     cursor: pointer;
 }
 
-.centerBlock__filter {
+.centerBlockFilter {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;

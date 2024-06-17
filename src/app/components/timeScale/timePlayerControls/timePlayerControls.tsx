@@ -1,41 +1,35 @@
-import styles from "../timeScaleBar/timeScaleBar.module.css";
+import styles from "./timePlayerControls.module.css";
 import classNames from "classnames";
 
 function GetTimeControls() {
     return (
-        <div className={styles.player__controls}>
-            <div className={styles.player__btnPrev}>
-                <svg className={styles.player__btnPrevSvg}>
+        <div className={styles.playerControls}>
+            <div className={styles.playerBtnPrev}>
+                <svg className={styles.playerBtnPrevSvg}>
                     <use href="/img/icon/sprite.svg#icon-prev" />
                 </svg>
             </div>
-            <div className={classNames(styles.player__btnPlay, styles._btn)}>
-                <svg className={styles.player__btnPlaySvg}>
+            <div className={classNames(styles.playerBtnPlay, styles._btn)}>
+                <svg className={styles.playerBtnPlaySvg}>
                     <use href="/img/icon/sprite.svg#icon-play" />
                 </svg>
             </div>
-            <div className={styles.player__btnNext}>
-                <svg className={styles.player__btnNextSvg}>
+            <div className={styles.playerBtnNext}>
+                <svg className={styles.playerBtnNextSvg}>
                     <use href="/img/icon/sprite.svg#icon-next" />
                 </svg>
             </div>
             <div
-                className={classNames(
-                    styles.player__btnRepeat,
-                    styles._btnIcon
-                )}
+                className={classNames(styles.playerBtnRepeat, styles._btnIcon)}
             >
-                <svg className={styles.player__btnRepeatSvg}>
+                <svg className={styles.playerBtnRepeatSvg}>
                     <use href="/img/icon/sprite.svg#icon-repeat" />
                 </svg>
             </div>
             <div
-                className={classNames(
-                    styles.player__btnShuffle,
-                    styles._btnIcon
-                )}
+                className={classNames(styles.playerBtnShuffle, styles._btnIcon)}
             >
-                <svg className={styles.player__btnShuffleSvg}>
+                <svg className={styles.playerBtnShuffleSvg}>
                     <use href="/img/icon/sprite.svg#icon-shuffle" />
                 </svg>
             </div>

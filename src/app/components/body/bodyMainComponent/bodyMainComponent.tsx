@@ -9,74 +9,74 @@ function Body() {
         <>
             <div
                 className={classNames(
-                    styles.main__centerBlock,
+                    styles.mainCenterBlock,
                     styles.centerBlock
                 )}
             >
                 <Search />
-                <h2 className={styles.centerBlock__h2}>Треки</h2>
+                <h2 className={styles.centerBlockH2}>Треки</h2>
                 <RadioBtn />
                 <div
                     className={classNames(
-                        styles.centerBlock__content,
+                        styles.centerBlockContent,
                         styles.playlistContent
                     )}
                 >
                     <TrackHeader />
                     <div
                         className={classNames(
-                            styles.content__playlist,
+                            styles.contentPlaylist,
                             styles.playlist
                         )}
                     >
-                        <div className={styles.playlist__item}>
+                        <div className={styles.playlistItem}>
                             <div
                                 className={classNames(
-                                    styles.playlist__track,
+                                    styles.playlistTrack,
                                     styles.track
                                 )}
                             >
-                                <div className={styles.track__title}>
-                                    <div className={styles.track__titleImage}>
-                                        <svg className={styles.track__titleSvg}>
+                                <div className={styles.trackTitle}>
+                                    <div className={styles.trackTitleImage}>
+                                        <svg className={styles.trackTitleSvg}>
                                             <use href="img/icon/sprite.svg#icon-note" />
                                         </svg>
                                     </div>
-                                    <div className={styles.track__titleText}>
+                                    <div className={styles.trackTitleText}>
                                         <a
-                                            className={styles.track__titleLink}
+                                            className={styles.trackTitleLink}
                                             href="http://"
                                         >
                                             Guilt{" "}
                                             <span
                                                 className={
-                                                    styles.track__titleSpan
+                                                    styles.trackTitleSpan
                                                 }
                                             />
                                         </a>
                                     </div>
                                 </div>
-                                <div className={styles.track__author}>
+                                <div className={styles.trackAuthor}>
                                     <a
-                                        className={styles.track__authorLink}
+                                        className={styles.trackAuthorLink}
                                         href="http://"
                                     >
                                         Nero
                                     </a>
                                 </div>
-                                <div className={styles.track__album}>
+                                <div className={styles.trackAlbum}>
                                     <a
-                                        className={styles.track__albumLink}
+                                        className={styles.trackAlbumLink}
                                         href="http://"
                                     >
                                         Welcome Reality
                                     </a>
                                 </div>
-                                <div className={styles.track__time}>
-                                    <svg className={styles.track__timeSvg}>
+                                <div className={styles.trackTime}>
+                                    <svg className={styles.trackTimeSvg}>
                                         <use href="img/icon/sprite.svg#icon-like" />
                                     </svg>
-                                    <span className={styles.track__timeText}>
+                                    <span className={styles.trackTimeText}>
                                         4:44
                                     </span>
                                 </div>

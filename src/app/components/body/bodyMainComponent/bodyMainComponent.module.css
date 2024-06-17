@@ -1,4 +1,4 @@
-.main__centerBlock {
+.mainCenterBlock {
     width: auto;
     -webkit-box-flex: 3;
     -ms-flex-positive: 3;
@@ -6,7 +6,7 @@
     padding: 20px 40px 20px 111px;
 }
 
-.centerBlock__h2 {
+.centerBlockH2 {
     font-style: normal;
     font-weight: 400;
     font-size: 64px;
@@ -15,7 +15,7 @@
     margin-bottom: 45px;
 }
 
-.centerBlock__content {
+.centerBlockContent {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -25,7 +25,7 @@
     flex-direction: column;
 }
 
-.content__playlist {
+.contentPlaylist {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -36,13 +36,13 @@
     overflow-y: auto;
 }
 
-.playlist__item {
+.playlistItem {
     width: 100%;
     display: block;
     margin-bottom: 12px;
 }
 
-.track__title {
+.trackTitle {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -56,7 +56,7 @@
     width: 447px;
 }
 
-.track__titleImage {
+.trackTitleImage {
     width: 51px;
     height: 51px;
     padding: 16px;
@@ -73,14 +73,14 @@
     margin-right: 17px;
 }
 
-.track__titleSvg {
+.trackTitleSvg {
     width: 18px;
     height: 17px;
     fill: transparent;
     stroke: #4e4e4e;
 }
 
-.track__titleLink {
+.trackTitleLink {
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -88,7 +88,7 @@
     color: #ffffff;
 }
 
-.track__titleSpan {
+.trackTitleSpan {
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -96,7 +96,7 @@
     color: #4e4e4e;
 }
 
-.track__author {
+.trackAuthor {
     width: 321px;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -106,7 +106,7 @@
     justify-content: flex-start;
 }
 
-.track__authorLink {
+.trackAuthorLink {
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -115,11 +115,11 @@
     text-align: left;
 }
 
-.track__album {
+.trackAlbum {
     width: 245px;
 }
 
-.track__albumLink {
+.trackAlbumLink {
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -127,7 +127,7 @@
     color: #696969;
 }
 
-.track__timeSvg {
+.trackTimeSvg {
     width: 14px;
     height: 12px;
     margin-right: 17px;
@@ -135,7 +135,7 @@
     stroke: #696969;
 }
 
-.track__timeText {
+.trackTimeText {
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -144,7 +144,7 @@
     color: #696969;
 }
 
-.playlist__track {
+.playlistTrack {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;

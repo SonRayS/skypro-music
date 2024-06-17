@@ -3,11 +3,11 @@ import classNames from "classnames";
 
 function RadioBtn() {
     return (
-        <div className={classNames(styles.centerBlock__filter, styles.filter)}>
-            <div className={styles.filter__title}>Искать по:</div>
+        <div className={classNames(styles.centerBlockFilter, styles.filter)}>
+            <div className={styles.filterTitle}>Искать по:</div>
             <div
                 className={classNames(
-                    styles.filter__button,
+                    styles.filterButton,
                     styles.buttonAuthor,
                     styles._btnText
                 )}
@@ -16,7 +16,7 @@ function RadioBtn() {
             </div>
             <div
                 className={classNames(
-                    styles.filter__button,
+                    styles.filterButton,
                     styles.buttonYear,
                     styles._btnText
                 )}
@@ -25,7 +25,7 @@ function RadioBtn() {
             </div>
             <div
                 className={classNames(
-                    styles.filter__button,
+                    styles.filterButton,
                     styles.buttonGenre,
                     styles._btnText
                 )}

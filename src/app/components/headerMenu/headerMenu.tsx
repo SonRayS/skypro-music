@@ -5,37 +5,37 @@ import classNames from "classnames";
 export default function Header() {
     return (
         <>
-            <nav className={classNames(styles.main__nav, styles.nav)}>
-                <div className={classNames(styles.nav__logo, styles.logo)}>
+            <nav className={classNames(styles.mainNav, styles.nav)}>
+                <div className={classNames(styles.navLogo, styles.logo)}>
                     <Image
-                        className={styles.logo__image}
+                        className={styles.logoImage}
                         src="/img/logo.png"
                         alt="Logo"
                         width={250}
                         height={170}
                     />
                 </div>
-                <div className={classNames(styles.nav__burger, styles.burger)}>
-                    <span className={styles.burger__line} />
-                    <span className={styles.burger__line} />
-                    <span className={styles.burger__line} />
+                <div className={classNames(styles.navBurger, styles.burger)}>
+                    <span className={styles.burgerLine} />
+                    <span className={styles.burgerLine} />
+                    <span className={styles.burgerLine} />
                 </div>
-                <div className={classNames(styles.nav__menu, styles.menu)}>
-                    <ul className={styles.menu__list}>
-                        <li className={styles.menu__item}>
-                            <a href="#" className={styles.menu__link}>
+                <div className={classNames(styles.navMenu, styles.menu)}>
+                    <ul className={styles.menuList}>
+                        <li className={styles.menuItem}>
+                            <a href="#" className={styles.menuLink}>
                                 Главное
                             </a>
                         </li>
-                        <li className={styles.menu__item}>
-                            <a href="#" className={styles.menu__link}>
+                        <li className={styles.menuItem}>
+                            <a href="#" className={styles.menuLink}>
                                 Мой плейлист
                             </a>
                         </li>
-                        <li className={styles.menu__item}>
+                        <li className={styles.menuItem}>
                             <a
                                 href="../signin.html"
-                                className={styles.menu__link}
+                                className={styles.menuLink}
                             >
                                 Войти
                             </a>

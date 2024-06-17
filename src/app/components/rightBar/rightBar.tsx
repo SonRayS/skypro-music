@@ -5,23 +5,21 @@ import classNames from "classnames";
 function RightBar() {
     return (
         <>
-            <div className={classNames(styles.main__sidebar, styles.sidebar)}>
-                <div className={styles.sidebar__personal}>
-                    <p className={styles.sidebar__personalName}>
-                        Sergey.Ivanov
-                    </p>
-                    <div className={styles.sidebar__icon}>
+            <div className={classNames(styles.mainSidebar, styles.sidebar)}>
+                <div className={styles.sidebarPersonal}>
+                    <p className={styles.sidebarPersonalName}>Sergey.Ivanov</p>
+                    <div className={styles.sidebarIcon}>
                         <svg>
                             <use xlinkHref="img/icon/sprite.svg#logout" />
                         </svg>
                     </div>
                 </div>
-                <div className={styles.sidebar__block}>
-                    <div className={styles.sidebar__list}>
-                        <div className={styles.sidebar__item}>
-                            <a className={styles.sidebar__link} href="#">
+                <div className={styles.sidebarBlock}>
+                    <div className={styles.sidebarList}>
+                        <div className={styles.sidebarItem}>
+                            <a className={styles.sidebarLink} href="#">
                                 <Image
-                                    className={styles.sidebar__img}
+                                    className={styles.sidebarImg}
                                     src="/img/playlist01.png"
                                     alt="day's playlist"
                                     width={250}
@@ -29,10 +27,10 @@ function RightBar() {
                                 />
                             </a>
                         </div>
-                        <div className={styles.sidebar__item}>
-                            <a className={styles.sidebar__link} href="#">
+                        <div className={styles.sidebarItem}>
+                            <a className={styles.sidebarLink} href="#">
                                 <Image
-                                    className={styles.sidebar__img}
+                                    className={styles.sidebarImg}
                                     src="/img/playlist02.png"
                                     alt="day's playlist"
                                     width={250}
@@ -40,10 +38,10 @@ function RightBar() {
                                 />
                             </a>
                         </div>
-                        <div className={styles.sidebar__item}>
-                            <a className={styles.sidebar__link} href="#">
+                        <div className={styles.sidebarItem}>
+                            <a className={styles.sidebarLink} href="#">
                                 <Image
-                                    className={styles.sidebar__img}
+                                    className={styles.sidebarImg}
                                     src="/img/playlist03.png"
                                     alt="day's playlist"
                                     width={250}

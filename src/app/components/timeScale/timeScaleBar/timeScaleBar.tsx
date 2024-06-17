@@ -6,12 +6,12 @@ function TimeScale() {
     return (
         <>
             <div className={styles.bar}>
-                <div className={styles.bar__content}>
-                    <div className={styles.bar__playerProgress} />
-                    <div className={styles.bar__playerBlock}>
+                <div className={styles.barContent}>
+                    <div className={styles.barPlayerProgress} />
+                    <div className={styles.barPlayerBlock}>
                         <div
                             className={classNames(
-                                styles.bar__player,
+                                styles.barPlayer,
                                 styles.player
                             )}
                         >
@@ -19,30 +19,30 @@ function TimeScale() {
 
                             <div
                                 className={classNames(
-                                    styles.player__trackPlay,
+                                    styles.playerTrackPlay,
                                     styles.trackPlay
                                 )}
                             >
-                                <div className={styles.trackPlay__contain}>
-                                    <div className={styles.trackPlay__image}>
-                                        <svg className={styles.trackPlay__svg}>
+                                <div className={styles.trackPlayContain}>
+                                    <div className={styles.trackPlayImage}>
+                                        <svg className={styles.trackPlaySvg}>
                                             <use href="/img/icon/sprite.svg#icon-note" />
                                         </svg>
                                     </div>
-                                    <div className={styles.trackPlay__author}>
+                                    <div className={styles.trackPlayAuthor}>
                                         <a
                                             className={
-                                                styles.trackPlay__authorLink
+                                                styles.trackPlayAuthorLink
                                             }
                                             href="http://"
                                         >
                                             Ты та...
                                         </a>
                                     </div>
-                                    <div className={styles.trackPlay__album}>
+                                    <div className={styles.trackPlayAlbum}>
                                         <a
                                             className={
-                                                styles.trackPlay__albumLink
+                                                styles.trackPlayAlbumLink
                                             }
                                             href="http://"
                                         >
@@ -50,30 +50,28 @@ function TimeScale() {
                                         </a>
                                     </div>
                                 </div>
-                                <div className={styles.trackPlay__likeDis}>
+                                <div className={styles.trackPlayLikeDis}>
                                     <div
                                         className={classNames(
-                                            styles.trackPlay__like,
+                                            styles.trackPlayLike,
                                             styles._btnIcon
                                         )}
                                     >
                                         <svg
-                                            className={
-                                                styles.trackPlay__likeSvg
-                                            }
+                                            className={styles.trackPlayLikeSvg}
                                         >
                                             <use href="img/icon/sprite.svg#iconLike" />
                                         </svg>
                                     </div>
                                     <div
                                         className={classNames(
-                                            styles.trackPlay__dislike,
+                                            styles.trackPlayDislike,
                                             styles._btnIcon
                                         )}
                                     >
                                         <svg
                                             className={
-                                                styles.trackPlay__dislikeSvg
+                                                styles.trackPlayDislikeSvg
                                             }
                                         >
                                             <use href="/img/icon/sprite.svg#icon-dislike" />
@@ -84,25 +82,25 @@ function TimeScale() {
                         </div>
                         <div
                             className={classNames(
-                                styles.bar__volumeBlock,
+                                styles.barVolumeBlock,
                                 styles.volume
                             )}
                         >
-                            <div className={styles.volume__content}>
-                                <div className={styles.volume__image}>
-                                    <svg className={styles.volume__svg}>
+                            <div className={styles.volumeContent}>
+                                <div className={styles.volumeImage}>
+                                    <svg className={styles.volumeSvg}>
                                         <use href="/img/icon/sprite.svg#icon-volume" />
                                     </svg>
                                 </div>
                                 <div
                                     className={classNames(
-                                        styles.volume__progress,
+                                        styles.volumeProgress,
                                         styles._btn
                                     )}
                                 >
                                     <input
                                         className={classNames(
-                                            styles.volume__progressLine,
+                                            styles.volumeProgressLine,
                                             styles._btn
                                         )}
                                         type="range"
