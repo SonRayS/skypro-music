@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "Montserrat";
+    src: url("../../public/fonts/Montserrat/Montserrat-VariableFont_wght.ttf"format("ttf"));
+}
+
 :root {
     --max-width: 1100px;
     --border-radius: 12px;
@@ -84,6 +89,7 @@
     padding: 0;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
 }
 
 html,
@@ -118,7 +124,6 @@ a {
 a,
 a:visited {
     text-decoration: none;
-    font-family: "Montserrat", sans-serif;
     cursor: pointer;
 }
 
