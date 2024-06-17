@@ -1,4 +1,4 @@
-import styles from "../timeScale.module.css";
+import styles from "../timeScaleBar/timeScaleBar.module.css";
 
 function GetTimeControls() {
     const classNames = require("classnames");

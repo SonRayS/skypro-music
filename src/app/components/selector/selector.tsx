@@ -1,5 +1,5 @@
 import styles from "./selector.module.css";
-import TimeScale from "../timeScale/timeScale";
+import TimeScale from "../timeScale/timeScaleBar/timeScaleBar";
 
 function Selector({ children }: { children: React.ReactNode }) {
     return (

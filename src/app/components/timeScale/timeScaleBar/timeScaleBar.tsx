@@ -1,5 +1,5 @@
-import styles from "./timeScale.module.css";
-import GetTimeControls from "./timePlayerControls/timePlayerControls";
+import styles from "./timeScaleBar.module.css";
+import GetTimeControls from "../timePlayerControls/timePlayerControls";
 
 function TimeScale() {
     const classNames = require("classnames");
