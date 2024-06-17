@@ -1,8 +1,8 @@
 import Image from "next/image";
 import styles from "./headerMenu.module.css";
+import classNames from "classnames";
 
 export default function Header() {
-    const classNames = require("classnames");
     return (
         <>
             <nav className={classNames(styles.main__nav, styles.nav)}>

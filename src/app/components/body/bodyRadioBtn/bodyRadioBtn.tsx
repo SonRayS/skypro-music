@@ -1,7 +1,7 @@
 import styles from "./bodyRadioBtn.module.css";
+import classNames from "classnames";
 
 function RadioBtn() {
-    const classNames = require("classnames");
     return (
         <div className={classNames(styles.centerBlock__filter, styles.filter)}>
             <div className={styles.filter__title}>Искать по:</div>

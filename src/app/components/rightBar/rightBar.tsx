@@ -1,8 +1,8 @@
 import Image from "next/image";
 import styles from "./rightBar.module.css";
+import classNames from "classnames";
 
 function RightBar() {
-    const classNames = require("classnames");
     return (
         <>
             <div className={classNames(styles.main__sidebar, styles.sidebar)}>

@@ -2,9 +2,9 @@ import Search from "../bodySearch/bodySearch";
 import RadioBtn from "../bodyRadioBtn/bodyRadioBtn";
 import TrackHeader from "../bodyTrackHeder/bodyTrackHeder";
 import styles from "./bodyMainComponent.module.css";
+import classNames from "classnames";
 
 function Body() {
-    const classNames = require("classnames");
     return (
         <>
             <div

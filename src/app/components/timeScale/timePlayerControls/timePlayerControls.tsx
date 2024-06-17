@@ -1,8 +1,7 @@
 import styles from "../timeScaleBar/timeScaleBar.module.css";
+import classNames from "classnames";
 
 function GetTimeControls() {
-    const classNames = require("classnames");
-
     return (
         <div className={styles.player__controls}>
             <div className={styles.player__btnPrev}>

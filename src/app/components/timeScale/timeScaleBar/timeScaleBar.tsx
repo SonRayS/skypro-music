@@ -1,8 +1,8 @@
 import styles from "./timeScaleBar.module.css";
 import GetTimeControls from "../timePlayerControls/timePlayerControls";
+import classNames from "classnames";
 
 function TimeScale() {
-    const classNames = require("classnames");
     return (
         <>
             <div className={styles.bar}>

@@ -1,7 +1,7 @@
 import styles from "./bodyTrackHeder.module.css";
+import classNames from "classnames";
 
 function TrackHeader() {
-    const classNames = require("classnames");
     return (
         <div
             className={classNames(styles.content__title, styles.playlistTitle)}

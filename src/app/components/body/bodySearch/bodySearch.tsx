@@ -1,7 +1,7 @@
 import styles from "./bodySearch.module.css";
+import classNames from "classnames";
 
 function Search() {
-    const classNames = require("classnames");
     return (
         <div className={classNames(styles.centerBlock__search, styles.search)}>
             <svg className={styles.search__svg}>
