@@ -1,5 +1,5 @@
 import Search from "../bodySearch/bodySearch";
-import RadioBtn from "../bodyRadioBtn/bodyRadioBtn";
+import Filters from "../bodyFilters/Filters";
 import TrackHeader from "../bodyTrackHeder/bodyTrackHeder";
 import styles from "./bodyMainComponent.module.css";
 import classNames from "classnames";
@@ -15,7 +15,7 @@ function Body() {
             >
                 <Search />
                 <h2 className={styles.centerBlockH2}>Треки</h2>
-                <RadioBtn />
+                <Filters />
                 <div
                     className={classNames(
                         styles.centerBlockContent,
