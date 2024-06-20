@@ -11,23 +11,32 @@ type FiltersItemType = {
 function FiltersItem({ isOpen, handleClick, title, list }: FiltersItemType) {
     return (
         <>
-            <div
-                onClick={() => handleClick(title)}
-                className={classNames(
-                    styles.filterButton,
-                    styles.buttonAuthor,
-                    styles._btnText
+            <div className={styles.trackContainer}>
+                <div
+                    onClick={() => handleClick(title)}
+                    className={classNames(
+                        styles.filterButton,
+                        styles.buttonAuthor,
+                        styles._btnText
+                    )}
+                >
+                    {title}
+                </div>
+                {isOpen && (
+                    <ul className={styles.trackList}>
+                        <div className={styles.trackScroll}>
+                            {list.map((el) => (
+                                <li
+                                    className={styles.trackListElement}
+                                    key={el}
+                                >
+                                    <p className={styles.trackListText}>{el}</p>
+                                </li>
+                            ))}
+                        </div>
+                    </ul>
                 )}
-            >
-                {title}
             </div>
-            {isOpen && (
-                <ul>
-                    {list.map((el) => (
-                        <li key={el}>{el}</li>
-                    ))}
-                </ul>
-            )}
         </>
     );
 }

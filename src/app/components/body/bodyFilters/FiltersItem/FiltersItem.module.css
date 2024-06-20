@@ -9,3 +9,58 @@
     cursor: pointer;
     margin-right: 10px;
 }
+
+.trackList {
+    background-color: #313131;
+    border: none;
+    border-radius: 12px;
+    width: 248px;
+    height: 305px;
+    position: absolute;
+    margin-top: 12px;
+}
+
+.trackListElement {
+    color: white;
+    padding: 34px;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.trackListElement:hover {
+    color: rgb(187, 255, 0);
+}
+
+.trackListElement:active {
+    color: #b672ff;
+    text-decoration: underline;
+}
+
+._btnText:active {
+    border-color: #ad61ff;
+    color: #ad61ff;
+}
+
+._btnText:hover {
+    border-color: #d9b6ff;
+    color: #d9b6ff;
+}
+
+.trackContainer {
+    position: relative;
+}
+
+.trackListText {
+    cursor: pointer;
+}
+
+.trackScroll {
+    overflow-y: auto;
+    height: 305px;
+    position: relative;
+    position: sticky;
+    top: 0;
+    scrollbar-color: #ffffff #4e4e4e;
+    scrollbar-width: thin;
+    scroll-behavior: smooth;
+}

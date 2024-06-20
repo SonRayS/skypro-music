@@ -93,6 +93,8 @@ body {
     min-height: 100%;
     font-family: "Montserrat", sans-serif;
     color: #ffffff;
+    overflow-y: hidden; /* Скрываем вертикальный scrollbar */
+    overflow-x: hidden; /* Скрываем горизонтальный scrollbar */
 }
 
 body {

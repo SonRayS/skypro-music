@@ -4,7 +4,6 @@ import FiltersItem from "./FiltersItem/FiltersItem";
 import styles from "./Filters.module.css";
 import classNames from "classnames";
 import { useState } from "react";
-import { title } from "process";
 import { filters } from "./data";
 
 function Filters() {

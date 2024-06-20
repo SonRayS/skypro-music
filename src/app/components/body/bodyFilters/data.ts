@@ -5,7 +5,7 @@ const Genre = "жанру";
 export const filters = [
     {
         title: Author,
-        list: ["Jon", "Smit", "Jon", "Richard"],
+        list: ["Jon", "Smit", "Gru", "Richard"],
     },
     {
         title: Release,
