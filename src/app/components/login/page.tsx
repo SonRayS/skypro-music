@@ -5,15 +5,12 @@ import classNames from "classnames";
 function LoginPage() {
     return (
         <body>
-            <div className={styles.styles.wrapper}>
-                <div className={styles.styles.containerEnter}>
-                    <div className={styles.styles.modalBlock}>
-                        <form
-                            className={styles.styles.modalDormLogin}
-                            action="#"
-                        >
+            <div className={styles.wrapper}>
+                <div className={styles.containerEnter}>
+                    <div className={styles.modalBlock}>
+                        <form className={styles.modalDormLogin} action="#">
                             <a href="../">
-                                <div className={styles.styles.modalLogo}>
+                                <div className={styles.modalLogo}>
                                     <Image
                                         src="./img/logoModal.png"
                                         alt="logo"
@@ -23,7 +20,7 @@ function LoginPage() {
                                 </div>
                             </a>
                             <input
-                                className={styles.classNames(
+                                className={classNames(
                                     styles.modalInput,
                                     styles.login
                                 )}
@@ -32,7 +29,7 @@ function LoginPage() {
                                 placeholder="Почта"
                             />
                             <input
-                                className={styles.classNames(
+                                className={classNames(
                                     styles.modalInput,
                                     styles.password
                                 )}
@@ -40,10 +37,10 @@ function LoginPage() {
                                 name="password"
                                 placeholder="Пароль"
                             />
-                            <button className={styles.styles.modalBtnEnter}>
+                            <button className={styles.modalBtnEnter}>
                                 <a href="../index.html">Войти</a>
                             </button>
-                            <button className={styles.styles.modalBtnSignup}>
+                            <button className={styles.modalBtnSignup}>
                                 <a href="signup.html">Зарегистрироваться</a>
                             </button>
                         </form>
