@@ -8,7 +8,17 @@ import getTrackList from "../../api/getTrackList/getTrackList";
 import { trackType } from "../../types";
 
 async function Body() {
-    const tracksResponse: trackType[] = await getTrackList();
+    /* ________________________________________ */
+
+    let tracksResponse: trackType[];
+
+    try {
+        tracksResponse = await getTrackList();
+    } catch (error: any) {
+        throw new Error(error.massage);
+    }
+
+    /* ________________________________________ */
 
     return (
         <>
