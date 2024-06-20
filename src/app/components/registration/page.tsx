@@ -1,15 +1,16 @@
 import Image from "next/image";
 import styles from "./pageRegistration.module.css";
+import classNames from "classnames";
 
 function LoginPage() {
     return (
         <body>
-            <div className="wrapper">
-                <div className="container-signup">
-                    <div className="modal__block">
-                        <form className="modal__form-login">
+            <div className={styles.wrapper}>
+                <div className={styles.containerSignup}>
+                    <div className={styles.modalBlock}>
+                        <form className={styles.modalFormLogin}>
                             <a href="../">
-                                <div className="modal__logo">
+                                <div className={styles.modalLogo}>
                                     <Image
                                         src="../img/logo_modal.png"
                                         alt="logo"
@@ -19,25 +20,34 @@ function LoginPage() {
                                 </div>
                             </a>
                             <input
-                                className="modal__input login"
+                                className={classNames(
+                                    styles.modalInput,
+                                    styles.login
+                                )}
                                 type="text"
                                 name="login"
                                 placeholder="Почта"
                             />
                             <input
-                                className="modal__input password-first"
+                                className={classNames(
+                                    styles.modalInput,
+                                    styles.passwordFirst
+                                )}
                                 type="password"
                                 name="password"
                                 placeholder="Пароль"
                             />
                             <input
-                                className="modal__input password-double"
+                                className={classNames(
+                                    styles.modalInput,
+                                    styles.passwordDouble
+                                )}
                                 type="password"
                                 name="password"
                                 placeholder="Повторите пароль"
                             />
-                            <button className="modal__btn-signup-ent">
-                                <a href="../index.html">Зарегистрироваться</a>
+                            <button className={styles.modalBtnSignupEnt}>
+                                <a href="#">Зарегистрироваться</a>
                             </button>
                         </form>
                     </div>
