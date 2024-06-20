@@ -4,39 +4,28 @@ import FiltersItem from "./FiltersItem/FiltersItem";
 import styles from "./Filters.module.css";
 import classNames from "classnames";
 import { useState } from "react";
+import { title } from "process";
+import { filters } from "./data";
 
 function Filters() {
     const [activeFilters, setActiveFilters] = useState<string | null>(null);
 
-    function handleClick(newFilter: string) {
-        setActiveFilters((prev) => (prev === newFilter ? newFilter : null));
+    function handleClick(el: string) {
+        setActiveFilters((prev) => (prev === el ? null : el));
     }
-
-    const Author = "исполнителю";
-    const Release = "году выпуска";
-    const Genre = "жанру";
 
     return (
         <div className={classNames(styles.centerBlockFilter, styles.filter)}>
             <div className={styles.filterTitle}>Искать по:</div>
-            <FiltersItem
-                isOpen={activeFilters === Author}
-                handleClick={handleClick}
-                title={Author}
-                list={["Jon", "Smit"]}
-            />
-            <FiltersItem
-                isOpen={activeFilters === Release}
-                handleClick={handleClick}
-                title={Release}
-                list={["Jon", "Smit"]}
-            />
-            <FiltersItem
-                isOpen={activeFilters === Genre}
-                handleClick={handleClick}
-                title={Genre}
-                list={["Jon", "Smit"]}
-            />
+            {filters.map((filter) => (
+                <FiltersItem
+                    isOpen={activeFilters === filter.title}
+                    handleClick={handleClick}
+                    title={filter.title}
+                    list={filter.list}
+                    key={title}
+                />
+            ))}
         </div>
     );
 }

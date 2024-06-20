@@ -5,7 +5,7 @@ type FiltersItemType = {
     isOpen: boolean;
     title: string;
     list: string[];
-    handleClick: (newFilter: string) => void;
+    handleClick: (el: string) => void;
 };
 
 function FiltersItem({ isOpen, handleClick, title, list }: FiltersItemType) {
@@ -21,11 +21,13 @@ function FiltersItem({ isOpen, handleClick, title, list }: FiltersItemType) {
             >
                 {title}
             </div>
-            <ul>
-                {list.map((el) => (
-                    <li key={el}>{el}</li>
-                ))}
-            </ul>
+            {isOpen && (
+                <ul>
+                    {list.map((el) => (
+                        <li key={el}>{el}</li>
+                    ))}
+                </ul>
+            )}
         </>
     );
 }
