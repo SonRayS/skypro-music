@@ -23,7 +23,7 @@ function Filters() {
                     handleClick={handleClick}
                     title={filter.title}
                     list={filter.list}
-                    key={title}
+                    key={filter.title}
                 />
             ))}
         </div>
