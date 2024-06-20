@@ -4,8 +4,12 @@ import TrackHeader from "../bodyTrackHeder/bodyTrackHeder";
 import styles from "./bodyMainComponent.module.css";
 import classNames from "classnames";
 import TrackComponent from "./bodyTrackComponent/bodyTrackComponent";
+import getTrackList from "../../api/getTrackList/getTrackList";
+import { trackType } from "../../types";
 
-function Body() {
+async function Body() {
+    const tracksResponse: trackType[] = await getTrackList();
+
     return (
         <>
             <div
@@ -24,7 +28,14 @@ function Body() {
                     )}
                 >
                     <TrackHeader />
-                    <TrackComponent />
+                    {tracksResponse.map((el) => (
+                        <TrackComponent
+                            key={el.id}
+                            name={el.name}
+                            author={el.author}
+                            album={el.album}
+                        />
+                    ))}
                 </div>
             </div>
         </>
@@ -32,10 +43,3 @@ function Body() {
 }
 
 export default Body;
-
-/* export default async function HomePage() {
-    const data = await getData();
-
-    return <main> Некий контент </main>;
-}
- */
