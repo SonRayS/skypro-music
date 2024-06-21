@@ -17,7 +17,7 @@ function FiltersItem({ isOpen, handleClick, title, list }: FiltersItemType) {
                     className={classNames(
                         styles.filterButton,
                         styles.buttonAuthor,
-                        styles._btnText
+                        isOpen ? styles.btnTextIsOpen : styles.btnText
                     )}
                 >
                     {title}
@@ -26,12 +26,16 @@ function FiltersItem({ isOpen, handleClick, title, list }: FiltersItemType) {
                     <ul className={styles.trackList}>
                         <div className={styles.trackScroll}>
                             {list.map((el) => (
-                                <li
-                                    className={styles.trackListElement}
-                                    key={el}
-                                >
-                                    <p className={styles.trackListText}>{el}</p>
-                                </li>
+                                <>
+                                    <li
+                                        className={styles.trackListElement}
+                                        key={el}
+                                    >
+                                        <p className={styles.trackListText}>
+                                            {el}
+                                        </p>
+                                    </li>
+                                </>
                             ))}
                         </div>
                     </ul>

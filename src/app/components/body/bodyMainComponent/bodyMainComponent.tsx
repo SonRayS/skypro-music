@@ -14,8 +14,11 @@ async function Body() {
 
     try {
         tracksResponse = await getTrackList();
-    } catch (error: any) {
-        throw new Error(error.massage);
+    } catch (error) {
+        let message;
+        if (error instanceof Error) message = error.message;
+        else message = String(error);
+        throw new Error(message);
     }
 
     /* ________________________________________ */

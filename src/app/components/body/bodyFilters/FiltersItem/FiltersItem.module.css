@@ -27,23 +27,10 @@
     font-weight: 400;
 }
 
-.trackListElement:hover {
-    color: rgb(187, 255, 0);
-}
-
-.trackListElement:active {
-    color: #b672ff;
-    text-decoration: underline;
-}
-
-._btnText:active {
-    border-color: #ad61ff;
-    color: #ad61ff;
-}
-
-._btnText:hover {
-    border-color: #d9b6ff;
-    color: #d9b6ff;
+.trackListIsOpen {
+    padding: 34px;
+    font-size: 18px;
+    font-weight: 400;
 }
 
 .trackContainer {
@@ -63,4 +50,29 @@
     scrollbar-color: #ffffff #4e4e4e;
     scrollbar-width: thin;
     scroll-behavior: smooth;
+}
+
+.trackListElement:hover {
+    color: #d9b6ff;
+    text-decoration: underline;
+}
+
+.trackListElement:active {
+    color: #b672ff;
+    text-decoration: underline;
+}
+
+.trackListElement:focus {
+    color: #b672ff;
+    text-decoration: underline;
+}
+
+.btnText:hover {
+    border-color: #d9b6ff;
+    color: #d9b6ff;
+}
+
+.btnTextIsOpen {
+    border-color: #b672ff;
+    color: #b672ff;
 }
