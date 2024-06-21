@@ -1,12 +1,33 @@
 "use client";
-
 import FiltersItem from "./FiltersItem/FiltersItem";
 import styles from "./Filters.module.css";
 import classNames from "classnames";
 import { useState } from "react";
-import { filters } from "./data";
+import { trackType } from "../../types";
 
-function Filters() {
+type Props = {
+    tracks: trackType[];
+};
+
+function Filters({ tracks }: Props) {
+    const filterData = [
+        {
+            title: "исполнителю",
+            list: Array.from(new Set(tracks.map((track) => track.author))),
+            value: "author",
+        },
+        {
+            title: "году выпуска",
+            list: ["По умолчанию", "Сгачала новые", "Сначала старые"],
+            value: "release",
+        },
+        {
+            title: "жанру",
+            list: Array.from(new Set(tracks.map((track) => track.genre))),
+            value: "genre",
+        },
+    ];
+
     const [activeFilters, setActiveFilters] = useState<string | null>(null);
 
     function handleClick(el: string) {
@@ -16,13 +37,13 @@ function Filters() {
     return (
         <div className={classNames(styles.centerBlockFilter, styles.filter)}>
             <div className={styles.filterTitle}>Искать по:</div>
-            {filters.map((filter) => (
+            {filterData.map((el, index) => (
                 <FiltersItem
-                    isOpen={activeFilters === filter.title}
+                    key={index}
+                    title={el.title}
+                    list={el.list}
                     handleClick={handleClick}
-                    title={filter.title}
-                    list={filter.list}
-                    key={filter.title}
+                    isOpen={activeFilters === el.title}
                 />
             ))}
         </div>

@@ -1,7 +1,4 @@
-const Author = "исполнителю";
-const Release = "году выпуска";
-const Genre = "жанру";
-
+/* 
 export const filters = [
     {
         title: Author,
@@ -15,4 +12,4 @@ export const filters = [
         title: Genre,
         list: ["Rock", "Pop", "Classic", "Rap"],
     },
-];
+]; */

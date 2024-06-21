@@ -8,6 +8,8 @@ import getTrackList from "../../api/getTrackList/getTrackList";
 import { trackType } from "../../types";
 
 async function Body() {
+    const tracks: trackType[] = await getTrackList();
+
     /* ________________________________________ */
 
     let tracksResponse: trackType[];
@@ -33,7 +35,7 @@ async function Body() {
             >
                 <Search />
                 <h2 className={styles.centerBlockH2}>Треки</h2>
-                <Filters />
+                <Filters tracks={tracks} />
                 <div
                     className={classNames(
                         styles.centerBlockContent,

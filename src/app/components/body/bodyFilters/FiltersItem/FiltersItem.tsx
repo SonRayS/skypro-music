@@ -4,11 +4,12 @@ import classNames from "classnames";
 type FiltersItemType = {
     isOpen: boolean;
     title: string;
-    list: string[];
+    list: string[] | number[];
     handleClick: (el: string) => void;
 };
 
-function FiltersItem({ isOpen, handleClick, title, list }: FiltersItemType) {
+function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
+    console.log(isOpen);
     return (
         <>
             <div className={styles.trackContainer}>
