@@ -9,7 +9,6 @@ type FiltersItemType = {
 };
 
 function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
-    console.log(isOpen);
     return (
         <>
             <div className={styles.trackContainer}>
@@ -26,11 +25,11 @@ function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
                 {isOpen && (
                     <ul className={styles.trackList}>
                         <div className={styles.trackScroll}>
-                            {list.map((el) => (
+                            {list.map((el, index) => (
                                 <>
                                     <li
                                         className={styles.trackListElement}
-                                        key={el}
+                                        key={index}
                                     >
                                         <p className={styles.trackListText}>
                                             {el}

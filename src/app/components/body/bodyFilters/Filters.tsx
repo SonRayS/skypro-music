@@ -10,6 +10,40 @@ type Props = {
 };
 
 function Filters({ tracks }: Props) {
+    /* ------------------------------------time----------------------------------- */
+    interface DateObject {
+        dates: string[];
+    }
+
+    function extractYearsFromObject(dateObj: DateObject): number[] {
+        return dateObj.dates.map((dateString) => {
+            const date = new Date(dateString);
+            return date.getFullYear();
+        });
+    }
+
+    const dateObject: DateObject = {
+        dates: Array.from(new Set(tracks.map((track) => track.release_date))),
+    };
+
+    const years = extractYearsFromObject(dateObject);
+    /* ------------------------------------time----------------------------------- */
+    /* ------------------------------------Sort----------------------------------- */
+
+    interface Item {
+        value: number;
+    }
+
+    function sortItemsByValue(items: number[]): number[] {
+        return items.sort((a, b) => b - a);
+    }
+
+    const items: number[] = years;
+
+    const sortedItems = sortItemsByValue(items);
+
+    /* ------------------------------------Sort----------------------------------- */
+
     const filterData = [
         {
             title: "исполнителю",
@@ -18,7 +52,7 @@ function Filters({ tracks }: Props) {
         },
         {
             title: "году выпуска",
-            list: ["По умолчанию", "Сгачала новые", "Сначала старые"],
+            list: sortedItems,
             value: "release",
         },
         {
