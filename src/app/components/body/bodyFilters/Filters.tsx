@@ -30,10 +30,6 @@ function Filters({ tracks }: Props) {
     /* ------------------------------------time----------------------------------- */
     /* ------------------------------------Sort----------------------------------- */
 
-    interface Item {
-        value: number;
-    }
-
     function sortItemsByValue(items: number[]): number[] {
         return items.sort((a, b) => b - a);
     }
