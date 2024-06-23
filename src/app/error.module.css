@@ -1,0 +1,64 @@
+.PageErr {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.errImg {
+}
+
+.errButton {
+    width: 178px;
+    height: 52px;
+    top: 300px;
+    left: 147px;
+    gap: 0px;
+    border-radius: 6px;
+    opacity: 0px;
+    border: none;
+    background-color: #580ea2;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-end;
+}
+
+.errBtnText {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 18px;
+    width: 268px;
+    text-align: center;
+}
+
+.errContainer {
+    display: flex;
+
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    margin-bottom: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.errContainer * {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    flex-direction: column;
+}
+
+.errModal {
+}

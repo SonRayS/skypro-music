@@ -1,6 +1,9 @@
 import Image from "next/image";
 import styles from "./rightBar.module.css";
 import classNames from "classnames";
+import playList01 from "./playlist01.png";
+import playList02 from "./playlist01.png";
+import playList03 from "./playlist01.png";
 
 function RightBar() {
     return (
@@ -19,8 +22,7 @@ function RightBar() {
                         <div className={styles.sidebarItem}>
                             <a className={styles.sidebarLink} href="#">
                                 <Image
-                                    className={styles.sidebarImg}
-                                    src="/img/playlist01.png"
+                                    src={playList01}
                                     alt="day's playlist"
                                     width={250}
                                     height={170}
@@ -30,8 +32,7 @@ function RightBar() {
                         <div className={styles.sidebarItem}>
                             <a className={styles.sidebarLink} href="#">
                                 <Image
-                                    className={styles.sidebarImg}
-                                    src="/img/playlist02.png"
+                                    src={playList02}
                                     alt="day's playlist"
                                     width={250}
                                     height={170}
@@ -41,8 +42,7 @@ function RightBar() {
                         <div className={styles.sidebarItem}>
                             <a className={styles.sidebarLink} href="#">
                                 <Image
-                                    className={styles.sidebarImg}
-                                    src="/img/playlist03.png"
+                                    src={playList03}
                                     alt="day's playlist"
                                     width={250}
                                     height={170}

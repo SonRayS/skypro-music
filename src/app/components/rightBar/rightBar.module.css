@@ -1,6 +1,7 @@
 .mainSidebar {
     max-width: 418px;
     padding: 20px 90px 20px 78px;
+    background-color: #181818;
 }
 .sidebarPersonal {
     display: -webkit-box;
@@ -78,7 +79,6 @@
     height: 100%;
 }
 
-.sidebarImg {
-    width: 100%;
-    height: auto;
+.sidebarItem .sidebarLink img {
+    padding-bottom: 20px;
 }
