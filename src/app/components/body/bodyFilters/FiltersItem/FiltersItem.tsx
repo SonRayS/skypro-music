@@ -26,16 +26,12 @@ function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
                     <ul className={styles.trackList}>
                         <div className={styles.trackScroll}>
                             {list.map((el, index) => (
-                                <>
-                                    <li
-                                        className={styles.trackListElement}
-                                        key={index}
-                                    >
-                                        <p className={styles.trackListText}>
-                                            {el}
-                                        </p>
-                                    </li>
-                                </>
+                                <li
+                                    className={styles.trackListElement}
+                                    key={index}
+                                >
+                                    <p className={styles.trackListText}>{el}</p>
+                                </li>
                             ))}
                         </div>
                     </ul>

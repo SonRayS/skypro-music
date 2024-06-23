@@ -78,3 +78,7 @@
     width: 100%;
     height: 100%;
 }
+
+.sidebarItem .sidebarLink img {
+    padding-bottom: 20px;
+}
