@@ -11,32 +11,27 @@ type Props = {
 
 function Filters({ tracks }: Props) {
     /* ------------------------------------time----------------------------------- */
-    interface DateObject {
-        dates: string[];
-    }
 
-    function extractYearsFromObject(dateObj: DateObject): number[] {
-        return dateObj.dates.map((dateString) => {
+    function extractYearsFromObject(dateObj: string[]) {
+        return dateObj.map((dateString) => {
             const date = new Date(dateString);
             return date.getFullYear();
         });
     }
 
-    const dateObject: DateObject = {
-        dates: Array.from(new Set(tracks.map((track) => track.release_date))),
-    };
+    const dateObject = Array.from(
+        new Set(tracks.map((track) => track.release_date))
+    );
 
     const years = extractYearsFromObject(dateObject);
     /* ------------------------------------time----------------------------------- */
     /* ------------------------------------Sort----------------------------------- */
 
-    function sortItemsByValue(items: number[]): number[] {
+    function sortItemsByValue(items: number[]) {
         return items.sort((a, b) => b - a);
     }
 
-    const items: number[] = years;
-
-    const sortedItems = sortItemsByValue(items);
+    const sortedItems = sortItemsByValue(years);
 
     /* ------------------------------------Sort----------------------------------- */
 
