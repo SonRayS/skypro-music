@@ -1,7 +1,6 @@
 "use client";
 import styles from "./timePlayerControls.module.css";
 import classNames from "classnames";
-import { MutableRefObject } from "react";
 
 type audioType = {
     togglePlay: () => void;

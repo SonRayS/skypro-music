@@ -1,19 +1,19 @@
 import styles from "./ProgressBar.module.css";
 import { ChangeEvent } from "react";
 
-type ProgressBar = {
-    max: number | undefined;
+type ProgressBarType = {
+    max: number;
     value: number;
     step: number;
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
 export default function ProgressBar({
-    max = 0,
+    max,
     value,
     step,
     onChange,
-}: ProgressBar) {
+}: ProgressBarType) {
     return (
         <input
             className={styles.styledProgressInput} // Применение стилей к ползунку

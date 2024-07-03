@@ -12,7 +12,6 @@ function TimeScale() {
     const [currentTime, setCurrentTime] = useState<number>(0);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const { track }: { track: trackType } = useTrackContext();
-    console.log(currentTime);
 
     const audioRef = useRef<null | HTMLAudioElement>(null);
 
@@ -48,7 +47,7 @@ function TimeScale() {
                 <div className={styles.barContent}>
                     <audio ref={audioRef} src={track.track_file}></audio>
                     <ProgressBar
-                        max={duration}
+                        max={duration ? duration : 0}
                         value={currentTime}
                         step={0.1}
                         onChange={handleSeek}
