@@ -212,8 +212,51 @@
     width: 109px;
 }
 
+.volumeProgress:hover {
+    --progress-height: 8px;
+}
+
 .volumeProgressLine {
+    --progress-height: 5px;
+    --progress-color: #b672ff;
+    --progress-bg-color: #2e2e2e;
     width: 109px;
+    margin: 0;
+    height: 18px;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row-reverse;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.volumeProgress:hover {
+    --progress-height: 8px;
+}
+
+.volumeProgressLine::-webkit-slider-runnable-track {
+    height: 20px;
+    background: linear-gradient(
+        #181818 0% 40%,
+        #ffffff 40% 55%,
+        #181818 55% 100%
+    );
+}
+
+.volumeProgressLine::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 17px;
+    height: 17px;
+    border: 3px solid white;
+    border-radius: 50%;
+    background: rgb(0, 0, 0);
 }
 
 ._btnText:hover {

@@ -11,11 +11,12 @@ import { ChangeEvent } from "react";
 function TimeScale() {
     const [currentTime, setCurrentTime] = useState<number>(0);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
+    const [volume, setVolume] = useState<number>(0.5);
     const { track }: { track: trackType } = useTrackContext();
 
     const audioRef = useRef<null | HTMLAudioElement>(null);
 
-    const duration = audioRef.current?.duration;
+    const duration = audioRef.current?.duration || 0;
 
     const togglePlay = () => {
         if (audioRef.current) {
@@ -24,7 +25,7 @@ function TimeScale() {
             } else {
                 audioRef.current.play();
             }
-            setIsPlaying(!isPlaying);
+            setIsPlaying((prev) => !prev);
         }
     };
 
@@ -34,10 +35,27 @@ function TimeScale() {
         );
     }, []);
 
+    useEffect(() => {
+        if (audioRef.current) {
+            audioRef.current.volume = volume;
+        }
+    }, [volume]);
+
+    useEffect(() => {
+        track ? setIsPlaying(false) : setIsPlaying(true);
+    }, [track]);
+
     const handleSeek = (event: ChangeEvent<HTMLInputElement>) => {
         if (audioRef.current) {
             setCurrentTime(Number(event.target.value));
             audioRef.current.currentTime = Number(event.target.value);
+        }
+    };
+
+    const handleSetVolume = (event: ChangeEvent<HTMLInputElement>) => {
+        if (audioRef.current) {
+            setVolume(Number(event.target.value));
+            audioRef.current.volume = Number(event.target.value);
         }
     };
 
@@ -47,7 +65,7 @@ function TimeScale() {
                 <div className={styles.barContent}>
                     <audio ref={audioRef} src={track.track_file}></audio>
                     <ProgressBar
-                        max={duration ? duration : 0}
+                        max={duration}
                         value={currentTime}
                         step={0.1}
                         onChange={handleSeek}
@@ -77,24 +95,22 @@ function TimeScale() {
                                         </svg>
                                     </div>
                                     <div className={styles.trackPlayAuthor}>
-                                        <a
+                                        <span
                                             className={
                                                 styles.trackPlayAuthorLink
                                             }
-                                            href="http://"
                                         >
                                             {track.name}
-                                        </a>
+                                        </span>
                                     </div>
                                     <div className={styles.trackPlayAlbum}>
-                                        <a
+                                        <span
                                             className={
                                                 styles.trackPlayAlbumLink
                                             }
-                                            href="http://"
                                         >
                                             {track.author}
-                                        </a>
+                                        </span>
                                     </div>
                                 </div>
                                 <div className={styles.trackPlayLikeDis}>
@@ -151,7 +167,12 @@ function TimeScale() {
                                             styles._btn
                                         )}
                                         type="range"
+                                        min="0"
+                                        max="1"
+                                        step="0.01"
                                         name="range"
+                                        value={volume}
+                                        onChange={handleSetVolume}
                                     />
                                 </div>
                             </div>
