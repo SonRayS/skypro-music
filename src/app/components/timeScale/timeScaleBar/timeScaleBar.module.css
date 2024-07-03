@@ -217,12 +217,12 @@
 }
 
 .volumeProgressLine {
-    --progress-height: 5px;
+    --progress-height: 18px;
     --progress-color: #b672ff;
     --progress-bg-color: #2e2e2e;
     width: 109px;
     margin: 0;
-    height: 18px;
+    height: var(--progress-height);
     -webkit-appearance: none;
     appearance: none;
     cursor: pointer;
