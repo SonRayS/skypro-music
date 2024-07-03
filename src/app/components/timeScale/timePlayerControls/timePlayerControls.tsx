@@ -1,7 +1,21 @@
+"use client";
 import styles from "./timePlayerControls.module.css";
 import classNames from "classnames";
+import { MutableRefObject } from "react";
 
-function GetTimeControls() {
+type audioType = {
+    audioRef: MutableRefObject<HTMLAudioElement | null>;
+    track: string;
+    togglePlay: () => void;
+    isPlaying: boolean;
+};
+
+function GetTimeControls({
+    audioRef,
+    track,
+    togglePlay,
+    isPlaying,
+}: audioType) {
     return (
         <div className={styles.playerControls}>
             <div className={styles.playerBtnPrev}>
@@ -10,8 +24,13 @@ function GetTimeControls() {
                 </svg>
             </div>
             <div className={classNames(styles.playerBtnPlay, styles._btn)}>
-                <svg className={styles.playerBtnPlaySvg}>
-                    <use href="/img/icon/sprite.svg#icon-play" />
+                <audio ref={audioRef} src={track}></audio>
+                <svg className={styles.playerBtnPlaySvg} onClick={togglePlay}>
+                    <use
+                        href={`/img/icon/sprite.svg#${
+                            isPlaying ? "icon-pause" : "icon-play"
+                        }`}
+                    />
                 </svg>
             </div>
             <div className={styles.playerBtnNext}>

@@ -1,13 +1,54 @@
+"use client";
 import styles from "./timeScaleBar.module.css";
 import GetTimeControls from "../timePlayerControls/timePlayerControls";
 import classNames from "classnames";
+import ProgressBar from "../../progressBar/progressBar";
+import { useTrackContext } from "../../context/useTrack";
+import { trackType } from "../../types";
+import { useState, useRef } from "react";
+import { ChangeEvent } from "react";
 
 function TimeScale() {
+    const [currentTime, setCurrentTime] = useState<number>(0);
+    const [isPlaying, setIsPlaying] = useState<boolean>(false);
+    const { track }: { track: trackType } = useTrackContext();
+
+    console.log(track);
+
+    const audioRef = useRef<null | HTMLAudioElement>(null);
+
+    const duration = audioRef.current?.duration;
+
+    const togglePlay = () => {
+        if (audioRef.current) {
+            if (isPlaying) {
+                audioRef.current.pause();
+            } else {
+                audioRef.current.play();
+            }
+            setIsPlaying((prev) => !prev);
+        }
+    };
+
+    const handleSeek = (event: ChangeEvent<HTMLInputElement>) => {
+        if (audioRef.current) {
+            setCurrentTime(Number(event.target.value));
+            audioRef.current.currentTime = Number(event.target.value);
+        } else {
+            null;
+        }
+    };
+
     return (
         <>
             <div className={styles.bar}>
                 <div className={styles.barContent}>
-                    <div className={styles.barPlayerProgress} />
+                    <ProgressBar
+                        max={duration}
+                        value={currentTime}
+                        step={0.1}
+                        onChange={handleSeek}
+                    />
                     <div className={styles.barPlayerBlock}>
                         <div
                             className={classNames(
@@ -15,7 +56,12 @@ function TimeScale() {
                                 styles.player
                             )}
                         >
-                            <GetTimeControls />
+                            <GetTimeControls
+                                audioRef={audioRef}
+                                track={track.track_file}
+                                togglePlay={togglePlay}
+                                isPlaying={isPlaying}
+                            />
 
                             <div
                                 className={classNames(

@@ -1,17 +1,32 @@
 "use client";
-
 import styles from "./bodyTrackComponent.module.css";
 import classNames from "classnames";
+import { useTrackContext } from "@/app/components/context/useTrack";
+import { trackType } from "../../../types";
 
-type trackType = {
+type trackTypes = {
     name: string;
     author: string;
     album: string;
+    el: trackType;
 };
 
-function TrackComponent({ name, author, album }: trackType) {
+function TrackComponent({ name, author, album, el }: trackTypes) {
+    const { track, setTrack } = useTrackContext();
+
+    function handleClick() {
+        if (track) {
+            setTrack(el);
+        } else {
+            setTrack(null);
+        }
+    }
+
     return (
-        <div className={classNames(styles.contentPlaylist, styles.playlist)}>
+        <div
+            onClick={handleClick}
+            className={classNames(styles.contentPlaylist, styles.playlist)}
+        >
             <div className={styles.playlistItem}>
                 <div className={classNames(styles.playlistTrack, styles.track)}>
                     <div className={styles.trackTitle}>
@@ -21,21 +36,17 @@ function TrackComponent({ name, author, album }: trackType) {
                             </svg>
                         </div>
                         <div className={styles.trackTitleText}>
-                            <a className={styles.trackTitleLink} href="http://">
-                                {name}{" "}
+                            <span className={styles.trackTitleLink}>
+                                {name}
                                 <span className={styles.trackTitleSpan} />
-                            </a>
+                            </span>
                         </div>
                     </div>
                     <div className={styles.trackAuthor}>
-                        <a className={styles.trackAuthorLink} href="http://">
-                            {author}
-                        </a>
+                        <span className={styles.trackAuthorLink}>{author}</span>
                     </div>
                     <div className={styles.trackAlbum}>
-                        <a className={styles.trackAlbumLink} href="http://">
-                            {album}
-                        </a>
+                        <span className={styles.trackAlbumLink}>{album}</span>
                     </div>
                     <div className={styles.trackTime}>
                         <svg className={styles.trackTimeSvg}>

@@ -49,6 +49,7 @@ async function Body() {
                             name={el.name}
                             author={el.author}
                             album={el.album}
+                            el={el}
                         />
                     ))}
                 </div>
