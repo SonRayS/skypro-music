@@ -5,15 +5,14 @@ import classNames from "classnames";
 import ProgressBar from "../../progressBar/progressBar";
 import { useTrackContext } from "../../context/useTrack";
 import { trackType } from "../../types";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { ChangeEvent } from "react";
 
 function TimeScale() {
     const [currentTime, setCurrentTime] = useState<number>(0);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const { track }: { track: trackType } = useTrackContext();
-
-    console.log(track);
+    console.log(currentTime);
 
     const audioRef = useRef<null | HTMLAudioElement>(null);
 
@@ -26,16 +25,20 @@ function TimeScale() {
             } else {
                 audioRef.current.play();
             }
-            setIsPlaying((prev) => !prev);
+            setIsPlaying(!isPlaying);
         }
     };
+
+    useEffect(() => {
+        audioRef.current?.addEventListener("timeupdate", () =>
+            setCurrentTime(audioRef.current!.currentTime)
+        );
+    }, []);
 
     const handleSeek = (event: ChangeEvent<HTMLInputElement>) => {
         if (audioRef.current) {
             setCurrentTime(Number(event.target.value));
             audioRef.current.currentTime = Number(event.target.value);
-        } else {
-            null;
         }
     };
 
@@ -43,6 +46,7 @@ function TimeScale() {
         <>
             <div className={styles.bar}>
                 <div className={styles.barContent}>
+                    <audio ref={audioRef} src={track.track_file}></audio>
                     <ProgressBar
                         max={duration}
                         value={currentTime}
@@ -57,8 +61,6 @@ function TimeScale() {
                             )}
                         >
                             <GetTimeControls
-                                audioRef={audioRef}
-                                track={track.track_file}
                                 togglePlay={togglePlay}
                                 isPlaying={isPlaying}
                             />
@@ -82,7 +84,7 @@ function TimeScale() {
                                             }
                                             href="http://"
                                         >
-                                            Ты та...
+                                            {track.name}
                                         </a>
                                     </div>
                                     <div className={styles.trackPlayAlbum}>
@@ -92,7 +94,7 @@ function TimeScale() {
                                             }
                                             href="http://"
                                         >
-                                            Баста
+                                            {track.author}
                                         </a>
                                     </div>
                                 </div>

@@ -4,18 +4,11 @@ import classNames from "classnames";
 import { MutableRefObject } from "react";
 
 type audioType = {
-    audioRef: MutableRefObject<HTMLAudioElement | null>;
-    track: string;
     togglePlay: () => void;
     isPlaying: boolean;
 };
 
-function GetTimeControls({
-    audioRef,
-    track,
-    togglePlay,
-    isPlaying,
-}: audioType) {
+function GetTimeControls({ togglePlay, isPlaying }: audioType) {
     return (
         <div className={styles.playerControls}>
             <div className={styles.playerBtnPrev}>
@@ -24,7 +17,6 @@ function GetTimeControls({
                 </svg>
             </div>
             <div className={classNames(styles.playerBtnPlay, styles._btn)}>
-                <audio ref={audioRef} src={track}></audio>
                 <svg className={styles.playerBtnPlaySvg} onClick={togglePlay}>
                     <use
                         href={`/img/icon/sprite.svg#${
