@@ -1,0 +1,78 @@
+.filterButton {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    border: 1px solid #ffffff;
+    border-radius: 60px;
+    padding: 6px 20px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.trackList {
+    background-color: #313131;
+    border: none;
+    border-radius: 12px;
+    width: 248px;
+    height: 305px;
+    position: absolute;
+    margin-top: 12px;
+}
+
+.trackListElement {
+    color: white;
+    padding: 34px;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.trackListIsOpen {
+    padding: 34px;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.trackContainer {
+    position: relative;
+}
+
+.trackListText {
+    cursor: pointer;
+}
+
+.trackScroll {
+    overflow-y: auto;
+    height: 305px;
+    position: relative;
+    position: sticky;
+    top: 0;
+    scrollbar-color: #ffffff #4e4e4e;
+    scrollbar-width: thin;
+    scroll-behavior: smooth;
+}
+
+.trackListElement:hover {
+    color: #d9b6ff;
+    text-decoration: underline;
+}
+
+.trackListElement:active {
+    color: #b672ff;
+    text-decoration: underline;
+}
+
+.trackListElement:focus {
+    color: #b672ff;
+    text-decoration: underline;
+}
+
+.btnText:hover {
+    border-color: #d9b6ff;
+    color: #d9b6ff;
+}
+
+.btnTextIsOpen {
+    border-color: #b672ff;
+    color: #b672ff;
+}

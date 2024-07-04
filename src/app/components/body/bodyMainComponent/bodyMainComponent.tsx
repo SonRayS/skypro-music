@@ -1,10 +1,30 @@
 import Search from "../bodySearch/bodySearch";
-import RadioBtn from "../bodyRadioBtn/bodyRadioBtn";
+import Filters from "../bodyFilters/Filters";
 import TrackHeader from "../bodyTrackHeder/bodyTrackHeder";
 import styles from "./bodyMainComponent.module.css";
 import classNames from "classnames";
+import TrackComponent from "./bodyTrackComponent/bodyTrackComponent";
+import getTrackList from "../../api/getTrackList/getTrackList";
+import { trackType } from "../../types";
 
-function Body() {
+async function Body() {
+    const tracks: trackType[] = await getTrackList();
+
+    /* ________________________________________ */
+
+    let tracksResponse: trackType[];
+
+    try {
+        tracksResponse = await getTrackList();
+    } catch (error) {
+        let message;
+        if (error instanceof Error) message = error.message;
+        else message = String(error);
+        throw new Error(message);
+    }
+
+    /* ________________________________________ */
+
     return (
         <>
             <div
@@ -15,7 +35,7 @@ function Body() {
             >
                 <Search />
                 <h2 className={styles.centerBlockH2}>Треки</h2>
-                <RadioBtn />
+                <Filters tracks={tracks} />
                 <div
                     className={classNames(
                         styles.centerBlockContent,
@@ -23,66 +43,15 @@ function Body() {
                     )}
                 >
                     <TrackHeader />
-                    <div
-                        className={classNames(
-                            styles.contentPlaylist,
-                            styles.playlist
-                        )}
-                    >
-                        <div className={styles.playlistItem}>
-                            <div
-                                className={classNames(
-                                    styles.playlistTrack,
-                                    styles.track
-                                )}
-                            >
-                                <div className={styles.trackTitle}>
-                                    <div className={styles.trackTitleImage}>
-                                        <svg className={styles.trackTitleSvg}>
-                                            <use href="img/icon/sprite.svg#icon-note" />
-                                        </svg>
-                                    </div>
-                                    <div className={styles.trackTitleText}>
-                                        <a
-                                            className={styles.trackTitleLink}
-                                            href="http://"
-                                        >
-                                            Guilt{" "}
-                                            <span
-                                                className={
-                                                    styles.trackTitleSpan
-                                                }
-                                            />
-                                        </a>
-                                    </div>
-                                </div>
-                                <div className={styles.trackAuthor}>
-                                    <a
-                                        className={styles.trackAuthorLink}
-                                        href="http://"
-                                    >
-                                        Nero
-                                    </a>
-                                </div>
-                                <div className={styles.trackAlbum}>
-                                    <a
-                                        className={styles.trackAlbumLink}
-                                        href="http://"
-                                    >
-                                        Welcome Reality
-                                    </a>
-                                </div>
-                                <div className={styles.trackTime}>
-                                    <svg className={styles.trackTimeSvg}>
-                                        <use href="img/icon/sprite.svg#icon-like" />
-                                    </svg>
-                                    <span className={styles.trackTimeText}>
-                                        4:44
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {tracksResponse.map((el) => (
+                        <TrackComponent
+                            key={el.id}
+                            name={el.name}
+                            author={el.author}
+                            album={el.album}
+                            el={el}
+                        />
+                    ))}
                 </div>
             </div>
         </>

@@ -1,8 +1,11 @@
 .wrapper {
     width: 100%;
     min-height: 100%;
-    overflow: hidden;
+    overflow: auto;
     background-color: #383838;
+    scrollbar-color: #ffffff #4e4e4e;
+    scrollbar-width: thin;
+    scroll-behavior: smooth;
 }
 
 .container {
