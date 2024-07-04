@@ -48,7 +48,7 @@ function GetTimeControls({
                 <svg className={styles.playerBtnRepeatSvg}>
                     <use
                         href={`/img/icon/sprite.svg#icon-${
-                            repeat ? "repeat" : "trackRepeat"
+                            repeat ? "trackRepeat" : "repeat"
                         }`}
                     />
                 </svg>

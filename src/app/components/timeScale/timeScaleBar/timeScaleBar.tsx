@@ -13,10 +13,12 @@ function TimeScale() {
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const [volume, setVolume] = useState<number>(0.5);
     const [repeat, setRepeat] = useState<boolean>(false);
-
     const { track }: { track: trackType } = useTrackContext();
     const audioRef = useRef<null | HTMLAudioElement>(null);
     const duration = audioRef.current?.duration || 0;
+    const audio = audioRef.current;
+    audio ? (audio.loop = repeat) : null;
+    console.log(audioRef.current);
 
     function handleClickRepeat() {
         setRepeat((prevState) => !prevState);
