@@ -3,6 +3,7 @@ import styles from "./bodyTrackComponent.module.css";
 import classNames from "classnames";
 import { useTrackContext } from "@/app/components/context/useTrack";
 import { trackType } from "../../../types";
+import TimeFormat from "@/app/components/setTime/setTime";
 
 type trackTypes = {
     name: string;
@@ -12,7 +13,13 @@ type trackTypes = {
 };
 
 function TrackComponent({ name, author, album, el }: trackTypes) {
-    const { track, setTrack } = useTrackContext();
+    const {
+        track,
+        setTrack,
+    }: {
+        track: trackType;
+        setTrack: React.Dispatch<React.SetStateAction<trackType | null>>;
+    } = useTrackContext();
 
     function handleClick() {
         if (track) {
@@ -52,7 +59,9 @@ function TrackComponent({ name, author, album, el }: trackTypes) {
                         <svg className={styles.trackTimeSvg}>
                             <use href="img/icon/sprite.svg#icon-like" />
                         </svg>
-                        <span className={styles.trackTimeText}>4:44</span>
+                        <span className={styles.trackTimeText}>
+                            <TimeFormat number={el.duration_in_seconds} />
+                        </span>
                     </div>
                 </div>
             </div>

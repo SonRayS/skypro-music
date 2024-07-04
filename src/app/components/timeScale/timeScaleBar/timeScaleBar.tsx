@@ -13,9 +13,8 @@ function TimeScale() {
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const [volume, setVolume] = useState<number>(0.5);
     const { track }: { track: trackType } = useTrackContext();
-
+    console.log(track);
     const audioRef = useRef<null | HTMLAudioElement>(null);
-
     const duration = audioRef.current?.duration || 0;
 
     const togglePlay = () => {
