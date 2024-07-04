@@ -1,6 +1,7 @@
 "use client";
 import styles from "./timePlayerControls.module.css";
 import classNames from "classnames";
+import { useState } from "react";
 
 type audioType = {
     togglePlay: () => void;
@@ -8,9 +9,18 @@ type audioType = {
 };
 
 function GetTimeControls({ togglePlay, isPlaying }: audioType) {
+    const [repeat, setRepeat] = useState<boolean>(false);
+
+    function handleClick() {
+        alert("Еще не реализовано");
+    }
+    function handleClickRepeat() {
+        setRepeat((prevState) => !prevState);
+    }
+
     return (
         <div className={styles.playerControls}>
-            <div className={styles.playerBtnPrev}>
+            <div onClick={handleClick} className={styles.playerBtnPrev}>
                 <svg className={styles.playerBtnPrevSvg}>
                     <use href="/img/icon/sprite.svg#icon-prev" />
                 </svg>
@@ -18,25 +28,31 @@ function GetTimeControls({ togglePlay, isPlaying }: audioType) {
             <div className={classNames(styles.playerBtnPlay, styles._btn)}>
                 <svg className={styles.playerBtnPlaySvg} onClick={togglePlay}>
                     <use
-                        href={`/img/icon/sprite.svg#${
-                            isPlaying ? "icon-pause" : "icon-play"
+                        href={`/img/icon/sprite.svg#icon-${
+                            isPlaying ? "pause" : "play"
                         }`}
                     />
                 </svg>
             </div>
-            <div className={styles.playerBtnNext}>
+            <div onClick={handleClick} className={styles.playerBtnNext}>
                 <svg className={styles.playerBtnNextSvg}>
                     <use href="/img/icon/sprite.svg#icon-next" />
                 </svg>
             </div>
             <div
+                onClick={handleClickRepeat}
                 className={classNames(styles.playerBtnRepeat, styles._btnIcon)}
             >
                 <svg className={styles.playerBtnRepeatSvg}>
-                    <use href="/img/icon/sprite.svg#icon-repeat" />
+                    <use
+                        href={`/img/icon/sprite.svg#icon-${
+                            repeat ? "repeat" : "trackRepeat"
+                        }`}
+                    />
                 </svg>
             </div>
             <div
+                onClick={handleClick}
                 className={classNames(styles.playerBtnShuffle, styles._btnIcon)}
             >
                 <svg className={styles.playerBtnShuffleSvg}>
