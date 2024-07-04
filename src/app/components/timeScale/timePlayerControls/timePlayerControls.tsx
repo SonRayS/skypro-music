@@ -6,16 +6,18 @@ import { useState } from "react";
 type audioType = {
     togglePlay: () => void;
     isPlaying: boolean;
+    repeat: boolean;
+    handleClickRepeat: () => void;
 };
 
-function GetTimeControls({ togglePlay, isPlaying }: audioType) {
-    const [repeat, setRepeat] = useState<boolean>(false);
-
+function GetTimeControls({
+    togglePlay,
+    isPlaying,
+    repeat,
+    handleClickRepeat,
+}: audioType) {
     function handleClick() {
         alert("Еще не реализовано");
-    }
-    function handleClickRepeat() {
-        setRepeat((prevState) => !prevState);
     }
 
     return (

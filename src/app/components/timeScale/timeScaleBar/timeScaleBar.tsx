@@ -12,9 +12,15 @@ function TimeScale() {
     const [currentTime, setCurrentTime] = useState<number>(0);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const [volume, setVolume] = useState<number>(0.5);
+    const [repeat, setRepeat] = useState<boolean>(false);
+
     const { track }: { track: trackType } = useTrackContext();
     const audioRef = useRef<null | HTMLAudioElement>(null);
     const duration = audioRef.current?.duration || 0;
+
+    function handleClickRepeat() {
+        setRepeat((prevState) => !prevState);
+    }
 
     const togglePlay = () => {
         if (track.author) {
@@ -78,6 +84,8 @@ function TimeScale() {
                             )}
                         >
                             <GetTimeControls
+                                handleClickRepeat={handleClickRepeat}
+                                repeat={repeat}
                                 togglePlay={togglePlay}
                                 isPlaying={isPlaying}
                             />
