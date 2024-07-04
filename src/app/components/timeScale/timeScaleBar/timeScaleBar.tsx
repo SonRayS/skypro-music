@@ -19,13 +19,15 @@ function TimeScale() {
     const duration = audioRef.current?.duration || 0;
 
     const togglePlay = () => {
-        if (audioRef.current) {
-            if (isPlaying) {
-                audioRef.current.pause();
-            } else {
-                audioRef.current.play();
+        if (track.author) {
+            if (audioRef.current) {
+                if (isPlaying) {
+                    audioRef.current.pause();
+                } else {
+                    audioRef.current.play();
+                }
+                setIsPlaying((prev) => !prev);
             }
-            setIsPlaying((prev) => !prev);
         }
     };
 
