@@ -1,5 +1,6 @@
+/* ProgressBar.module.css */
 .styledProgressInput {
-    --progress-height: 10px;
+    --progress-height: 5px;
     --progress-color: #b672ff;
     --progress-bg-color: #2e2e2e;
 
