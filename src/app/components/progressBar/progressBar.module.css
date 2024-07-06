@@ -1,5 +1,7 @@
+/* ProgressBar.module.css */
 .styledProgressInput {
-    --progress-height: 10px;
+    --progress-width: 6px;
+    --progress-height: 6px;
     --progress-color: #b672ff;
     --progress-bg-color: #2e2e2e;
 
@@ -12,7 +14,8 @@
     background: transparent;
     position: relative;
     overflow: hidden;
-    transition: height 0.2s;
+    transition: height 0.3s;
+    border-radius: 40px;
 
     background: linear-gradient(
         to right,
@@ -22,7 +25,9 @@
 }
 
 .styledProgressInput:hover {
-    --progress-height: 8px;
+    --progress-height: 10px;
+    --progress-width: 10px;
+    transition: 0.3s;
 }
 
 /* Стили для WebKit браузеров */
@@ -34,8 +39,8 @@
 .styledProgressInput::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 25px;
-    height: 25px;
+    width: var(--progress-width);
+    height: var(--progress-height);
     border-radius: 50%;
     background: var(--progress-color);
 }

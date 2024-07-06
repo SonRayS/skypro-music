@@ -218,7 +218,7 @@
 
 .volumeProgressLine {
     --progress-height: 18px;
-    --progress-color: #b672ff;
+    --progress-color: #616161;
     --progress-bg-color: #2e2e2e;
     width: 109px;
     margin: 0;
@@ -241,7 +241,6 @@
 }
 
 .volumeProgressLine::-webkit-slider-runnable-track {
-    height: 20px;
     background: linear-gradient(
         #181818 0% 40%,
         #ffffff 40% 55%,
