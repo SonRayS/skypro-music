@@ -5,8 +5,6 @@ import { trackType } from "../../types";
 import BodyGetTrack from "./bodyGetTrack/bodyGetTrack";
 
 async function Body() {
-    const tracks: trackType[] = await getTrackList();
-
     let tracksResponse: trackType[];
 
     try {

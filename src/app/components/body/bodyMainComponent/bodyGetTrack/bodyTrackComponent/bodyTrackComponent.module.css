@@ -61,6 +61,11 @@
     font-size: 16px;
     line-height: 24px;
     color: #ffffff;
+    cursor: default;
+}
+
+.trackTitleLink:active {
+    cursor: text;
 }
 
 .trackTitleSpan {
@@ -88,6 +93,11 @@
     line-height: 24px;
     color: #ffffff;
     text-align: left;
+    cursor: default;
+}
+
+.trackAuthorLink:active {
+    cursor: text;
 }
 
 .trackAlbum {
@@ -100,6 +110,11 @@
     font-size: 16px;
     line-height: 24px;
     color: #696969;
+    cursor: default;
+}
+
+.trackAlbumLink:active {
+    cursor: text;
 }
 
 .trackTimeSvg {
