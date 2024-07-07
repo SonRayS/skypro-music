@@ -2,7 +2,7 @@
 import styles from "./bodyTrackComponent.module.css";
 import classNames from "classnames";
 import { useTrackContext } from "@/app/components/context/useTrack";
-import { trackType } from "../../../types";
+import { trackType } from "@/app/components/types";
 import TimeFormat from "@/app/components/setTime/setTime";
 
 type trackTypes = {
