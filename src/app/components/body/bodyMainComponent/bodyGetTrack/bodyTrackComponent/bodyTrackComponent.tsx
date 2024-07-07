@@ -1,9 +1,10 @@
 "use client";
 import styles from "./bodyTrackComponent.module.css";
 import classNames from "classnames";
-import { useTrackContext } from "@/app/components/context/useTrack";
 import { trackType } from "@/app/components/types";
 import TimeFormat from "@/app/components/setTime/setTime";
+import { useAppDispatch } from "@/hooks";
+import { setCurrentTrack } from "@/store/features/playlistSlice";
 
 type trackTypes = {
     name: string;
@@ -13,20 +14,10 @@ type trackTypes = {
 };
 
 function TrackComponent({ name, author, album, el }: trackTypes) {
-    const {
-        track,
-        setTrack,
-    }: {
-        track: trackType;
-        setTrack: React.Dispatch<React.SetStateAction<trackType | null>>;
-    } = useTrackContext();
+    const dispatch = useAppDispatch();
 
     function handleClick() {
-        if (track) {
-            setTrack(el);
-        } else {
-            setTrack(null);
-        }
+        dispatch(setCurrentTrack(el));
     }
 
     return (

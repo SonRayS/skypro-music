@@ -1,3 +1,4 @@
+"use client";
 import Search from "../../bodySearch/bodySearch";
 import Filters from "../../bodyFilters/Filters";
 import TrackHeader from "../../bodyTrackHeder/bodyTrackHeder";
@@ -7,11 +8,10 @@ import TrackComponent from "./bodyTrackComponent/bodyTrackComponent";
 import { trackType } from "@/app/components/types";
 
 type getTrackType = {
-    track: trackType;
     tracks: trackType[];
 };
 
-export function BodyGetTrack({ track, tracks }: getTrackType) {
+function BodyGetTrack({ tracks }: getTrackType) {
     return (
         <>
             <Search />
@@ -24,16 +24,18 @@ export function BodyGetTrack({ track, tracks }: getTrackType) {
                 )}
             >
                 <TrackHeader />
-                <TrackComponent
-                    key={track.id}
-                    name={track.name}
-                    author={track.author}
-                    album={track.album}
-                    el={track}
-                />
+                {tracks.map((el) => (
+                    <TrackComponent
+                        key={el.id}
+                        name={el.name}
+                        author={el.author}
+                        album={el.album}
+                        el={el}
+                    />
+                ))}
             </div>
         </>
     );
 }
 
-export default Body;
+export default BodyGetTrack;

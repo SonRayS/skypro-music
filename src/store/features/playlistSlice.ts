@@ -2,7 +2,7 @@ import { trackType } from "@/app/components/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type playlistStateType = {
-    currentTrack: null | trackType;
+    currentTrack: trackType | null;
 };
 
 const initialState: playlistStateType = {
