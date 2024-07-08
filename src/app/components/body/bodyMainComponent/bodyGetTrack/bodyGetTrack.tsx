@@ -27,10 +27,8 @@ function BodyGetTrack({ tracks }: getTrackType) {
                 {tracks.map((el) => (
                     <TrackComponent
                         key={el.id}
-                        name={el.name}
-                        author={el.author}
-                        album={el.album}
-                        el={el}
+                        track={el}
+                        tracksData={tracks}
                     />
                 ))}
             </div>

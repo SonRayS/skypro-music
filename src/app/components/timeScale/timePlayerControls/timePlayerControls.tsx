@@ -1,6 +1,8 @@
 "use client";
+import { setIsShuffle } from "@/store/features/playlistSlice";
 import styles from "./timePlayerControls.module.css";
 import classNames from "classnames";
+import { useAppDispatch } from "@/hooks";
 import { useState } from "react";
 
 type audioType = {
@@ -16,13 +18,17 @@ function GetTimeControls({
     repeat,
     handleClickRepeat,
 }: audioType) {
-    function handleClick() {
-        alert("Еще не реализовано");
+    const dispatch = useAppDispatch();
+    const [shuffle, setShuffle] = useState<boolean>(false);
+
+    function handleShuffleClick() {
+        setShuffle((prevState) => !prevState);
+        dispatch(setIsShuffle(shuffle));
     }
 
     return (
         <div className={styles.playerControls}>
-            <div onClick={handleClick} className={styles.playerBtnPrev}>
+            <div className={styles.playerBtnPrev}>
                 <svg className={styles.playerBtnPrevSvg}>
                     <use href="/img/icon/sprite.svg#icon-prev" />
                 </svg>
@@ -36,14 +42,14 @@ function GetTimeControls({
                     />
                 </svg>
             </div>
-            <div onClick={handleClick} className={styles.playerBtnNext}>
+            <div className={styles.playerBtnNext}>
                 <svg className={styles.playerBtnNextSvg}>
                     <use href="/img/icon/sprite.svg#icon-next" />
                 </svg>
             </div>
             <div
-                onClick={handleClickRepeat}
                 className={classNames(styles.playerBtnRepeat, styles._btnIcon)}
+                onClick={handleClickRepeat}
             >
                 <svg className={styles.playerBtnRepeatSvg}>
                     <use
@@ -54,11 +60,15 @@ function GetTimeControls({
                 </svg>
             </div>
             <div
-                onClick={handleClick}
+                onClick={handleShuffleClick}
                 className={classNames(styles.playerBtnShuffle, styles._btnIcon)}
             >
                 <svg className={styles.playerBtnShuffleSvg}>
-                    <use href="/img/icon/sprite.svg#icon-shuffle" />
+                    <use
+                        href={`/img/icon/sprite.svg#icon-${
+                            shuffle ? "shuffle" : "shuffleActive"
+                        }`}
+                    />
                 </svg>
             </div>
         </div>

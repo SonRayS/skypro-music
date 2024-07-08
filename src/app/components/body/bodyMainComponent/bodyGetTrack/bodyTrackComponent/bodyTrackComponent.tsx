@@ -3,26 +3,27 @@ import styles from "./bodyTrackComponent.module.css";
 import classNames from "classnames";
 import { trackType } from "@/app/components/types";
 import TimeFormat from "@/app/components/setTime/setTime";
-import { useAppDispatch } from "@/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 import { setCurrentTrack } from "@/store/features/playlistSlice";
 
 type trackTypes = {
-    name: string;
-    author: string;
-    album: string;
-    el: trackType;
+    track: trackType;
+    tracksData: trackType[];
 };
 
-function TrackComponent({ name, author, album, el }: trackTypes) {
+function TrackComponent({ track, tracksData }: trackTypes) {
     const dispatch = useAppDispatch();
 
-    function handleClick() {
-        dispatch(setCurrentTrack(el));
+    function handleTrackClick() {
+        dispatch(setCurrentTrack({ track, tracksData }));
     }
+
+    const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
+    const isPlaying = currentTrack ? currentTrack.id === track.id : false;
 
     return (
         <div
-            onClick={handleClick}
+            onClick={handleTrackClick}
             className={classNames(styles.contentPlaylist, styles.playlist)}
         >
             <div className={styles.playlistItem}>
@@ -35,23 +36,27 @@ function TrackComponent({ name, author, album, el }: trackTypes) {
                         </div>
                         <div className={styles.trackTitleText}>
                             <span className={styles.trackTitleLink}>
-                                {name}
+                                {track.name}
                                 <span className={styles.trackTitleSpan} />
                             </span>
                         </div>
                     </div>
                     <div className={styles.trackAuthor}>
-                        <span className={styles.trackAuthorLink}>{author}</span>
+                        <span className={styles.trackAuthorLink}>
+                            {track.author}
+                        </span>
                     </div>
                     <div className={styles.trackAlbum}>
-                        <span className={styles.trackAlbumLink}>{album}</span>
+                        <span className={styles.trackAlbumLink}>
+                            {track.album}
+                        </span>
                     </div>
                     <div className={styles.trackTime}>
                         <svg className={styles.trackTimeSvg}>
                             <use href="img/icon/sprite.svg#icon-like" />
                         </svg>
                         <span className={styles.trackTimeText}>
-                            <TimeFormat number={el.duration_in_seconds} />
+                            <TimeFormat number={track.duration_in_seconds} />
                         </span>
                     </div>
                 </div>
