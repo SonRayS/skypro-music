@@ -21,9 +21,12 @@ function TimeScale() {
     const audioRef = useRef<null | HTMLAudioElement>(null);
     const duration = audioRef.current?.duration || 0;
     const audio = audioRef.current;
-    audio ? (audio.loop = repeat) : null;
     useAppSelector((state) => state.playlist.isShuffle);
     const dispatch = useAppDispatch();
+
+    if (audio) {
+        audio.loop = repeat;
+    }
 
     function handleShuffleClick() {
         dispatch(toggleShuffle());
@@ -61,12 +64,6 @@ function TimeScale() {
     }, [audio]);
 
     useEffect(() => {
-        if (audioRef.current) {
-            audioRef.current.volume = volume;
-        }
-    }, [volume]);
-
-    useEffect(() => {
         currentTrack ? setIsPlaying(false) : setIsPlaying(true);
     }, [currentTrack]);
 
@@ -79,6 +76,7 @@ function TimeScale() {
 
     const handleSetVolume = (event: ChangeEvent<HTMLInputElement>) => {
         if (audioRef.current) {
+            audioRef.current.volume = volume;
             setVolume(Number(event.target.value));
             audioRef.current.volume = Number(event.target.value);
         }
