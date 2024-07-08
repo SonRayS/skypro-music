@@ -1,8 +1,9 @@
 "use client";
+import { useAppSelector } from "@/hooks";
 import styles from "./timePlayerControls.module.css";
 import classNames from "classnames";
 
-type audioType = {
+type AudioType = {
     togglePlay: () => void;
     isPlaying: boolean;
     repeat: boolean;
@@ -20,7 +21,7 @@ function GetTimeControls({
     handleNextClick,
     handlePreviousClick,
     handleShuffleClick,
-}: audioType) {
+}: AudioType) {
     return (
         <div className={styles.playerControls}>
             <div onClick={handlePreviousClick} className={styles.playerBtnPrev}>

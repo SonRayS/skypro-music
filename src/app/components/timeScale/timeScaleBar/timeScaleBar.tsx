@@ -7,7 +7,7 @@ import { useState, useRef, useEffect } from "react";
 import { ChangeEvent } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import {
-    setIsShuffle,
+    toggleShuffle,
     setNextTrack,
     setPreviousTrack,
 } from "@/store/features/playlistSlice";
@@ -22,14 +22,11 @@ function TimeScale() {
     const duration = audioRef.current?.duration || 0;
     const audio = audioRef.current;
     audio ? (audio.loop = repeat) : null;
-    const dispatch = useAppDispatch();
     useAppSelector((state) => state.playlist.isShuffle);
-    const [shuffle, setShuffle] = useState<boolean>(false);
+    const dispatch = useAppDispatch();
 
     function handleShuffleClick() {
-        setShuffle((prevState) => !prevState);
-        dispatch(setIsShuffle(shuffle));
-        console.log(1);
+        dispatch(toggleShuffle());
     }
 
     function handleNextClick() {

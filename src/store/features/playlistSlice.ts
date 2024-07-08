@@ -43,13 +43,18 @@ const playlistSlice = createSlice({
                 (track) => track.id === state.currentTrack?.id
             );
 
-            const nextTrack = playlist[currentTrackIndex + 1];
+            if (currentTrackIndex === -1) {
+                return;
+            }
 
-            if (nextTrack) {
-                state.currentTrack === nextTrack;
+            const nextTrack = currentTrackIndex + 1;
+
+            if (nextTrack >= playlist.length) {
+                state.currentTrack = playlist[0];
+            } else {
+                state.currentTrack = playlist[nextTrack];
             }
         },
-
         setPreviousTrack: (state) => {
             /* STATE = status ACTION = setStatus */
             const playlist = state.isShuffle
@@ -65,7 +70,7 @@ const playlistSlice = createSlice({
             if (currentTrackIndex === 0) {
                 previousTrack = playlist[currentTrackIndex];
             } else {
-                previousTrack = playlist[currentTrackIndex - 1];
+                previousTrack = currentTrackIndex - 1;
             }
 
             if (previousTrack) {
@@ -73,12 +78,16 @@ const playlistSlice = createSlice({
             }
         },
 
-        setIsShuffle: (state, action: PayloadAction<boolean>) => {
-            state.isShuffle === action.payload;
+        toggleShuffle: (state) => {
+            state.isShuffle = !state.isShuffle;
         },
     },
 });
 
-export const { setCurrentTrack, setNextTrack, setPreviousTrack, setIsShuffle } =
-    playlistSlice.actions;
+export const {
+    setCurrentTrack,
+    setNextTrack,
+    setPreviousTrack,
+    toggleShuffle,
+} = playlistSlice.actions;
 export const playlistReducer = playlistSlice.reducer;
