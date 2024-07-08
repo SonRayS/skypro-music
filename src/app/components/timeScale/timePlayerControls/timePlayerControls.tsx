@@ -1,15 +1,15 @@
 "use client";
-import { setIsShuffle } from "@/store/features/playlistSlice";
 import styles from "./timePlayerControls.module.css";
 import classNames from "classnames";
-import { useAppDispatch } from "@/hooks";
-import { useState } from "react";
 
 type audioType = {
     togglePlay: () => void;
     isPlaying: boolean;
     repeat: boolean;
     handleClickRepeat: () => void;
+    handleNextClick: () => void;
+    handlePreviousClick: () => void;
+    handleShuffleClick: () => void;
 };
 
 function GetTimeControls({
@@ -17,18 +17,13 @@ function GetTimeControls({
     isPlaying,
     repeat,
     handleClickRepeat,
+    handleNextClick,
+    handlePreviousClick,
+    handleShuffleClick,
 }: audioType) {
-    const dispatch = useAppDispatch();
-    const [shuffle, setShuffle] = useState<boolean>(false);
-
-    function handleShuffleClick() {
-        setShuffle((prevState) => !prevState);
-        dispatch(setIsShuffle(shuffle));
-    }
-
     return (
         <div className={styles.playerControls}>
-            <div className={styles.playerBtnPrev}>
+            <div onClick={handlePreviousClick} className={styles.playerBtnPrev}>
                 <svg className={styles.playerBtnPrevSvg}>
                     <use href="/img/icon/sprite.svg#icon-prev" />
                 </svg>
@@ -42,7 +37,7 @@ function GetTimeControls({
                     />
                 </svg>
             </div>
-            <div className={styles.playerBtnNext}>
+            <div className={styles.playerBtnNext} onClick={handleNextClick}>
                 <svg className={styles.playerBtnNextSvg}>
                     <use href="/img/icon/sprite.svg#icon-next" />
                 </svg>
@@ -64,11 +59,7 @@ function GetTimeControls({
                 className={classNames(styles.playerBtnShuffle, styles._btnIcon)}
             >
                 <svg className={styles.playerBtnShuffleSvg}>
-                    <use
-                        href={`/img/icon/sprite.svg#icon-${
-                            shuffle ? "shuffle" : "shuffleActive"
-                        }`}
-                    />
+                    <use href="/img/icon/sprite.svg#icon-shuffle" />
                 </svg>
             </div>
         </div>

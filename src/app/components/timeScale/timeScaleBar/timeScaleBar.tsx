@@ -5,7 +5,12 @@ import classNames from "classnames";
 import ProgressBar from "../../progressBar/progressBar";
 import { useState, useRef, useEffect } from "react";
 import { ChangeEvent } from "react";
-import { useAppSelector } from "@/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import {
+    setIsShuffle,
+    setNextTrack,
+    setPreviousTrack,
+} from "@/store/features/playlistSlice";
 
 function TimeScale() {
     const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
@@ -17,6 +22,22 @@ function TimeScale() {
     const duration = audioRef.current?.duration || 0;
     const audio = audioRef.current;
     audio ? (audio.loop = repeat) : null;
+    const dispatch = useAppDispatch();
+    useAppSelector((state) => state.playlist.isShuffle);
+    const [shuffle, setShuffle] = useState<boolean>(false);
+
+    function handleShuffleClick() {
+        setShuffle((prevState) => !prevState);
+        dispatch(setIsShuffle(shuffle));
+    }
+
+    function handleNextClick() {
+        dispatch(setNextTrack());
+    }
+
+    function handlePreviousClick() {
+        dispatch(setPreviousTrack());
+    }
 
     function handleClickRepeat() {
         setRepeat((prevState) => !prevState);
@@ -89,6 +110,9 @@ function TimeScale() {
                             >
                                 <GetTimeControls
                                     handleClickRepeat={handleClickRepeat}
+                                    handleNextClick={handleNextClick}
+                                    handlePreviousClick={handlePreviousClick}
+                                    handleShuffleClick={handleShuffleClick}
                                     repeat={repeat}
                                     togglePlay={togglePlay}
                                     isPlaying={isPlaying}
