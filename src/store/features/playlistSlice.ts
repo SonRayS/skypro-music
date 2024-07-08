@@ -32,6 +32,7 @@ const playlistSlice = createSlice({
                 () => 0.5 - Math.random()
             );
         },
+
         setNextTrack: (state) => {
             /* STATE = status ACTION = setStatus */
             const playlist = state.isShuffle
@@ -48,6 +49,7 @@ const playlistSlice = createSlice({
                 state.currentTrack === nextTrack;
             }
         },
+
         setPreviousTrack: (state) => {
             /* STATE = status ACTION = setStatus */
             const playlist = state.isShuffle
@@ -70,6 +72,7 @@ const playlistSlice = createSlice({
                 state.currentTrack === previousTrack;
             }
         },
+
         setIsShuffle: (state, action: PayloadAction<boolean>) => {
             state.isShuffle === action.payload;
         },

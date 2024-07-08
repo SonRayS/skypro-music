@@ -29,6 +29,7 @@ function TimeScale() {
     function handleShuffleClick() {
         setShuffle((prevState) => !prevState);
         dispatch(setIsShuffle(shuffle));
+        console.log(1);
     }
 
     function handleNextClick() {
@@ -57,10 +58,10 @@ function TimeScale() {
     };
 
     useEffect(() => {
-        audioRef.current?.addEventListener("timeupdate", () =>
+        audio?.addEventListener("timeupdate", () =>
             setCurrentTime(audioRef.current!.currentTime)
         );
-    }, []);
+    }, [audio]);
 
     useEffect(() => {
         if (audioRef.current) {
