@@ -42,9 +42,15 @@ function TrackComponent({ track, tracksData }: trackTypes) {
                         >
                             <div className={styles.trackTitle}>
                                 <div className={styles.trackTitleImage}>
-                                    <svg className={styles.trackTitleSvg}>
-                                        <use href="img/icon/sprite.svg#icon-isPlaying" />
-                                    </svg>
+                                    {isPlaying ? (
+                                        <svg className={styles.trackActiveSvg}>
+                                            <use href="img/icon/sprite.svg#icon-isPlaying" />
+                                        </svg>
+                                    ) : (
+                                        <svg className={styles.trackTitleSvg}>
+                                            <use href="img/icon/sprite.svg#icon-isPlaying" />
+                                        </svg>
+                                    )}
                                 </div>
                                 <div className={styles.trackTitleText}>
                                     <span className={styles.trackTitleLink}>
