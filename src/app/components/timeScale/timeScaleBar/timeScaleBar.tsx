@@ -11,6 +11,7 @@ import {
     setNextTrack,
     setPreviousTrack,
     setIsPlaying,
+    setCurrentTrack,
 } from "@/store/features/playlistSlice";
 
 function TimeScale() {
@@ -50,15 +51,13 @@ function TimeScale() {
     }
 
     const togglePlay = () => {
-        if (currentTrack) {
-            if (audioRef.current) {
-                if (isPlaying) {
-                    dispatch(setIsPlaying(false));
-                    audioRef.current.pause();
-                } else {
-                    dispatch(setIsPlaying(true));
-                    audioRef.current.play();
-                }
+        if (currentTrack && audioRef.current) {
+            if (isPlaying) {
+                dispatch(setIsPlaying(false));
+                audioRef.current.pause();
+            } else {
+                dispatch(setIsPlaying(true));
+                audioRef.current.play();
             }
         }
     };
@@ -83,6 +82,43 @@ function TimeScale() {
             audioRef.current.volume = Number(event.target.value);
         }
     };
+
+    const playlist = useAppSelector((state) => state.playlist.playlist);
+    const currentTrackIndex = useAppSelector(
+        (state) => state.playlist.currentTrackIndex
+    );
+
+    useEffect(() => {
+        const handleEnded = () => {
+            if (currentTrackIndex) {
+                if (currentTrackIndex < playlist.length - 1) {
+                    dispatch(
+                        setCurrentTrack({
+                            track: playlist[currentTrackIndex + 1],
+                            tracksData: playlist,
+                        })
+                    );
+                } else {
+                    dispatch(
+                        setCurrentTrack({
+                            track: playlist[0],
+                            tracksData: playlist,
+                        })
+                    );
+                }
+            }
+        };
+
+        if (audio && currentTrackIndex) {
+            audio.src = playlist[currentTrackIndex].track_file;
+            audio.addEventListener("ended", handleEnded);
+            audio.play();
+
+            return () => {
+                audio.removeEventListener("ended", handleEnded);
+            };
+        }
+    }, [currentTrackIndex, playlist, audio, dispatch]);
 
     return (
         <>
