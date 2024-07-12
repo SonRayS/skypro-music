@@ -53,11 +53,11 @@ function TimeScale() {
         if (currentTrack) {
             if (audioRef.current) {
                 if (isPlaying) {
-                    audioRef.current.pause();
                     dispatch(setIsPlaying(false));
+                    audioRef.current.pause();
                 } else {
-                    audioRef.current.play();
                     dispatch(setIsPlaying(true));
+                    audioRef.current.play();
                 }
             }
         }
@@ -127,7 +127,7 @@ function TimeScale() {
                                             <svg
                                                 className={styles.trackPlaySvg}
                                             >
-                                                <use href="/img/icon/sprite.svg#icon-note" />
+                                                <use href="img/icon/sprite.svg#icon-note" />
                                             </svg>
                                         </div>
                                         <div className={styles.trackPlayAuthor}>

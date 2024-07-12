@@ -24,6 +24,7 @@ function GetTimeControls({
     handleShuffleClick,
 }: AudioType) {
     const isShuffle = useAppSelector((state) => state.playlist.isShuffle);
+
     return (
         <div className={styles.playerControls}>
             <div onClick={handlePreviousClick} className={styles.playerBtnPrev}>
