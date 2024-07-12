@@ -84,6 +84,11 @@ function TimeScale() {
     };
 
     const playlist = useAppSelector((state) => state.playlist.playlist);
+    const shuffledPlaylist = useAppSelector(
+        (state) => state.playlist.shuffledPlaylist
+    );
+    const activePlaylist = isShuffle! ? playlist : shuffledPlaylist;
+
     const currentTrackIndex = useAppSelector(
         (state) => state.playlist.currentTrackIndex
     );
@@ -91,18 +96,18 @@ function TimeScale() {
     useEffect(() => {
         const handleEnded = () => {
             if (currentTrackIndex) {
-                if (currentTrackIndex < playlist.length - 1) {
+                if (currentTrackIndex < activePlaylist.length - 1) {
                     dispatch(
                         setCurrentTrack({
-                            track: playlist[currentTrackIndex + 1],
-                            tracksData: playlist,
+                            track: activePlaylist[currentTrackIndex + 1],
+                            tracksData: activePlaylist,
                         })
                     );
                 } else {
                     dispatch(
                         setCurrentTrack({
-                            track: playlist[0],
-                            tracksData: playlist,
+                            track: activePlaylist[0],
+                            tracksData: activePlaylist,
                         })
                     );
                 }
@@ -110,7 +115,7 @@ function TimeScale() {
         };
 
         if (audio && currentTrackIndex) {
-            audio.src = playlist[currentTrackIndex].track_file;
+            audio.src = activePlaylist[currentTrackIndex].track_file;
             audio.addEventListener("ended", handleEnded);
             audio.play();
 
@@ -118,7 +123,7 @@ function TimeScale() {
                 audio.removeEventListener("ended", handleEnded);
             };
         }
-    }, [currentTrackIndex, playlist, audio, dispatch]);
+    }, [currentTrackIndex, activePlaylist, audio, dispatch]);
 
     return (
         <>
