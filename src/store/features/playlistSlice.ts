@@ -75,7 +75,7 @@ const playlistSlice = createSlice({
                 (track) => track.id === state.currentTrack?.id
             );
 
-            if (currentTrackIndex === -1) {
+            if (currentTrackIndex === 0) {
                 return;
             }
 
