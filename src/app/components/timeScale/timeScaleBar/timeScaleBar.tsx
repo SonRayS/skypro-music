@@ -3,40 +3,45 @@ import styles from "./timeScaleBar.module.css";
 import GetTimeControls from "../timePlayerControls/timePlayerControls";
 import classNames from "classnames";
 import ProgressBar from "../../progressBar/progressBar";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, MouseEventHandler } from "react";
 import { ChangeEvent } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import {
     toggleShuffle,
     setNextTrack,
     setPreviousTrack,
+    setIsPlaying,
 } from "@/store/features/playlistSlice";
 
 function TimeScale() {
     const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
     const [currentTime, setCurrentTime] = useState<number>(0);
-    const [isPlaying, setIsPlaying] = useState<boolean>(false);
+    /* const [isPlaying, setIsPlaying] = useState<boolean>(true); */
     const [volume, setVolume] = useState<number>(0.5);
     const [repeat, setRepeat] = useState<boolean>(false);
     const audioRef = useRef<null | HTMLAudioElement>(null);
     const duration = audioRef.current?.duration || 0;
     const audio = audioRef.current;
-    useAppSelector((state) => state.playlist.isShuffle);
+    const isShuffle = useAppSelector((state) => state.playlist.isShuffle);
     const dispatch = useAppDispatch();
+    const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
 
     if (audio) {
         audio.loop = repeat;
     }
 
-    function handleShuffleClick() {
+    const handleShuffleClick: MouseEventHandler<HTMLDivElement> = (e) => {
+        e.stopPropagation();
         dispatch(toggleShuffle());
-    }
+    };
 
     function handleNextClick() {
+        dispatch(setIsPlaying(false));
         dispatch(setNextTrack());
     }
 
     function handlePreviousClick() {
+        dispatch(setIsPlaying(false));
         dispatch(setPreviousTrack());
     }
 
@@ -49,10 +54,11 @@ function TimeScale() {
             if (audioRef.current) {
                 if (isPlaying) {
                     audioRef.current.pause();
+                    dispatch(setIsPlaying(false));
                 } else {
                     audioRef.current.play();
+                    dispatch(setIsPlaying(true));
                 }
-                setIsPlaying((prev) => !prev);
             }
         }
     };
@@ -62,10 +68,6 @@ function TimeScale() {
             setCurrentTime(audioRef.current!.currentTime)
         );
     }, [audio]);
-
-    useEffect(() => {
-        currentTrack ? setIsPlaying(false) : setIsPlaying(true);
-    }, [currentTrack]);
 
     const handleSeek = (event: ChangeEvent<HTMLInputElement>) => {
         if (audioRef.current) {

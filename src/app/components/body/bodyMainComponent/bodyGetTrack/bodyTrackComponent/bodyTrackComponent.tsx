@@ -18,8 +18,7 @@ function TrackComponent({ track, tracksData }: trackTypes) {
         dispatch(setCurrentTrack({ track, tracksData }));
     }
 
-    const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
-    const isPlaying = currentTrack ? currentTrack.id === track.id : false;
+    const isPlaying = useAppSelector((state) => state.playlist.currentTrack);
 
     return (
         <div
@@ -31,7 +30,11 @@ function TrackComponent({ track, tracksData }: trackTypes) {
                     <div className={styles.trackTitle}>
                         <div className={styles.trackTitleImage}>
                             <svg className={styles.trackTitleSvg}>
-                                <use href="img/icon/sprite.svg#icon-note" />
+                                <use
+                                    href={`img/icon/sprite.svg#icon-${
+                                        isPlaying ? "isPlaying" : "note"
+                                    }`}
+                                />
                             </svg>
                         </div>
                         <div className={styles.trackTitleText}>

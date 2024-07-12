@@ -6,12 +6,17 @@ import styles from "./bodyGetTrack.module.css";
 import classNames from "classnames";
 import TrackComponent from "./bodyTrackComponent/bodyTrackComponent";
 import { trackType } from "@/app/components/types";
+import { useAppSelector } from "@/hooks";
 
 type getTrackType = {
     tracks: trackType[];
 };
 
 function BodyGetTrack({ tracks }: getTrackType) {
+    const shuffle = useAppSelector((state) => state.playlist.shuffledPlaylist);
+    const isShuffle = useAppSelector((state) => state.playlist.isShuffle);
+    const playList = isShuffle ? shuffle : tracks;
+
     return (
         <>
             <Search />
@@ -24,11 +29,11 @@ function BodyGetTrack({ tracks }: getTrackType) {
                 )}
             >
                 <TrackHeader />
-                {tracks.map((el) => (
+                {playList.map((el) => (
                     <TrackComponent
                         key={el.id}
                         track={el}
-                        tracksData={tracks}
+                        tracksData={playList}
                     />
                 ))}
             </div>

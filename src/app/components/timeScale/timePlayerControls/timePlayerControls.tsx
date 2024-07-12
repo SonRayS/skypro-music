@@ -2,6 +2,7 @@
 import { useAppSelector } from "@/hooks";
 import styles from "./timePlayerControls.module.css";
 import classNames from "classnames";
+import { MouseEventHandler } from "react";
 
 type AudioType = {
     togglePlay: () => void;
@@ -10,7 +11,7 @@ type AudioType = {
     handleClickRepeat: () => void;
     handleNextClick: () => void;
     handlePreviousClick: () => void;
-    handleShuffleClick: () => void;
+    handleShuffleClick: MouseEventHandler<HTMLDivElement>;
 };
 
 function GetTimeControls({
@@ -22,6 +23,7 @@ function GetTimeControls({
     handlePreviousClick,
     handleShuffleClick,
 }: AudioType) {
+    const isShuffle = useAppSelector((state) => state.playlist.isShuffle);
     return (
         <div className={styles.playerControls}>
             <div onClick={handlePreviousClick} className={styles.playerBtnPrev}>
@@ -56,11 +58,15 @@ function GetTimeControls({
                 </svg>
             </div>
             <div
-                onClick={handleShuffleClick}
                 className={classNames(styles.playerBtnShuffle, styles._btnIcon)}
+                onClick={handleShuffleClick}
             >
                 <svg className={styles.playerBtnShuffleSvg}>
-                    <use href="/img/icon/sprite.svg#icon-shuffle" />
+                    <use
+                        href={`/img/icon/sprite.svg#icon-${
+                            isShuffle ? "shuffleActive" : "shuffle"
+                        }`}
+                    />
                 </svg>
             </div>
         </div>
