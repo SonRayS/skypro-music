@@ -4,8 +4,7 @@ import classNames from "classnames";
 import { trackType } from "@/app/components/types";
 import TimeFormat from "@/app/components/setTime/setTime";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import { setCurrentTrack, setIsPlaying } from "@/store/features/playlistSlice";
-import { current } from "@reduxjs/toolkit";
+import { setCurrentTrack } from "@/store/features/playlistSlice";
 
 type trackTypes = {
     track: trackType;
@@ -17,7 +16,6 @@ function TrackComponent({ track, tracksData }: trackTypes) {
 
     function handleTrackClick() {
         dispatch(setCurrentTrack({ track, tracksData }));
-        dispatch(setIsPlaying(false));
     }
 
     const isPlaying = useAppSelector((state) => state.playlist.isPlaying);

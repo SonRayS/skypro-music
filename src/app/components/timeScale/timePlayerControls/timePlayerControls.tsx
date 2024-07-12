@@ -2,7 +2,6 @@
 import { useAppSelector } from "@/hooks";
 import styles from "./timePlayerControls.module.css";
 import classNames from "classnames";
-import { MouseEventHandler } from "react";
 
 type AudioType = {
     togglePlay: () => void;
@@ -11,7 +10,7 @@ type AudioType = {
     handleClickRepeat: () => void;
     handleNextClick: () => void;
     handlePreviousClick: () => void;
-    handleShuffleClick: MouseEventHandler<HTMLDivElement>;
+    handleShuffleClick: () => void;
 };
 
 function GetTimeControls({

@@ -17,7 +17,6 @@ import {
 function TimeScale() {
     const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
     const [currentTime, setCurrentTime] = useState<number>(0);
-    /* const [isPlaying, setIsPlaying] = useState<boolean>(true); */
     const [volume, setVolume] = useState<number>(0.5);
     const [repeat, setRepeat] = useState<boolean>(false);
     const audioRef = useRef<null | HTMLAudioElement>(null);
@@ -26,24 +25,38 @@ function TimeScale() {
     const isShuffle = useAppSelector((state) => state.playlist.isShuffle);
     const dispatch = useAppDispatch();
     const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
+    const playlist = useAppSelector((state) => state.playlist.playlist);
+    const shuffledPlaylist = useAppSelector(
+        (state) => state.playlist.shuffledPlaylist
+    );
+    const activePlaylist = isShuffle ? shuffledPlaylist : playlist;
+
+    const currentTrackIndex = useAppSelector(
+        (state) => state.playlist.currentTrackIndex
+    );
+
+    setCurrentTrack({
+        track: activePlaylist[currentTrackIndex!],
+        tracksData: activePlaylist,
+    });
 
     if (audio) {
         audio.loop = repeat;
     }
 
-    const handleShuffleClick: MouseEventHandler<HTMLDivElement> = (e) => {
-        e.stopPropagation();
+    function handleShuffleClick() {
         dispatch(toggleShuffle());
-    };
+        dispatch(setIsPlaying(true));
+    }
 
     function handleNextClick() {
-        dispatch(setIsPlaying(false));
         dispatch(setNextTrack());
+        dispatch(setIsPlaying(false));
     }
 
     function handlePreviousClick() {
-        dispatch(setIsPlaying(false));
         dispatch(setPreviousTrack());
+        dispatch(setIsPlaying(false));
     }
 
     function handleClickRepeat() {
@@ -83,16 +96,6 @@ function TimeScale() {
         }
     };
 
-    const playlist = useAppSelector((state) => state.playlist.playlist);
-    const shuffledPlaylist = useAppSelector(
-        (state) => state.playlist.shuffledPlaylist
-    );
-    const activePlaylist = isShuffle! ? playlist : shuffledPlaylist;
-
-    const currentTrackIndex = useAppSelector(
-        (state) => state.playlist.currentTrackIndex
-    );
-
     useEffect(() => {
         const handleEnded = () => {
             if (currentTrackIndex) {
@@ -104,6 +107,8 @@ function TimeScale() {
                         })
                     );
                 } else {
+                    audio!.pause();
+                    dispatch(setIsPlaying(false));
                     dispatch(
                         setCurrentTrack({
                             track: activePlaylist[0],
