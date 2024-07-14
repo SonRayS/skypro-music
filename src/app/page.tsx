@@ -1,14 +1,7 @@
-import MainPage from "./components/page/page";
-import LoginPage from "./components/login/login";
-import { useAppSelector } from "@/hooks";
+import MainPage from "./components/page/mainPage";
 
 function Home() {
-    const statusAuth = useAppSelector((state) => state.authReducer.goAuth);
-
-    function setPage() {
-        return <>{statusAuth ? <LoginPage /> : <MainPage />}</>;
-    }
-    return setPage();
+    return <MainPage />;
 }
 
 export default Home;

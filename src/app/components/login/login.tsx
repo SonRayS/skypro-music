@@ -37,13 +37,10 @@ function LoginPage() {
                             placeholder="Пароль"
                         />
                         <button className={styles.modalBtnEnter}>
-                            <a href="../index.html">Войти</a>
+                            <a href="/">Войти</a>
                         </button>
                         <button className={styles.modalBtnSignUp}>
-                            <a
-                                className={styles.modalBtnText}
-                                href="signup.html"
-                            >
+                            <a className={styles.modalBtnText} href="/signup">
                                 Зарегистрироваться
                             </a>
                         </button>
