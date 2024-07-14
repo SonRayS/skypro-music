@@ -48,7 +48,9 @@ function SignUp() {
                                 placeholder="Повторите пароль"
                             />
                             <button className={styles.modalBtnSignupEnt}>
-                                Зарегистрироваться
+                                <a className={styles.modalBtnText}>
+                                    Зарегистрироваться
+                                </a>
                             </button>
                         </form>
                     </div>
