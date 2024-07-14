@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
-import { TrackProvider } from "./components/context/track";
 import ReduxProvider from "@/store/ReduxProvider";
 import "./globals.css";
 
@@ -19,9 +18,7 @@ export default function RootLayout({
     return (
         <html lang="ru">
             <ReduxProvider>
-                <TrackProvider>
-                    <body className={montserrat.className}>{children}</body>
-                </TrackProvider>
+                <body className={montserrat.className}>{children}</body>
             </ReduxProvider>
         </html>
     );
