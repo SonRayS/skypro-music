@@ -1,8 +1,8 @@
 import Image from "next/image";
-import styles from "./login.module.css";
+import styles from "./signin.module.css";
 import classNames from "classnames";
 
-function LoginPage() {
+function SignIn() {
     return (
         <div className={styles.wrapper}>
             <div className={styles.containerEnter}>
@@ -51,4 +51,4 @@ function LoginPage() {
     );
 }
 
-export default LoginPage;
+export default SignIn;

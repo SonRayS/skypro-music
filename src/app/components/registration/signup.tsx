@@ -1,8 +1,8 @@
 import Image from "next/image";
-import styles from "./registration.module.css";
+import styles from "./signup.module.css";
 import classNames from "classnames";
 
-function RegistrationPage() {
+function SignUp() {
     return (
         <body>
             <div className={styles.wrapper}>
@@ -57,4 +57,4 @@ function RegistrationPage() {
     );
 }
 
-export default RegistrationPage;
+export default SignUp;
