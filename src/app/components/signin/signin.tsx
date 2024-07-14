@@ -1,6 +1,7 @@
 import Image from "next/image";
 import styles from "./signin.module.css";
 import classNames from "classnames";
+import Link from "next/link";
 
 function SignIn() {
     return (
@@ -8,7 +9,7 @@ function SignIn() {
             <div className={styles.containerEnter}>
                 <div className={styles.modalBlock}>
                     <form className={styles.modalFormLogin} action="#">
-                        <a href="../">
+                        <Link href="/">
                             <div className={styles.modalLogo}>
                                 <Image
                                     src="/img/logo_modal.png"
@@ -17,7 +18,7 @@ function SignIn() {
                                     height={170}
                                 />
                             </div>
-                        </a>
+                        </Link>
                         <input
                             className={classNames(
                                 styles.modalInput,
