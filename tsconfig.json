@@ -31,7 +31,7 @@
         ".next/types/**/*.ts",
         "src/app/components/body/bodyMainComponent/bodyMainComponent.tsx",
         "src/app/components/page/auth.tsx",
-        "src/app/components/page/page.jsx"
+        "src/app/components/page/page.tsx"
     ],
     "exclude": ["node_modules"]
 }
