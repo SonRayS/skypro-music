@@ -3,13 +3,27 @@ import Image from "next/image";
 import styles from "./headerMenu.module.css";
 import classNames from "classnames";
 import { useState } from "react";
+import Link from "next/link";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { goToAuth } from "@/store/features/exitSlice";
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState<boolean>(false);
+    const dispatch = useAppDispatch();
 
     function handleClick() {
         setIsOpen((prevState) => !prevState);
     }
+
+    const statusAuth = useAppSelector((state) => state.authReducer.goAuth);
+
+    function handleAuthClick() {
+        statusAuth
+            ? dispatch(goToAuth({ status: false }))
+            : dispatch(goToAuth({ status: true }));
+    }
+
+    console.log(statusAuth);
 
     return (
         <>
@@ -44,13 +58,13 @@ export default function Header() {
                                     Мой плейлист
                                 </a>
                             </li>
-                            <li className={styles.menuItem}>
-                                <a
-                                    href="../signin.html"
-                                    className={styles.menuLink}
-                                >
+                            <li
+                                className={styles.menuItem}
+                                onClick={handleAuthClick}
+                            >
+                                <Link href="/" className={styles.menuLink}>
                                     Войти
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>

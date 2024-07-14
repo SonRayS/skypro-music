@@ -1,8 +1,8 @@
 import Image from "next/image";
-import styles from "./pageRegistration.module.css";
+import styles from "./registration.module.css";
 import classNames from "classnames";
 
-function LoginPage() {
+function RegistrationPage() {
     return (
         <body>
             <div className={styles.wrapper}>
@@ -12,7 +12,7 @@ function LoginPage() {
                             <a href="../">
                                 <div className={styles.modalLogo}>
                                     <Image
-                                        src="../img/logo_modal.png"
+                                        src="/img/logo_modal.png"
                                         alt="logo"
                                         width={250}
                                         height={170}
@@ -57,4 +57,4 @@ function LoginPage() {
     );
 }
 
-export default LoginPage;
+export default RegistrationPage;

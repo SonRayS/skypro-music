@@ -29,7 +29,9 @@
         "**/*.ts",
         "**/*.tsx",
         ".next/types/**/*.ts",
-        "src/app/components/body/bodyMainComponent/bodyMainComponent.tsx"
+        "src/app/components/body/bodyMainComponent/bodyMainComponent.tsx",
+        "src/app/components/page/auth.jsx",
+        "src/app/components/page/page.jsx"
     ],
     "exclude": ["node_modules"]
 }
