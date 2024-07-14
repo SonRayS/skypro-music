@@ -1,13 +1,16 @@
 import Header from "../headerMenu/headerMenu";
 import Body from "../body/bodyMainComponent/bodyMainComponent";
 import RightBar from "../rightBar/rightBar";
+import Selector from "../selector/selector";
 
 function MainPage() {
     return (
         <>
-            <Header />
-            <Body />
-            <RightBar />
+            <Selector>
+                <Header />
+                <Body />
+                <RightBar />
+            </Selector>
         </>
     );
 }
