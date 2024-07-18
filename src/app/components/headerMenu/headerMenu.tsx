@@ -4,9 +4,20 @@ import styles from "./headerMenu.module.css";
 import classNames from "classnames";
 import { useState } from "react";
 import Link from "next/link";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { setAuthState, setUserData } from "@/store/features/authSlice";
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState<boolean>(false);
+    const logged = useAppSelector((state) => state.auth.authState);
+    const dispatch = useAppDispatch();
+
+    const logout = () => {
+        dispatch(setAuthState(false));
+        dispatch(setUserData(null));
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+    };
 
     function handleClick() {
         setIsOpen((prevState) => !prevState);
@@ -49,12 +60,22 @@ export default function Header() {
                                 </a>
                             </li>
                             <li className={styles.menuItem}>
-                                <Link
-                                    href="/signin"
-                                    className={styles.menuLink}
-                                >
-                                    Войти
-                                </Link>
+                                {logged ? (
+                                    <Link
+                                        onClick={logout}
+                                        href="/signin"
+                                        className={styles.menuLink}
+                                    >
+                                        Выйти
+                                    </Link>
+                                ) : (
+                                    <Link
+                                        href="/signin"
+                                        className={styles.menuLink}
+                                    >
+                                        Войти
+                                    </Link>
+                                )}
                             </li>
                         </ul>
                     </div>

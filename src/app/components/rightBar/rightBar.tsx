@@ -1,21 +1,47 @@
+"use client";
+
 import Image from "next/image";
 import styles from "./rightBar.module.css";
 import classNames from "classnames";
 import playList01 from "./playlist01.png";
 import playList02 from "./playlist01.png";
 import playList03 from "./playlist01.png";
+import { setAuthState, setUserData } from "@/store/features/authSlice";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 
 function RightBar() {
+    const logged = useAppSelector((state) => state.auth.authState);
+    const userName = useAppSelector((state) => state.auth.userData);
+    const dispatch = useAppDispatch();
+
+    const logout = () => {
+        dispatch(setAuthState(false));
+        dispatch(setUserData(null));
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+    };
+
     return (
         <>
             <div className={classNames(styles.mainSidebar, styles.sidebar)}>
                 <div className={styles.sidebarPersonal}>
-                    <p className={styles.sidebarPersonalName}>Sergey.Ivanov</p>
-                    <div className={styles.sidebarIcon}>
-                        <svg>
-                            <use xlinkHref="img/icon/sprite.svg#logout" />
-                        </svg>
-                    </div>
+                    {logged ? (
+                        <>
+                            <p className={styles.sidebarPersonalName}>
+                                {userName?.email}
+                            </p>
+                            <div
+                                onClick={logout}
+                                className={styles.sidebarIcon}
+                            >
+                                <svg>
+                                    <use xlinkHref="img/icon/sprite.svg#logout" />
+                                </svg>
+                            </div>
+                        </>
+                    ) : (
+                        ""
+                    )}
                 </div>
                 <div className={styles.sidebarBlock}>
                     <div className={styles.sidebarList}>
