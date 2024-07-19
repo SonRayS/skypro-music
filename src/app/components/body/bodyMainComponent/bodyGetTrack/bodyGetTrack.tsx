@@ -7,10 +7,7 @@ import classNames from "classnames";
 import TrackComponent from "./bodyTrackComponent/bodyTrackComponent";
 import { trackType } from "@/app/components/types";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import {
-    setFilterList,
-    setFilterPlaylist,
-} from "@/store/features/playlistSlice";
+import { setFilterPlaylist } from "@/store/features/playlistSlice";
 
 type getTrackType = {
     tracksData: trackType[];
@@ -19,9 +16,7 @@ type getTrackType = {
 function BodyGetTrack({ tracksData }: getTrackType) {
     const dispatch = useAppDispatch();
     dispatch(setFilterPlaylist({ tracksData }));
-
     const newTrack = useAppSelector((el) => el.playlist.filterList);
-
     const newTracksData = newTrack.length > 0 ? newTrack : tracksData;
 
     return (

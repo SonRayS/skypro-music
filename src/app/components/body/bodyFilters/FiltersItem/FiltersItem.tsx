@@ -15,8 +15,7 @@ type FiltersItemType = {
 
 function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
     const dispatch = useAppDispatch();
-    const [filterTitle, SetFilterTitle] = useState<string>("");
-    const [filterNumber, SetFilterNumber] = useState<number>(0);
+    const [filterNumber, setFilterNumber] = useState<number>(0);
     const filterPlaylist = useAppSelector((el) => el.playlist.filterPlaylist);
     const filterList = useAppSelector((el) => el.playlist.filterList);
 
@@ -31,22 +30,31 @@ function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
         filterPlaylist: trackType[],
         filterList: trackType[]
     ) {
-        SetFilterTitle;
-        const filteredTracks = filterPlaylist.filter(
+        handleClick(title);
+        let filteredTracks = filterPlaylist.filter(
             (obj) =>
                 obj.genre === el ||
                 obj.author === el ||
                 extractYearsFromObject(obj.release_date) === el
         );
 
-        return dispatch(
-            setFilterList({
-                tracksFilters: filteredTracks,
-            })
-        );
+        if (filterList.length === 0) {
+            return dispatch(
+                setFilterList({
+                    tracksFilters: filteredTracks,
+                })
+            );
+        } else {
+            const addFilterTrack = Array.from(
+                new Set(filteredTracks.concat(filterList))
+            );
+            return dispatch(
+                setFilterList({
+                    tracksFilters: addFilterTrack,
+                })
+            );
+        }
     }
-
-    console.log(filterList);
 
     return (
         <>
@@ -59,7 +67,7 @@ function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
                         isOpen ? styles.btnTextIsOpen : styles.btnText
                     )}
                 >
-                    {title}
+                    <p>{title}</p>
                 </div>
                 {isOpen && (
                     <ul className={styles.trackList}>
