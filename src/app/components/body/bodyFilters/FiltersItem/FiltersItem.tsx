@@ -47,8 +47,15 @@ function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
         );
 
         let updatedFiltersName = [...filtersName];
+
         if (!updatedFiltersName.includes(String(el))) {
+            // +
             updatedFiltersName.push(String(el));
+        } else {
+            // -
+            updatedFiltersName = updatedFiltersName.filter(
+                (item) => item !== String(el)
+            );
         }
 
         console.log(updatedFiltersName);
