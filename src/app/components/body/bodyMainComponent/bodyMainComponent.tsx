@@ -5,10 +5,10 @@ import { trackType } from "../../types";
 import BodyGetTrack from "./bodyGetTrack/bodyGetTrack";
 
 async function Body() {
-    let tracksResponse: trackType[];
+    let tracksData: trackType[];
 
     try {
-        tracksResponse = await getTrackList();
+        tracksData = await getTrackList();
     } catch (error) {
         let message;
         if (error instanceof Error) message = error.message;
@@ -24,7 +24,7 @@ async function Body() {
                     styles.centerBlock
                 )}
             >
-                <BodyGetTrack tracks={tracksResponse} />
+                <BodyGetTrack tracksData={tracksData} />
             </div>
         </>
     );

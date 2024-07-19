@@ -5,6 +5,8 @@ type playlistStateType = {
     /* Types */
     currentTrack: trackType | null;
     playlist: trackType[];
+    filterList: trackType[];
+    filterPlaylist: trackType[];
     shuffledPlaylist: trackType[];
     isShuffle: boolean;
     currentTrackIndex: number | null;
@@ -15,6 +17,8 @@ const initialState: playlistStateType = {
     /* first status point */
     currentTrack: null,
     playlist: [],
+    filterList: [],
+    filterPlaylist: [],
     shuffledPlaylist: [],
     isShuffle: false,
     currentTrackIndex: null,
@@ -25,6 +29,22 @@ const playlistSlice = createSlice({
     name: "playlist",
     initialState,
     reducers: {
+        setFilterList: (
+            state,
+            action: PayloadAction<{
+                tracksFilters: trackType[];
+            }>
+        ) => {
+            state.filterList = action.payload.tracksFilters;
+        },
+        setFilterPlaylist: (
+            state,
+            action: PayloadAction<{
+                tracksData: trackType[];
+            }>
+        ) => {
+            state.filterPlaylist = action.payload.tracksData;
+        },
         setCurrentTrack: (
             state,
             action: PayloadAction<{
@@ -99,6 +119,8 @@ const playlistSlice = createSlice({
 });
 
 export const {
+    setFilterList,
+    setFilterPlaylist,
     setCurrentTrack,
     setNextTrack,
     setPreviousTrack,

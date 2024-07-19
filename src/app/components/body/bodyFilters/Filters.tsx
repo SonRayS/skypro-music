@@ -43,7 +43,7 @@ function Filters({ tracks }: Props) {
         },
         {
             title: "году выпуска",
-            list: sortedItems,
+            list: Array.from(new Set(sortedItems)),
             value: "release",
         },
         {

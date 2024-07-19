@@ -6,17 +6,29 @@ import styles from "./bodyGetTrack.module.css";
 import classNames from "classnames";
 import TrackComponent from "./bodyTrackComponent/bodyTrackComponent";
 import { trackType } from "@/app/components/types";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import {
+    setFilterList,
+    setFilterPlaylist,
+} from "@/store/features/playlistSlice";
 
 type getTrackType = {
-    tracks: trackType[];
+    tracksData: trackType[];
 };
 
-function BodyGetTrack({ tracks }: getTrackType) {
+function BodyGetTrack({ tracksData }: getTrackType) {
+    const dispatch = useAppDispatch();
+    dispatch(setFilterPlaylist({ tracksData }));
+
+    const newTrack = useAppSelector((el) => el.playlist.filterList);
+
+    const newTracksData = newTrack.length > 0 ? newTrack : tracksData;
+
     return (
         <>
             <Search />
             <h2 className={styles.centerBlockH2}>Треки</h2>
-            <Filters tracks={tracks} />
+            <Filters tracks={tracksData} />
             <div
                 className={classNames(
                     styles.centerBlockContent,
@@ -24,11 +36,11 @@ function BodyGetTrack({ tracks }: getTrackType) {
                 )}
             >
                 <TrackHeader />
-                {tracks.map((el) => (
+                {newTracksData.map((el) => (
                     <TrackComponent
                         key={el.id}
                         track={el}
-                        tracksData={tracks}
+                        tracksData={tracksData}
                     />
                 ))}
             </div>
