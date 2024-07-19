@@ -19,7 +19,6 @@ export async function postAuthUser({ email, password }: SigninType) {
         },
     });
     if (!res.ok) {
-        console.log(res.ok);
         throw new Error("Ошибка");
     }
     const data = await res.json();
