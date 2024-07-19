@@ -2,7 +2,7 @@
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import styles from "./FiltersItem.module.css";
 import classNames from "classnames";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { trackType } from "@/app/components/types";
 import { setFilterList } from "@/store/features/playlistSlice";
 
@@ -16,10 +16,15 @@ type FiltersItemType = {
 function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
     const dispatch = useAppDispatch();
     const [filterNumber, setFilterNumber] = useState<number>(0);
-    const filterPlaylist = useAppSelector((el) => el.playlist.filterPlaylist);
-    const filterList = useAppSelector((el) => el.playlist.filterList);
+    const filterPlaylist = useAppSelector(
+        (state) => state.playlist.filterPlaylist
+    );
+    const filterList = useAppSelector((state) => state.playlist.filterList);
+    const filtersName = useAppSelector((state) => state.playlist.filtersName);
 
-    function extractYearsFromObject(dateObj: string) {
+    console.log(filtersName);
+
+    function extractYearsFromObject(dateObj: string): number {
         const date = new Date(dateObj);
         return date.getFullYear();
     }
@@ -28,9 +33,12 @@ function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
         el: string | number,
         title: string,
         filterPlaylist: trackType[],
-        filterList: trackType[]
+        filterList: trackType[],
+        filtersName: string[]
     ) {
         handleClick(title);
+
+        // Фильтрация треков
         let filteredTracks = filterPlaylist.filter(
             (obj) =>
                 obj.genre === el ||
@@ -38,22 +46,25 @@ function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
                 extractYearsFromObject(obj.release_date) === el
         );
 
-        if (filterList.length === 0) {
-            return dispatch(
-                setFilterList({
-                    tracksFilters: filteredTracks,
-                })
-            );
-        } else {
-            const addFilterTrack = Array.from(
-                new Set(filteredTracks.concat(filterList))
-            );
-            return dispatch(
-                setFilterList({
-                    tracksFilters: addFilterTrack,
-                })
-            );
+        let updatedFiltersName = [...filtersName];
+        if (!updatedFiltersName.includes(String(el))) {
+            updatedFiltersName.push(String(el));
         }
+
+        console.log(updatedFiltersName);
+
+        // Обновление состояния
+        dispatch(
+            setFilterList({
+                tracksFilters:
+                    filterList.length === 0
+                        ? filteredTracks
+                        : Array.from(
+                              new Set(filteredTracks.concat(filterList))
+                          ),
+                filtersName: Array.from(new Set(updatedFiltersName)),
+            })
+        );
     }
 
     return (
@@ -64,11 +75,15 @@ function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
                     className={classNames(
                         styles.filterButton,
                         styles.buttonAuthor,
+                        styles.activeFilter,
                         isOpen ? styles.btnTextIsOpen : styles.btnText
                     )}
                 >
-                    <p>{title}</p>
+                    {title}
                 </div>
+                {filterNumber > 0 ? (
+                    <div className={styles.filterNumber}>{filterNumber}</div>
+                ) : null}
                 {isOpen && (
                     <ul className={styles.trackList}>
                         <div className={styles.trackScroll}>
@@ -81,7 +96,8 @@ function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
                                             el,
                                             title,
                                             filterPlaylist,
-                                            filterList
+                                            filterList,
+                                            filtersName
                                         )
                                     }
                                 >

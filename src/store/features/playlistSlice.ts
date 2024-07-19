@@ -6,6 +6,7 @@ type playlistStateType = {
     currentTrack: trackType | null;
     playlist: trackType[];
     filterList: trackType[];
+    filtersName: string[];
     filterPlaylist: trackType[];
     shuffledPlaylist: trackType[];
     isShuffle: boolean;
@@ -18,6 +19,7 @@ const initialState: playlistStateType = {
     currentTrack: null,
     playlist: [],
     filterList: [],
+    filtersName: [],
     filterPlaylist: [],
     shuffledPlaylist: [],
     isShuffle: false,
@@ -33,9 +35,11 @@ const playlistSlice = createSlice({
             state,
             action: PayloadAction<{
                 tracksFilters: trackType[];
+                filtersName: string[];
             }>
         ) => {
             state.filterList = action.payload.tracksFilters;
+            state.filtersName = action.payload.filtersName;
         },
         setFilterPlaylist: (
             state,
