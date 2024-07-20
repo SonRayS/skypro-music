@@ -17,6 +17,10 @@
     margin-bottom: 12px;
 }
 
+.useLike {
+    cursor: pointer;
+}
+
 .trackTitle {
     display: -webkit-box;
     display: -ms-flexbox;
