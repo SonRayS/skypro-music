@@ -9,6 +9,7 @@ import { setDislike, setLike } from "@/app/components/api/likes/likes";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { setAuthState, setUserData } from "@/store/features/authSlice";
+import { error } from "console";
 
 type trackTypes = {
     track: trackType;
@@ -37,35 +38,40 @@ function TrackComponent({ track, tracksData }: trackTypes) {
     };
 
     const handleLikeClick = () => {
-        setIsLiked((prevState) => !prevState);
-        if (isLiked && currentTrack?.id) {
-            console.log(1);
-            setDislike(userData?.access, currentTrack.id)
-                .then(() => {})
-                .catch((error) => {
-                    if (error) {
-                        const errorData = JSON.parse(error.message);
-                        if (errorData.status === 401) {
-                            logout();
-                            router.push("/signin");
+        if (userData) {
+            setIsLiked((prevState) => !prevState);
+            if (isLiked && currentTrack?.id) {
+                setDislike(userData?.access, currentTrack.id)
+                    .then(() => {})
+                    .catch((error) => {
+                        if (error) {
+                            const errorData = JSON.parse(error.message);
+                            if (errorData.status === 401) {
+                                logout();
+                                router.push("/signin");
+                            }
                         }
-                    }
-                });
-        } else if (!isLiked && currentTrack?.id) {
-            console.log(2);
-            setLike(userData?.access, currentTrack.id)
-                .then(() => {})
-                .catch((error) => {
-                    if (error) {
-                        const errorData = JSON.parse(error.message);
-                        if (errorData.status === 401) {
-                            logout();
-                            router.push("/signin");
+                    });
+            } else if (!isLiked && currentTrack?.id) {
+                setLike(userData?.access, currentTrack.id)
+                    .then(() => {})
+                    .catch((error) => {
+                        if (error) {
+                            const errorData = JSON.parse(error.message);
+                            if (errorData.status === 401) {
+                                logout();
+                                router.push("/signin");
+                            }
                         }
-                    }
-                });
+                    });
+            } else {
+                throw new Error("Что то идет не так");
+            }
         } else {
-            throw new Error("Что то идет не так");
+            alert("Функция доступна только авторизованным пользователям");
+            throw new Error(
+                "Функция доступна только авторизованным пользователям"
+            );
         }
     };
 
@@ -119,7 +125,15 @@ function TrackComponent({ track, tracksData }: trackTypes) {
                             </div>
                             <div className={styles.trackTime}>
                                 <svg className={styles.trackTimeSvg}>
-                                    <use href="img/icon/sprite.svg#icon-like" />
+                                    <use
+                                        className={styles.useLike}
+                                        onClick={handleLikeClick}
+                                        href={`img/icon/sprite.svg#${
+                                            isLiked
+                                                ? "icon-like-active"
+                                                : "icon-like"
+                                        }`}
+                                    />
                                 </svg>
                                 <span className={styles.trackTimeText}>
                                     <TimeFormat
