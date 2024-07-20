@@ -55,9 +55,21 @@ export default function Header() {
                                 </a>
                             </li>
                             <li className={styles.menuItem}>
-                                <a href="#" className={styles.menuLink}>
-                                    Мой плейлист
-                                </a>
+                                {logged ? (
+                                    <a
+                                        href="/myPlaylist"
+                                        className={styles.menuLink}
+                                    >
+                                        Мой плейлист
+                                    </a>
+                                ) : (
+                                    <Link
+                                        href="/signin"
+                                        className={styles.menuLink}
+                                    >
+                                        Мой плейлист
+                                    </Link>
+                                )}
                             </li>
                             <li className={styles.menuItem}>
                                 {logged ? (

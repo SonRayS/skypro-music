@@ -7,9 +7,8 @@ import { useAppDispatch, useAppSelector } from "@/hooks";
 import { setCurrentTrack, setIsPlaying } from "@/store/features/playlistSlice";
 import { setDislike, setLike } from "@/app/components/api/likes/likes";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { setAuthState, setUserData } from "@/store/features/authSlice";
-import { error } from "console";
 
 type trackTypes = {
     track: trackType;
