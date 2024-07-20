@@ -21,8 +21,7 @@ function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
     );
     const filterList = useAppSelector((state) => state.playlist.filterList);
     const filtersName = useAppSelector((state) => state.playlist.filtersName);
-
-    console.log(filtersName);
+    const activeTitle = useAppSelector((state) => state.playlist.activeTitle);
 
     function extractYearsFromObject(dateObj: string): number {
         const date = new Date(dateObj);
@@ -31,13 +30,10 @@ function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
 
     function setFilters(
         el: string | number,
-        title: string,
         filterPlaylist: trackType[],
         filterList: trackType[],
         filtersName: string[]
     ) {
-        handleClick(title);
-
         // Фильтрация треков
         let filteredTracks = filterPlaylist.filter(
             (obj) =>
@@ -49,30 +45,39 @@ function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
         let updatedFiltersName = [...filtersName];
 
         if (!updatedFiltersName.includes(String(el))) {
-            // +
+            // + filters
             updatedFiltersName.push(String(el));
         } else {
-            // -
+            // - filters
             updatedFiltersName = updatedFiltersName.filter(
                 (item) => item !== String(el)
             );
         }
 
-        console.log(updatedFiltersName);
+        let updatedFilterPlaylist = [...filterPlaylist];
+
+        if (filterList.length === 0 && filteredTracks.length === 0) {
+            updatedFilterPlaylist = filterPlaylist;
+        } else if (filterList.length === 0 && filteredTracks.length > 0) {
+            updatedFilterPlaylist = filteredTracks;
+        } else {
+            updatedFilterPlaylist = Array.from(
+                new Set(filteredTracks.concat(filterList))
+            );
+        }
 
         // Обновление состояния
         dispatch(
             setFilterList({
-                tracksFilters:
-                    filterList.length === 0
-                        ? filteredTracks
-                        : Array.from(
-                              new Set(filteredTracks.concat(filterList))
-                          ),
+                tracksFilters: updatedFilterPlaylist,
                 filtersName: Array.from(new Set(updatedFiltersName)),
             })
         );
     }
+
+    useEffect(() => {
+        setFilterNumber(filtersName.length);
+    }, [filtersName]);
 
     return (
         <>
@@ -88,7 +93,7 @@ function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
                 >
                     {title}
                 </div>
-                {filterNumber > 0 ? (
+                {filterNumber > 0 && title === activeTitle ? (
                     <div className={styles.filterNumber}>{filterNumber}</div>
                 ) : null}
                 {isOpen && (
@@ -101,7 +106,6 @@ function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
                                     onClick={() =>
                                         setFilters(
                                             el,
-                                            title,
                                             filterPlaylist,
                                             filterList,
                                             filtersName

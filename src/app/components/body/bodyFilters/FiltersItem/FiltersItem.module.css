@@ -11,6 +11,12 @@
 }
 
 .activeFilter {
+    border-color: #ffffff;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.activeFilter:active {
     border-color: #ad61ff;
     color: #ad61ff;
     cursor: pointer;

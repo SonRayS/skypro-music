@@ -4,12 +4,25 @@ import styles from "./Filters.module.css";
 import classNames from "classnames";
 import { useState } from "react";
 import { trackType } from "../../types";
+import {
+    setActiveTitle,
+    setFilterList,
+    setFilterPlaylist,
+} from "@/store/features/playlistSlice";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 
 type Props = {
     tracks: trackType[];
 };
 
 function Filters({ tracks }: Props) {
+    const dispatch = useAppDispatch();
+    const [activeFilters, setActiveFilters] = useState<string | null>(null);
+    const activeTitle = useAppSelector((state) => state.playlist.activeTitle);
+    const filterPlaylist = useAppSelector(
+        (state) => state.playlist.filterPlaylist
+    );
+
     /* ------------------------------------time----------------------------------- */
 
     function extractYearsFromObject(dateObj: string[]) {
@@ -53,10 +66,29 @@ function Filters({ tracks }: Props) {
         },
     ];
 
-    const [activeFilters, setActiveFilters] = useState<string | null>(null);
-
     function handleClick(el: string) {
+        if (activeTitle === null && activeTitle !== el) {
+            dispatch(
+                setActiveTitle({
+                    activeTitle: el,
+                })
+            );
+        } else if (activeFilters !== null && activeFilters !== el) {
+            dispatch(
+                setActiveTitle({
+                    activeTitle: null,
+                })
+            );
+            dispatch(
+                setFilterList({
+                    tracksFilters: filterPlaylist,
+                    filtersName: [],
+                })
+            );
+        }
         setActiveFilters((prev) => (prev === el ? null : el));
+        console.log(el);
+        console.log(activeFilters);
     }
 
     return (
