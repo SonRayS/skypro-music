@@ -79,16 +79,8 @@ function Filters({ tracks }: Props) {
                     activeTitle: null,
                 })
             );
-            dispatch(
-                setFilterList({
-                    tracksFilters: filterPlaylist,
-                    filtersName: [],
-                })
-            );
         }
         setActiveFilters((prev) => (prev === el ? null : el));
-        console.log(el);
-        console.log(activeFilters);
     }
 
     return (
