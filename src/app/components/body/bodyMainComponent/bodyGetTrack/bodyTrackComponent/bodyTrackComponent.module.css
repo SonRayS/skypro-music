@@ -28,18 +28,15 @@
     transition: transform 0.3s, fill 0.3s;
 }
 
-/* Анимация при нажатии */
 .trackTimeSvg:active {
     transform: scale(1.2);
 }
 
-/* Анимация изменения цвета */
 .icon-like-active {
-    fill: red; /* Цвет активного лайка */
+    fill: red;
     animation: pulse 1s infinite;
 }
 
-/* Анимация пульсации */
 @keyframes pulse {
     0% {
         transform: scale(1);
