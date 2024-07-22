@@ -68,9 +68,7 @@ function TrackComponent({ track, tracksData }: trackTypes) {
             }
         } else {
             alert("Функция доступна только авторизованным пользователям");
-            throw new Error(
-                "Функция доступна только авторизованным пользователям"
-            );
+            return;
         }
     };
 
