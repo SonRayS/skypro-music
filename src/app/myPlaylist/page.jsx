@@ -1,16 +1,5 @@
-import Header from "../headerMenu/headerMenu";
-import Body from "../body/bodyMainComponent/bodyMainComponent";
-import RightBar from "../rightBar/rightBar";
-import Selector from "../selector/selector";
+import MyPlaylist from "../components/myPlaylist/myPlaylist";
 
 export default function MyPlatList() {
-    return (
-        <>
-            <Selector>
-                <Header />
-                <Body />
-                <RightBar />
-            </Selector>
-        </>
-    );
+    return <MyPlaylist />;
 }

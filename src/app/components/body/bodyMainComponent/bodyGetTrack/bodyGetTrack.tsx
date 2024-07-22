@@ -15,6 +15,7 @@ type getTrackType = {
 };
 
 function BodyGetTrack({ tracksData }: getTrackType) {
+    console.log(tracksData);
     const dispatch = useAppDispatch();
 
     useEffect(() => {

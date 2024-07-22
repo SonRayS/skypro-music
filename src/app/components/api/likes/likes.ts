@@ -14,6 +14,7 @@ export async function setLike(token: string, id: number) {
         );
     }
     const data = await res.json();
+    console.log(data);
     return data;
 }
 
@@ -33,5 +34,6 @@ export async function setDislike(token: string, id: number) {
         );
     }
     const data = await res.json();
+    console.log(data);
     return data;
 }
