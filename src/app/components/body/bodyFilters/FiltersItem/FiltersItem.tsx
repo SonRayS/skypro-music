@@ -34,42 +34,27 @@ function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
         filterList: trackType[],
         filtersName: string[]
     ) {
-        // Фильтрация треков
-        let filteredTracks = filterPlaylist.filter(
-            (obj) =>
-                obj.genre === el ||
-                obj.author === el ||
-                extractYearsFromObject(obj.release_date) === el
-        );
-
         let updatedFiltersName = [...filtersName];
-
-        if (!updatedFiltersName.includes(String(el))) {
-            // + filters
-            updatedFiltersName.push(String(el));
-        } else {
-            // - filters
+        if (updatedFiltersName.includes(String(el))) {
             updatedFiltersName = updatedFiltersName.filter(
                 (item) => item !== String(el)
             );
-        }
-
-        let updatedFilterPlaylist = [...filterPlaylist];
-
-        if (filterList.length === 0 && filteredTracks.length === 0) {
-            updatedFilterPlaylist = filterPlaylist;
-        } else if (filterList.length === 0 && filteredTracks.length > 0) {
-            updatedFilterPlaylist = filteredTracks;
         } else {
-            updatedFilterPlaylist = Array.from(
-                new Set(filteredTracks.concat(filterList))
-            );
+            updatedFiltersName.push(String(el));
         }
 
-        // Обновление состояния
+        let filteredTracks = filterPlaylist.filter(
+            (obj) =>
+                updatedFiltersName.includes(obj.genre) ||
+                updatedFiltersName.includes(obj.author) ||
+                updatedFiltersName.includes(
+                    String(extractYearsFromObject(obj.release_date))
+                )
+        );
+
         dispatch(
             setFilterList({
-                tracksFilters: updatedFilterPlaylist,
+                tracksFilters: filteredTracks,
                 filtersName: Array.from(new Set(updatedFiltersName)),
             })
         );
@@ -101,7 +86,15 @@ function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
                         <div className={styles.trackScroll}>
                             {list.map((el, index) => (
                                 <li
-                                    className={styles.trackListElement}
+                                    className={classNames(
+                                        styles.trackListElement,
+                                        {
+                                            [styles.selectedItem]:
+                                                filtersName.includes(
+                                                    String(el)
+                                                ),
+                                        }
+                                    )}
                                     key={index}
                                     onClick={() =>
                                         setFilters(

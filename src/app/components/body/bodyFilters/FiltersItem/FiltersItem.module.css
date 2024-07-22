@@ -38,6 +38,14 @@
     padding: 6px;
 }
 
+.trackListElement {
+}
+
+.trackListElement.selectedItem {
+    border-color: #ad61ff;
+    color: #ad61ff;
+}
+
 .trackList {
     background-color: #313131;
     border: none;

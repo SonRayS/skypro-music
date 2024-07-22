@@ -25,22 +25,21 @@ function RightBar() {
         <>
             <div className={classNames(styles.mainSidebar, styles.sidebar)}>
                 <div className={styles.sidebarPersonal}>
-                    {logged ? (
+                    {logged && (
                         <>
-                            <p className={styles.sidebarPersonalName}>
-                                {userName?.email}
-                            </p>
-                            <div
+                            <div>
+                                <p className={styles.sidebarPersonalName}>
+                                    {userName?.email}
+                                </p>
+                            </div>
+
+                            <svg
                                 onClick={logout}
                                 className={styles.sidebarIcon}
                             >
-                                <svg>
-                                    <use xlinkHref="img/icon/sprite.svg#logout" />
-                                </svg>
-                            </div>
+                                <use xlinkHref="img/icon/sprite.svg#logout" />
+                            </svg>
                         </>
-                    ) : (
-                        ""
                     )}
                 </div>
                 <div className={styles.sidebarBlock}>

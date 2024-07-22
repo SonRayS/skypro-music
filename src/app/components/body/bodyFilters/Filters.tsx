@@ -67,20 +67,13 @@ function Filters({ tracks }: Props) {
     ];
 
     function handleClick(el: string) {
-        if (activeTitle === null && activeTitle !== el) {
-            dispatch(
-                setActiveTitle({
-                    activeTitle: el,
-                })
-            );
-        } else if (activeFilters !== null && activeFilters !== el) {
-            dispatch(
-                setActiveTitle({
-                    activeTitle: null,
-                })
-            );
+        if (activeTitle !== el) {
+            dispatch(setActiveTitle({ activeTitle: el }));
+            setActiveFilters(el);
+        } else {
+            dispatch(setActiveTitle({ activeTitle: null }));
+            setActiveFilters(null);
         }
-        setActiveFilters((prev) => (prev === el ? null : el));
     }
 
     return (
