@@ -21,6 +21,37 @@
     cursor: pointer;
 }
 
+.trackTimeSvg {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    transition: transform 0.3s, fill 0.3s;
+}
+
+/* Анимация при нажатии */
+.trackTimeSvg:active {
+    transform: scale(1.2);
+}
+
+/* Анимация изменения цвета */
+.icon-like-active {
+    fill: red; /* Цвет активного лайка */
+    animation: pulse 1s infinite;
+}
+
+/* Анимация пульсации */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
 .trackTitle {
     display: -webkit-box;
     display: -ms-flexbox;

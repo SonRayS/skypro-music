@@ -125,7 +125,9 @@ function TrackComponent({ track, tracksData }: trackTypes) {
                             <div className={styles.trackTime}>
                                 <svg className={styles.trackTimeSvg}>
                                     <use
-                                        className={styles.useLike}
+                                        className={`${styles.useLike} ${
+                                            isLiked ? styles.iconLikeActive : ""
+                                        }`}
                                         onClick={handleLikeClick}
                                         href={`img/icon/sprite.svg#${
                                             isLiked
