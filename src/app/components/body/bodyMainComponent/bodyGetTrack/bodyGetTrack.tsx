@@ -17,7 +17,6 @@ function BodyGetTrack({ tracksData }: getTrackType) {
     const dispatch = useAppDispatch();
     dispatch(setFilterPlaylist({ tracksData }));
     const newTrack = useAppSelector((el) => el.playlist.filterList);
-    const activeTitle = useAppSelector((el) => el.playlist.activeTitle);
     const newTracksData = newTrack.length > 0 ? newTrack : tracksData;
 
     return (

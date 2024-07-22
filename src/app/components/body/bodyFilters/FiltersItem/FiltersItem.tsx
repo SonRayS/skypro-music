@@ -23,6 +23,7 @@ function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
     );
     const filterList = useAppSelector((state) => state.playlist.filterList);
     const filtersName = useAppSelector((state) => state.playlist.filtersName);
+    const activeTitle = useAppSelector((state) => state.playlist.activeTitle);
 
     function extractYearsFromObject(dateObj: string): number {
         const date = new Date(dateObj);
@@ -71,8 +72,11 @@ function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
         const activeFiltersForTitle = filtersName.filter((filter) =>
             list.map(String).includes(filter)
         ).length;
-        setFilterNumbers({ ...filterNumbers, [title]: activeFiltersForTitle });
-    }, [filtersName, list, title, filterNumbers]);
+        setFilterNumbers((prev) => ({
+            ...prev,
+            [title]: activeFiltersForTitle,
+        }));
+    }, [filtersName, list, title]);
 
     return (
         <>
