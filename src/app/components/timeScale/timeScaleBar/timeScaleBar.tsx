@@ -97,38 +97,53 @@ function TimeScale() {
     };
 
     useEffect(() => {
-        const handleEnded = () => {
-            if (currentTrackIndex) {
-                if (currentTrackIndex < activePlaylist.length - 1) {
-                    dispatch(
-                        setCurrentTrack({
-                            track: activePlaylist[currentTrackIndex + 1],
-                            tracksData: activePlaylist,
-                        })
-                    );
-                } else {
-                    audio!.pause();
-                    dispatch(setIsPlaying(false));
-                    dispatch(
-                        setCurrentTrack({
-                            track: activePlaylist[0],
-                            tracksData: activePlaylist,
-                        })
-                    );
-                }
-            }
-        };
+        dispatch(setIsPlaying(true));
+        if (audioRef.current && currentTrackIndex !== null) {
+            const audio = audioRef.current;
 
-        if (audio && currentTrackIndex) {
-            audio.src = activePlaylist[currentTrackIndex].track_file;
+            audio.src = activePlaylist[currentTrackIndex]?.track_file || "";
+            audio.loop = repeat;
+
+            const handleEnded = () => {
+                if (currentTrackIndex !== null) {
+                    if (currentTrackIndex < activePlaylist.length - 1) {
+                        dispatch(
+                            setCurrentTrack({
+                                track: activePlaylist[currentTrackIndex + 1],
+                                tracksData: activePlaylist,
+                            })
+                        );
+                    } else {
+                        audio.pause();
+                        dispatch(setIsPlaying(false));
+                        dispatch(
+                            setCurrentTrack({
+                                track: activePlaylist[0],
+                                tracksData: activePlaylist,
+                            })
+                        );
+                    }
+                }
+            };
+
             audio.addEventListener("ended", handleEnded);
-            audio.play();
+
+            const playAudio = async () => {
+                try {
+                    await audio.play();
+                } catch (error) {
+                    console.error("Ошибка воспроизведения трека: ", error);
+                }
+            };
+
+            playAudio();
 
             return () => {
                 audio.removeEventListener("ended", handleEnded);
+                audio.pause();
             };
         }
-    }, [currentTrackIndex, activePlaylist, audio, dispatch]);
+    }, [currentTrackIndex, activePlaylist, repeat, dispatch]);
 
     return (
         <>
