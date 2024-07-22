@@ -15,7 +15,7 @@ export async function postAuthUser({ email, password }: SigninType) {
                 password: password,
             }),
             headers: {
-                "Content-Type": "application/json",
+                "content-type": "application/json",
             },
         });
 

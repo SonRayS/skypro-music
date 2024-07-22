@@ -42,35 +42,28 @@ function SignIn() {
         event.preventDefault();
         setErrorMessage(null);
 
-        try {
-            const userData = await postAuthUser(loginData);
+        await postAuthUser(loginData).then((data) => {
             dispatch(setAuthState(true));
             dispatch(
                 setUserData({
-                    username: userData.username,
-                    email: userData.email,
-                    id: userData.id,
+                    username: data.username,
+                    email: data.email,
+                    id: data.id,
                 })
             );
 
-            localStorage.setItem("user", JSON.stringify(userData));
-
-            const tokenData = await postToken(loginData);
-            localStorage.setItem("token", JSON.stringify(tokenData.access));
-            dispatch(
-                setUserData({
-                    refresh: tokenData.refresh,
-                    access: tokenData.access,
-                })
-            );
-            router.push("/");
-        } catch (error: any) {
-            if (error.message) {
-                setErrorMessage(error.message);
-            } else {
-                setErrorMessage("Произошла ошибка авторизации");
-            }
-        }
+            localStorage.setItem("user", JSON.stringify(data));
+            postToken(loginData).then((data) => {
+                localStorage.setItem("token", JSON.stringify(data.access));
+                dispatch(
+                    setUserData({
+                        refresh: data.refresh,
+                        access: data.access,
+                    })
+                );
+                router.push("/");
+            });
+        });
     };
 
     return (
@@ -94,7 +87,7 @@ function SignIn() {
                                 styles.modalInput,
                                 styles.login
                             )}
-                            type="text"
+                            type="email"
                             name="email"
                             placeholder="Почта"
                         />
