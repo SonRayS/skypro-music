@@ -16,7 +16,7 @@
     background-color: #3f007d;
 }
 
-.modalBtnSignup-ent:active {
+.modalBtnSignupEnt:active {
     background-color: #271a58;
 }
 
@@ -111,12 +111,12 @@
 
 .modalBtnSignupEnt {
     width: 278px;
-    height: 62px;
+    padding-top: 18px;
+    padding-bottom: 18px;
     background-color: #580ea2;
     border-radius: 6px;
     margin-left: 4px;
     border: none;
-    margin-top: 30px;
 }
 
 .modalBtnText {

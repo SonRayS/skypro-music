@@ -119,12 +119,10 @@ function SignUp() {
                                 name="email"
                                 placeholder="Почта"
                             />
-                            {emailActive ? (
+                            {emailActive && (
                                 <div className={styles.emailExample}>
                                     Пример: blablabla@mail.ru
                                 </div>
-                            ) : (
-                                ""
                             )}
                             <input
                                 onChange={hanleInputChange}
@@ -136,7 +134,7 @@ function SignUp() {
                                 name="passwordfirst"
                                 placeholder="Пароль"
                             />
-                            {passwordActive ? (
+                            {passwordActive && (
                                 <div
                                     className={classNames(
                                         {
@@ -151,8 +149,6 @@ function SignUp() {
                                 >
                                     Минимум 8 символов из букв латиницей и цифр
                                 </div>
-                            ) : (
-                                ""
                             )}
                             <input
                                 onChange={hanleInputChange}
@@ -172,12 +168,10 @@ function SignUp() {
                                     Зарегистрироваться
                                 </a>
                             </button>
-                            {isNotFilled && isSubmitted ? (
+                            {isNotFilled && isSubmitted && (
                                 <div className={styles.notFilled}>
                                     Нужно заполнить все поля корректно
                                 </div>
-                            ) : (
-                                ""
                             )}
                         </form>
                     </div>
