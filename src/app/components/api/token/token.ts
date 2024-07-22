@@ -1,7 +1,9 @@
 import { userType } from "../../types";
 
-const apiUrlToken = "https://skypro-music-api.skyeng.tech/user/token/";
-const apiUtlTokenRefresh = "https://skypro-music-api.skyeng.tech/user/token/";
+const apiUrlToken =
+    "https://webdev-music-003b5b991590.herokuapp.com/user/token/";
+const apiUtlTokenRefresh =
+    "https://webdev-music-003b5b991590.herokuapp.com/user/token/refresh/";
 
 type SigninType = {
     email: string;

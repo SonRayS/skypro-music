@@ -1,5 +1,6 @@
 import { getValueFromLocalStorage } from "@/app/lib/getValueFromLS";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { useState } from "react";
 
 type AuthStateType = {
     authState: boolean;

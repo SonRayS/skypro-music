@@ -94,7 +94,7 @@ function SignUp() {
     };
 
     return (
-        <body>
+        <div>
             <div className={styles.wrapper}>
                 <div className={styles.containerSignup}>
                     <div className={styles.modalBlock}>
@@ -183,7 +183,7 @@ function SignUp() {
                     </div>
                 </div>
             </div>
-        </body>
+        </div>
     );
 }
 

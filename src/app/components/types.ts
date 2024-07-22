@@ -9,6 +9,7 @@ export type userType = {
 };
 
 export type trackType = {
+    isFavorite?: boolean;
     id: number;
     name: string;
     author: string;

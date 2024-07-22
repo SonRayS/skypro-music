@@ -37,7 +37,6 @@ function SignIn() {
     const handleSignin = async () => {
         await postAuthUser(loginData)
             .then((data) => {
-                console.log(data);
                 dispatch(setAuthState(true));
                 dispatch(
                     setUserData({

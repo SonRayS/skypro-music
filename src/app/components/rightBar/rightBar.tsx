@@ -1,4 +1,5 @@
 "use client";
+
 import Image from "next/image";
 import styles from "./rightBar.module.css";
 import classNames from "classnames";
@@ -13,11 +14,16 @@ function RightBar() {
     const logged = useAppSelector((state) => state.auth.authState);
     const userName = useAppSelector((state) => state.auth.userData);
     const dispatch = useAppDispatch();
-    const [isLogged, setIsLogged] = useState(logged);
+    const [isLogged, setIsLogged] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
         setIsLogged(logged);
     }, [logged]);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
     const logout = () => {
         dispatch(setAuthState(false));
@@ -25,6 +31,10 @@ function RightBar() {
         localStorage.removeItem("user");
         localStorage.removeItem("token");
     };
+
+    if (!isMounted) {
+        return null; // Пока компонент не смонтирован, ничего не рендерим
+    }
 
     return (
         <div className={classNames(styles.mainSidebar, styles.sidebar)}>

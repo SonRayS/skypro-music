@@ -1,6 +1,7 @@
 //Зарегистрироваться
 
-const apiUrlSignup = "https://skypro-music-api.skyeng.tech/user/signup/";
+const apiUrlSignup =
+    "https://webdev-music-003b5b991590.herokuapp.com/user/signup/";
 
 type SignupType = {
     email: string;

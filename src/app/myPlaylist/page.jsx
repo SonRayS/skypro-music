@@ -1,5 +1,5 @@
-import MyPlaylist from "../components/myPlaylist/myPlaylist";
+import MyPlaylistPage from "../components/myPlaylistPage/myPlaylistPage";
 
 export default function MyPlatList() {
-    return <MyPlaylist />;
+    return <MyPlaylistPage />;
 }

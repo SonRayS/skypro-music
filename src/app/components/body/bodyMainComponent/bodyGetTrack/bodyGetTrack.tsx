@@ -12,10 +12,10 @@ import { setFilterPlaylist } from "@/store/features/playlistSlice";
 
 type getTrackType = {
     tracksData: trackType[];
+    isFavorite?: boolean;
 };
 
-function BodyGetTrack({ tracksData }: getTrackType) {
-    console.log(tracksData);
+function BodyGetTrack({ tracksData, isFavorite }: getTrackType) {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -24,6 +24,7 @@ function BodyGetTrack({ tracksData }: getTrackType) {
 
     const newTrack = useAppSelector((el) => el.playlist.filterList);
     const newTracksData = newTrack.length > 0 ? newTrack : tracksData;
+    const isFavoriteStatus = isFavorite ? tracksData : newTracksData;
 
     return (
         <>
@@ -37,7 +38,7 @@ function BodyGetTrack({ tracksData }: getTrackType) {
                 )}
             >
                 <TrackHeader />
-                {newTracksData.map((el) => (
+                {isFavoriteStatus.map((el) => (
                     <TrackComponent
                         key={el.id}
                         track={el}

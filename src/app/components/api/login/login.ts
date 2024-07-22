@@ -1,4 +1,5 @@
-const apiUrlLogin = "https://skypro-music-api.skyeng.tech/user/login/";
+const apiUrlLogin =
+    "https://webdev-music-003b5b991590.herokuapp.com/user/login/";
 
 type SigninType = {
     email: string;
@@ -19,6 +20,7 @@ export async function postAuthUser({ email, password }: SigninType) {
         },
     });
     if (!res.ok) {
+        alert("res not ok");
         throw new Error("Ошибка");
     }
     const data = await res.json();
