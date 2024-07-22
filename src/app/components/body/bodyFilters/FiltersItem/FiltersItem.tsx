@@ -15,7 +15,9 @@ type FiltersItemType = {
 
 function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
     const dispatch = useAppDispatch();
-    const [filterNumber, setFilterNumber] = useState<number>(0);
+    const [filterNumbers, setFilterNumbers] = useState<{
+        [key: string]: number;
+    }>({});
     const filterPlaylist = useAppSelector(
         (state) => state.playlist.filterPlaylist
     );
@@ -58,11 +60,20 @@ function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
                 filtersName: Array.from(new Set(updatedFiltersName)),
             })
         );
+
+        const newFilterNumbers = {
+            ...filterNumbers,
+            [title]: updatedFiltersName.length,
+        };
+        setFilterNumbers(newFilterNumbers);
     }
 
     useEffect(() => {
-        setFilterNumber(filtersName.length);
-    }, [filtersName]);
+        const activeFiltersForTitle = filtersName.filter((filter) =>
+            list.map(String).includes(filter)
+        ).length;
+        setFilterNumbers({ ...filterNumbers, [title]: activeFiltersForTitle });
+    }, [filtersName, list, title, filterNumbers]);
 
     return (
         <>
@@ -78,9 +89,11 @@ function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
                 >
                     {title}
                 </div>
-                {filterNumber > 0 && title === activeTitle ? (
-                    <div className={styles.filterNumber}>{filterNumber}</div>
-                ) : null}
+                {filterNumbers[title] > 0 && (
+                    <div className={styles.filterNumber}>
+                        {filterNumbers[title]}
+                    </div>
+                )}
                 {isOpen && (
                     <ul className={styles.trackList}>
                         <div className={styles.trackScroll}>
