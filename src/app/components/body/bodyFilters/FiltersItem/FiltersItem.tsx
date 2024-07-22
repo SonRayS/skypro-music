@@ -23,7 +23,6 @@ function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
     );
     const filterList = useAppSelector((state) => state.playlist.filterList);
     const filtersName = useAppSelector((state) => state.playlist.filtersName);
-    const activeTitle = useAppSelector((state) => state.playlist.activeTitle);
 
     function extractYearsFromObject(dateObj: string): number {
         const date = new Date(dateObj);
