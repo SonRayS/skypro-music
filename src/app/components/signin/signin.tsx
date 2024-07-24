@@ -48,10 +48,8 @@ export default function SignIn() {
                 setUserData({
                     username: data.username,
                     email: data.email,
-                    id: data.id,
                 })
             );
-
             localStorage.setItem("user", JSON.stringify(data));
             postToken(loginData).then((data) => {
                 localStorage.setItem("token", JSON.stringify(data.access));
@@ -61,6 +59,7 @@ export default function SignIn() {
                         access: data.access,
                     })
                 );
+                console.log(data);
                 router.push("/");
             });
         });
