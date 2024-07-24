@@ -16,10 +16,11 @@
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
         "react-redux": "^9.1.2",
-        "sharp": "^0.33.4"
+        "sharp": "^0.33.4",
+        "vitest": "^2.0.4"
     },
     "devDependencies": {
-        "@testing-library/jest-dom": "^6.4.6",
+        "@testing-library/jest-dom": "^6.4.8",
         "@testing-library/react": "^16.0.0",
         "@types/enzyme": "^3.10.18",
         "@types/jest": "^29.5.12",
