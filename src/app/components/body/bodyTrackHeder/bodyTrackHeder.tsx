@@ -15,7 +15,7 @@ export default function TrackHeader() {
             </div>
             <div className={classNames(styles.playlistTitleCol, styles.col04)}>
                 <svg className={styles.playlistTitleSvg}>
-                    <use href="img/icon/sprite.svg#icon-watch" />
+                    <use href="/img/icon/sprite.svg#icon-watch" />
                 </svg>
             </div>
         </div>

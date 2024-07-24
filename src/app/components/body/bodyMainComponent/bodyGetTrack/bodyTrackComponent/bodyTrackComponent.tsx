@@ -93,11 +93,11 @@ export default function TrackComponent({ track, tracksData }: trackTypes) {
                                 <div className={styles.trackTitleImage}>
                                     {isPlaying ? (
                                         <svg className={styles.trackActiveSvg}>
-                                            <use href="img/icon/sprite.svg#icon-isPlaying" />
+                                            <use href="/img/icon/sprite.svg#icon-isPlaying" />
                                         </svg>
                                     ) : (
                                         <svg className={styles.trackTitleSvg}>
-                                            <use href="img/icon/sprite.svg#icon-isPlaying" />
+                                            <use href="/img/icon/sprite.svg#icon-isPlaying" />
                                         </svg>
                                     )}
                                 </div>
@@ -129,7 +129,7 @@ export default function TrackComponent({ track, tracksData }: trackTypes) {
                                             }`
                                         )}
                                         onClick={handleLikeClick}
-                                        href={`img/icon/sprite.svg#${
+                                        href={`/img/icon/sprite.svg#${
                                             isLiked
                                                 ? "icon-like-active"
                                                 : "icon-like"
@@ -163,7 +163,7 @@ export default function TrackComponent({ track, tracksData }: trackTypes) {
                             <div className={styles.trackTitle}>
                                 <div className={styles.trackTitleImage}>
                                     <svg className={styles.trackTitleSvg}>
-                                        <use href="img/icon/sprite.svg#icon-note" />
+                                        <use href="/img/icon/sprite.svg#icon-note" />
                                     </svg>
                                 </div>
                                 <div className={styles.trackTitleText}>
@@ -190,7 +190,7 @@ export default function TrackComponent({ track, tracksData }: trackTypes) {
                                     <use
                                         className={styles.useLike}
                                         onClick={handleLikeClick}
-                                        href={`img/icon/sprite.svg#${
+                                        href={`/img/icon/sprite.svg#${
                                             isLiked
                                                 ? "icon-like-active"
                                                 : "icon-like"

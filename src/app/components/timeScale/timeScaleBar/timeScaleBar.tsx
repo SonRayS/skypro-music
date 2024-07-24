@@ -77,7 +77,7 @@ export default function TimeScale() {
 
     useEffect(() => {
         audio?.addEventListener("timeupdate", () =>
-            setCurrentTime(audioRef.current!.currentTime)
+            setCurrentTime(audio.currentTime)
         );
     }, [audio]);
 
