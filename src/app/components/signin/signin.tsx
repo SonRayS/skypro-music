@@ -16,7 +16,7 @@ type SigninType = {
     password: string;
 };
 
-function SignIn() {
+export default function SignIn() {
     const dispatch = useAppDispatch();
     const [loginData, setLoginData] = useState<SigninType>({
         email: "",
@@ -119,5 +119,3 @@ function SignIn() {
         </div>
     );
 }
-
-export default SignIn;

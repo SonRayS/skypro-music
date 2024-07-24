@@ -13,7 +13,12 @@ type FiltersItemType = {
     handleClick: (el: string) => void;
 };
 
-function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
+export default function FiltersItem({
+    isOpen,
+    title,
+    list,
+    handleClick,
+}: FiltersItemType) {
     const dispatch = useAppDispatch();
     const [filterNumbers, setFilterNumbers] = useState<{
         [key: string]: number;
@@ -131,5 +136,3 @@ function FiltersItem({ isOpen, title, list, handleClick }: FiltersItemType) {
         </>
     );
 }
-
-export default FiltersItem;

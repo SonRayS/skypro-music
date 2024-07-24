@@ -1,7 +1,7 @@
 import styles from "./bodyTrackHeder.module.css";
 import classNames from "classnames";
 
-function TrackHeader() {
+export default function TrackHeader() {
     return (
         <div className={classNames(styles.contentTitle, styles.playlistTitle)}>
             <div className={classNames(styles.playlistTitleCol, styles.col01)}>
@@ -21,5 +21,3 @@ function TrackHeader() {
         </div>
     );
 }
-
-export default TrackHeader;

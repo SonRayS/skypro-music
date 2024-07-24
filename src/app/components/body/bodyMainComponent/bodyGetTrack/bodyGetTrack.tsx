@@ -6,48 +6,45 @@ import styles from "./bodyGetTrack.module.css";
 import classNames from "classnames";
 import TrackComponent from "./bodyTrackComponent/bodyTrackComponent";
 import { trackType } from "@/app/components/types";
-import { useAppDispatch, useAppSelector } from "@/hooks";
-import { useEffect } from "react";
-import { setFilterPlaylist } from "@/store/features/playlistSlice";
+import { useAppSelector } from "@/hooks";
 
 type getTrackType = {
     tracksData: trackType[];
     isFavorite?: boolean;
 };
 
-function BodyGetTrack({ tracksData, isFavorite }: getTrackType) {
-    const dispatch = useAppDispatch();
-
-    useEffect(() => {
-        dispatch(setFilterPlaylist({ tracksData }));
-    }, [dispatch, tracksData]);
-
+export default function BodyGetTrack({ tracksData, isFavorite }: getTrackType) {
     const newTrack = useAppSelector((el) => el.playlist.filterList);
     const newTracksData = newTrack.length > 0 ? newTrack : tracksData;
     const isFavoriteStatus = isFavorite ? tracksData : newTracksData;
 
     return (
         <>
-            <Search />
-            <h2 className={styles.centerBlockH2}>Треки</h2>
-            <Filters tracks={tracksData} />
             <div
                 className={classNames(
-                    styles.centerBlockContent,
-                    styles.playlistContent
+                    styles.mainCenterBlock,
+                    styles.centerBlock
                 )}
             >
-                <TrackHeader />
-                {isFavoriteStatus.map((el) => (
-                    <TrackComponent
-                        key={el.id}
-                        track={el}
-                        tracksData={tracksData}
-                    />
-                ))}
+                <Search />
+                <h2 className={styles.centerBlockH2}>Треки</h2>
+                <Filters tracks={tracksData} />
+                <div
+                    className={classNames(
+                        styles.centerBlockContent,
+                        styles.playlistContent
+                    )}
+                >
+                    <TrackHeader />
+                    {isFavoriteStatus.map((el) => (
+                        <TrackComponent
+                            key={el.id}
+                            track={el}
+                            tracksData={tracksData}
+                        />
+                    ))}
+                </div>
             </div>
         </>
     );
 }
-
-export default BodyGetTrack;

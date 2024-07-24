@@ -15,7 +15,7 @@ type Props = {
     tracks: trackType[];
 };
 
-function Filters({ tracks }: Props) {
+export default function Filters({ tracks }: Props) {
     const dispatch = useAppDispatch();
     const [activeFilters, setActiveFilters] = useState<string | null>(null);
     const activeTitle = useAppSelector((state) => state.playlist.activeTitle);
@@ -91,5 +91,3 @@ function Filters({ tracks }: Props) {
         </div>
     );
 }
-
-export default Filters;

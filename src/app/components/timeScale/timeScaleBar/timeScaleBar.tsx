@@ -14,7 +14,7 @@ import {
     setCurrentTrack,
 } from "@/store/features/playlistSlice";
 
-function TimeScale() {
+export default function TimeScale() {
     const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
     const [currentTime, setCurrentTime] = useState<number>(0);
     const [volume, setVolume] = useState<number>(0.5);
@@ -283,5 +283,3 @@ function TimeScale() {
         </>
     );
 }
-
-export default TimeScale;

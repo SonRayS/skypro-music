@@ -15,7 +15,7 @@ type trackTypes = {
     tracksData: trackType[];
 };
 
-function TrackComponent({ track, tracksData }: trackTypes) {
+export default function TrackComponent({ track, tracksData }: trackTypes) {
     const dispatch = useAppDispatch();
     const router = useRouter();
     const userData = useAppSelector((state) => state.auth.userData);
@@ -210,5 +210,3 @@ function TrackComponent({ track, tracksData }: trackTypes) {
         </>
     );
 }
-
-export default TrackComponent;

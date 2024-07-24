@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type playlistStateType = {
     /* Types */
-    currentTrack: trackType | null;
+    currentTrack: trackType | null | undefined;
     playlist: trackType[];
     filterList: trackType[];
     filtersName: string[];
@@ -62,7 +62,7 @@ const playlistSlice = createSlice({
         setCurrentTrack: (
             state,
             action: PayloadAction<{
-                track: trackType | null;
+                track?: trackType | null;
                 tracksData: trackType[];
             }>
         ) => {

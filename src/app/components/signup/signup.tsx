@@ -15,7 +15,7 @@ type SignupType = {
     passwordrepeat: string;
 };
 
-function SignUp() {
+export default function SignUp() {
     const router = useRouter();
     const [emailActive, setEmailActive] = useState<boolean>(false);
     const [passwordActive, setPasswordActive] = useState<boolean>(false);
@@ -180,5 +180,3 @@ function SignUp() {
         </div>
     );
 }
-
-export default SignUp;

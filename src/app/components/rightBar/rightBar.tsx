@@ -9,8 +9,9 @@ import playList03 from "./playlist01.png";
 import { setAuthState, setUserData } from "@/store/features/authSlice";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
-function RightBar() {
+export default function RightBar() {
     const logged = useAppSelector((state) => state.auth.authState);
     const userName = useAppSelector((state) => state.auth.userData);
     const dispatch = useAppDispatch();
@@ -56,39 +57,46 @@ function RightBar() {
             <div className={styles.sidebarBlock}>
                 <div className={styles.sidebarList}>
                     <div className={styles.sidebarItem}>
-                        <a className={styles.sidebarLink} href="#">
+                        <Link
+                            className={styles.sidebarLink}
+                            href="/tracks/category/1"
+                        >
                             <Image
                                 src={playList01}
                                 alt="day's playlist"
                                 width={250}
                                 height={170}
                             />
-                        </a>
+                        </Link>
                     </div>
                     <div className={styles.sidebarItem}>
-                        <a className={styles.sidebarLink} href="#">
+                        <Link
+                            className={styles.sidebarLink}
+                            href="/tracks/category/2"
+                        >
                             <Image
                                 src={playList02}
                                 alt="day's playlist"
                                 width={250}
                                 height={170}
                             />
-                        </a>
+                        </Link>
                     </div>
                     <div className={styles.sidebarItem}>
-                        <a className={styles.sidebarLink} href="#">
+                        <Link
+                            className={styles.sidebarLink}
+                            href="/tracks/category/3"
+                        >
                             <Image
                                 src={playList03}
                                 alt="day's playlist"
                                 width={250}
                                 height={170}
                             />
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>
         </div>
     );
 }
-
-export default RightBar;
