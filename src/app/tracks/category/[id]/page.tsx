@@ -10,7 +10,7 @@ export default async function CategoryPage({ params }: paramsCategory) {
 
     return (
         <>
-            <BodyGetTrack tracksData={tracksData} />
+            <BodyGetTrack tracksData={tracksData} params={params.id} />
         </>
     );
 }
