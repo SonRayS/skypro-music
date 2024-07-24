@@ -82,3 +82,8 @@
 .sidebarItem .sidebarLink img {
     padding-bottom: 20px;
 }
+
+.sidebarImg {
+    width: 100%;
+    height: auto;
+}

@@ -3,9 +3,6 @@
 import Image from "next/image";
 import styles from "./rightBar.module.css";
 import classNames from "classnames";
-import playList01 from "./playlist01.png";
-import playList02 from "./playlist01.png";
-import playList03 from "./playlist01.png";
 import { setAuthState, setUserData } from "@/store/features/authSlice";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { useEffect, useState } from "react";
@@ -62,10 +59,11 @@ export default function RightBar() {
                             href="/tracks/category/1"
                         >
                             <Image
-                                src={playList01}
-                                alt="day's playlist"
+                                className={styles.sidebarImg}
+                                src="/img/playlist01.png"
+                                alt="Плейлист дня"
                                 width={250}
-                                height={170}
+                                height={150}
                             />
                         </Link>
                     </div>
@@ -75,10 +73,11 @@ export default function RightBar() {
                             href="/tracks/category/2"
                         >
                             <Image
-                                src={playList02}
-                                alt="day's playlist"
+                                className={styles.sidebarImg}
+                                src="/img/playlist02.png"
+                                alt="100 танцевальных хитов"
                                 width={250}
-                                height={170}
+                                height={150}
                             />
                         </Link>
                     </div>
@@ -88,10 +87,11 @@ export default function RightBar() {
                             href="/tracks/category/3"
                         >
                             <Image
-                                src={playList03}
-                                alt="day's playlist"
+                                className={styles.sidebarImg}
+                                src="/img/playlist03.png"
+                                alt="Инди заряд"
                                 width={250}
-                                height={170}
+                                height={150}
                             />
                         </Link>
                     </div>
