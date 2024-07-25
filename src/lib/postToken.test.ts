@@ -1,5 +1,5 @@
 import fetchMock from "jest-fetch-mock";
-import { postToken } from "../components/api/token/token"; // Укажите правильный путь к вашему модулю
+import { postToken } from "@/app/components/api/token/token";
 
 // Определяем тип для ответа
 type TokenResponse = {

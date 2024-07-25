@@ -1,4 +1,4 @@
-import TimeFormat from "../components/setTime/setTime";
+import TimeFormat from "@/app/components/setTime/setTime";
 
 describe("TimeFormat Component", () => {
     it("should correctly format 0 seconds", () => {

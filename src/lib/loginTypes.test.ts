@@ -1,5 +1,5 @@
 import fetchMock from "jest-fetch-mock";
-import { postAuthUser } from "../components/api/login/login";
+import { postAuthUser } from "@/app/components/api/login/login";
 
 // Определяем тип для ответа
 type AuthUserResponse = {
