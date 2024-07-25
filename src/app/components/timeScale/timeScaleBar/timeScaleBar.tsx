@@ -3,14 +3,7 @@ import styles from "./timeScaleBar.module.css";
 import GetTimeControls from "../timePlayerControls/timePlayerControls";
 import classNames from "classnames";
 import ProgressBar from "../../progressBar/progressBar";
-import {
-    useState,
-    useRef,
-    useEffect,
-    MouseEventHandler,
-    useCallback,
-} from "react";
-import { ChangeEvent } from "react";
+import { useRef, useEffect, ChangeEvent, useCallback, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import {
     toggleShuffle,
@@ -18,12 +11,14 @@ import {
     setPreviousTrack,
     setIsPlaying,
     setCurrentTrack,
+    setVolume,
+    setCurrentTime,
 } from "@/store/features/playlistSlice";
 
 export default function TimeScale() {
     const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
-    const [currentTime, setCurrentTime] = useState<number>(0);
-    const [volume, setVolume] = useState<number>(0.5);
+    const currentTime = useAppSelector((state) => state.playlist.currentTime);
+    const volume = useAppSelector((state) => state.playlist.volume);
     const [repeat, setRepeat] = useState<boolean>(false);
     const audioRef = useRef<null | HTMLAudioElement>(null);
     const duration = audioRef.current?.duration || 0;
@@ -41,10 +36,16 @@ export default function TimeScale() {
         (state) => state.playlist.currentTrackIndex
     );
 
-    setCurrentTrack({
-        track: activePlaylist[currentTrackIndex!],
-        tracksData: activePlaylist,
-    });
+    useEffect(() => {
+        if (currentTrackIndex !== null) {
+            dispatch(
+                setCurrentTrack({
+                    track: activePlaylist[currentTrackIndex],
+                    tracksData: activePlaylist,
+                })
+            );
+        }
+    }, [currentTrackIndex, activePlaylist, dispatch]);
 
     if (audio) {
         audio.loop = repeat;
@@ -82,23 +83,35 @@ export default function TimeScale() {
     };
 
     useEffect(() => {
-        audio?.addEventListener("timeupdate", () =>
-            setCurrentTime(audio.currentTime)
-        );
-    }, [audio]);
-
-    const handleSeek = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-        if (audioRef.current) {
-            audioRef.current.currentTime = Number(event.target.value);
+        if (audio) {
+            audio.addEventListener("timeupdate", () => {
+                const currentTime = audio.currentTime;
+                dispatch(setCurrentTime(currentTime));
+            });
         }
-    }, []);
+    }, [audio, dispatch]);
 
-    const handleVolume = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-        if (audioRef.current) {
-            audioRef.current.volume = Number(event.target.value);
-            setVolume(audioRef.current.volume);
-        }
-    }, []);
+    const handleSeek = useCallback(
+        (event: ChangeEvent<HTMLInputElement>) => {
+            if (audioRef.current) {
+                const newTime = Number(event.target.value);
+                audioRef.current.currentTime = newTime;
+                dispatch(setCurrentTime(newTime));
+            }
+        },
+        [dispatch]
+    );
+
+    const handleVolume = useCallback(
+        (event: ChangeEvent<HTMLInputElement>) => {
+            if (audioRef.current) {
+                const newVolume = Number(event.target.value);
+                audioRef.current.volume = newVolume;
+                dispatch(setVolume(newVolume));
+            }
+        },
+        [dispatch]
+    );
 
     useEffect(() => {
         dispatch(setIsPlaying(true));
@@ -158,7 +171,9 @@ export default function TimeScale() {
                             ref={audioRef}
                             src={currentTrack.track_file}
                             onTimeUpdate={(e) =>
-                                setCurrentTime(e.currentTarget.currentTime)
+                                dispatch(
+                                    setCurrentTime(e.currentTarget.currentTime)
+                                )
                             }
                         ></audio>
                         <ProgressBar
