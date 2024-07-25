@@ -60,7 +60,7 @@ export default function SignIn() {
                     })
                 );
                 console.log(data);
-                router.push("/");
+                router.push("/tracks");
             });
         });
     };
