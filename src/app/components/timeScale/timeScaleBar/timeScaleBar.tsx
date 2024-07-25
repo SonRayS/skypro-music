@@ -3,7 +3,13 @@ import styles from "./timeScaleBar.module.css";
 import GetTimeControls from "../timePlayerControls/timePlayerControls";
 import classNames from "classnames";
 import ProgressBar from "../../progressBar/progressBar";
-import { useState, useRef, useEffect, MouseEventHandler } from "react";
+import {
+    useState,
+    useRef,
+    useEffect,
+    MouseEventHandler,
+    useCallback,
+} from "react";
 import { ChangeEvent } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import {
@@ -81,20 +87,18 @@ export default function TimeScale() {
         );
     }, [audio]);
 
-    const handleSeek = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleSeek = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         if (audioRef.current) {
-            setCurrentTime(Number(event.target.value));
             audioRef.current.currentTime = Number(event.target.value);
         }
-    };
+    }, []);
 
-    const handleSetVolume = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleVolume = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         if (audioRef.current) {
-            audioRef.current.volume = volume;
-            setVolume(Number(event.target.value));
             audioRef.current.volume = Number(event.target.value);
+            setVolume(audioRef.current.volume);
         }
-    };
+    }, []);
 
     useEffect(() => {
         dispatch(setIsPlaying(true));
@@ -153,6 +157,9 @@ export default function TimeScale() {
                         <audio
                             ref={audioRef}
                             src={currentTrack.track_file}
+                            onTimeUpdate={(e) =>
+                                setCurrentTime(e.currentTarget.currentTime)
+                            }
                         ></audio>
                         <ProgressBar
                             max={duration}
@@ -271,7 +278,7 @@ export default function TimeScale() {
                                             step="0.01"
                                             name="range"
                                             value={volume}
-                                            onChange={handleSetVolume}
+                                            onChange={handleVolume}
                                         />
                                     </div>
                                 </div>

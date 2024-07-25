@@ -1,6 +1,6 @@
 .styledProgressInput {
-    --progress-height: 10px;
-    --progress-color: rgb(151, 15, 192);
+    --progress-height: 5px;
+    --progress-color: #b672ff;
     --progress-bg-color: #2e2e2e;
 
     margin: 0;
@@ -22,7 +22,7 @@
 }
 
 .styledProgressInput:hover {
-    --progress-height: 15px;
+    --progress-height: 8px;
 }
 
 /* Стили для WebKit браузеров */
