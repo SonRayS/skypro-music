@@ -20,6 +20,7 @@ export default function TimeScale() {
     const currentTime = useAppSelector((state) => state.playlist.currentTime);
     const volume = useAppSelector((state) => state.playlist.volume);
     const [repeat, setRepeat] = useState<boolean>(false);
+    const [audioSrc, setAudioSrc] = useState<string | null>(null);
     const audioRef = useRef<null | HTMLAudioElement>(null);
     const dispatch = useAppDispatch();
     const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
@@ -31,12 +32,9 @@ export default function TimeScale() {
 
     useEffect(() => {
         if (currentTrackIndex !== null) {
-            dispatch(
-                setCurrentTrack({
-                    track: playlist[currentTrackIndex],
-                    tracksData: playlist,
-                })
-            );
+            const track = playlist[currentTrackIndex];
+            dispatch(setCurrentTrack({ track, tracksData: playlist }));
+            setAudioSrc(playlist[currentTrackIndex!]?.track_file);
         }
     }, [currentTrackIndex, playlist, dispatch]);
 
@@ -44,7 +42,6 @@ export default function TimeScale() {
         if (audioRef.current) {
             const audio = audioRef.current;
             audio.loop = repeat;
-            audio.src = playlist[currentTrackIndex!]?.track_file || "";
 
             const handleEnded = () => {
                 if (isShuffle) {
@@ -96,35 +93,15 @@ export default function TimeScale() {
         }
     }, [currentTrackIndex, playlist, repeat, isPlaying, isShuffle, dispatch]);
 
-    function handleShuffleClick() {
-        dispatch(toggleShuffle());
-        if (!isPlaying && audioRef.current) {
-            dispatch(setIsPlaying(true));
-        }
-    }
-
-    function handleNextClick() {
-        dispatch(setNextTrack());
-        dispatch(setIsPlaying(false));
-    }
-
-    function handlePreviousClick() {
-        dispatch(setPreviousTrack());
-        dispatch(setIsPlaying(false));
-    }
-
-    function handleClickRepeat() {
-        setRepeat((prevState) => !prevState);
-    }
-
     const togglePlay = () => {
         if (currentTrack && audioRef.current) {
+            const audio = audioRef.current;
             if (isPlaying) {
                 dispatch(setIsPlaying(false));
-                audioRef.current.pause();
+                audio.pause();
             } else {
                 dispatch(setIsPlaying(true));
-                audioRef.current.play().catch((error) => {
+                audio.play().catch((error) => {
                     console.error("Ошибка воспроизведения трека: ", error);
                 });
             }
@@ -160,7 +137,12 @@ export default function TimeScale() {
                     <div className={styles.barContent}>
                         <audio
                             ref={audioRef}
-                            src={currentTrack.track_file}
+                            src={audioSrc || ""}
+                            onTimeUpdate={(e) =>
+                                dispatch(
+                                    setCurrentTime(e.currentTarget.currentTime)
+                                )
+                            }
                         ></audio>
                         <ProgressBar
                             max={audioRef.current?.duration || 0}
@@ -176,15 +158,25 @@ export default function TimeScale() {
                                 )}
                             >
                                 <GetTimeControls
-                                    handleClickRepeat={handleClickRepeat}
-                                    handleNextClick={handleNextClick}
-                                    handlePreviousClick={handlePreviousClick}
-                                    handleShuffleClick={handleShuffleClick}
+                                    handleClickRepeat={() => setRepeat(!repeat)}
+                                    handleNextClick={() => {
+                                        dispatch(setNextTrack());
+                                        dispatch(setIsPlaying(false));
+                                    }}
+                                    handlePreviousClick={() => {
+                                        dispatch(setPreviousTrack());
+                                        dispatch(setIsPlaying(false));
+                                    }}
+                                    handleShuffleClick={() => {
+                                        dispatch(toggleShuffle());
+                                        if (!isPlaying && audioRef.current) {
+                                            dispatch(setIsPlaying(true));
+                                        }
+                                    }}
                                     repeat={repeat}
                                     togglePlay={togglePlay}
                                     isPlaying={isPlaying}
                                 />
-
                                 <div
                                     className={classNames(
                                         styles.playerTrackPlay,
