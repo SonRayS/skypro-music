@@ -21,39 +21,86 @@ export default function TimeScale() {
     const volume = useAppSelector((state) => state.playlist.volume);
     const [repeat, setRepeat] = useState<boolean>(false);
     const audioRef = useRef<null | HTMLAudioElement>(null);
-    const duration = audioRef.current?.duration || 0;
-    const audio = audioRef.current;
-    const isShuffle = useAppSelector((state) => state.playlist.isShuffle);
     const dispatch = useAppDispatch();
     const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
     const playlist = useAppSelector((state) => state.playlist.playlist);
-    const shuffledPlaylist = useAppSelector(
-        (state) => state.playlist.shuffledPlaylist
-    );
-    const activePlaylist = isShuffle ? shuffledPlaylist : playlist;
-
     const currentTrackIndex = useAppSelector(
         (state) => state.playlist.currentTrackIndex
     );
+    const isShuffle = useAppSelector((state) => state.playlist.isShuffle);
 
     useEffect(() => {
         if (currentTrackIndex !== null) {
             dispatch(
                 setCurrentTrack({
-                    track: activePlaylist[currentTrackIndex],
-                    tracksData: activePlaylist,
+                    track: playlist[currentTrackIndex],
+                    tracksData: playlist,
                 })
             );
         }
-    }, [currentTrackIndex, activePlaylist, dispatch]);
+    }, [currentTrackIndex, playlist, dispatch]);
 
-    if (audio) {
-        audio.loop = repeat;
-    }
+    useEffect(() => {
+        if (audioRef.current) {
+            const audio = audioRef.current;
+            audio.loop = repeat;
+            audio.src = playlist[currentTrackIndex!]?.track_file || "";
+
+            const handleEnded = () => {
+                if (isShuffle) {
+                    const randomIndex = Math.floor(
+                        Math.random() * playlist.length
+                    );
+                    dispatch(
+                        setCurrentTrack({
+                            track: playlist[randomIndex],
+                            tracksData: playlist,
+                        })
+                    );
+                } else {
+                    if (currentTrackIndex! < playlist.length - 1) {
+                        dispatch(setNextTrack());
+                    } else {
+                        dispatch(setIsPlaying(false));
+                        dispatch(
+                            setCurrentTrack({
+                                track: playlist[0],
+                                tracksData: playlist,
+                            })
+                        );
+                    }
+                }
+            };
+
+            const handleTimeUpdate = () => {
+                dispatch(setCurrentTime(audio.currentTime));
+            };
+
+            const handleCanPlay = () => {
+                if (isPlaying) {
+                    audio.play().catch((error) => {
+                        console.error("Ошибка воспроизведения трека: ", error);
+                    });
+                }
+            };
+
+            audio.addEventListener("ended", handleEnded);
+            audio.addEventListener("timeupdate", handleTimeUpdate);
+            audio.addEventListener("canplay", handleCanPlay);
+
+            return () => {
+                audio.removeEventListener("ended", handleEnded);
+                audio.removeEventListener("timeupdate", handleTimeUpdate);
+                audio.removeEventListener("canplay", handleCanPlay);
+            };
+        }
+    }, [currentTrackIndex, playlist, repeat, isPlaying, isShuffle, dispatch]);
 
     function handleShuffleClick() {
         dispatch(toggleShuffle());
-        dispatch(setIsPlaying(true));
+        if (!isPlaying && audioRef.current) {
+            dispatch(setIsPlaying(true));
+        }
     }
 
     function handleNextClick() {
@@ -77,19 +124,12 @@ export default function TimeScale() {
                 audioRef.current.pause();
             } else {
                 dispatch(setIsPlaying(true));
-                audioRef.current.play();
+                audioRef.current.play().catch((error) => {
+                    console.error("Ошибка воспроизведения трека: ", error);
+                });
             }
         }
     };
-
-    useEffect(() => {
-        if (audio) {
-            audio.addEventListener("timeupdate", () => {
-                const currentTime = audio.currentTime;
-                dispatch(setCurrentTime(currentTime));
-            });
-        }
-    }, [audio, dispatch]);
 
     const handleSeek = useCallback(
         (event: ChangeEvent<HTMLInputElement>) => {
@@ -113,55 +153,6 @@ export default function TimeScale() {
         [dispatch]
     );
 
-    useEffect(() => {
-        dispatch(setIsPlaying(true));
-        if (audioRef.current && currentTrackIndex !== null) {
-            const audio = audioRef.current;
-
-            audio.src = activePlaylist[currentTrackIndex]?.track_file || "";
-            audio.loop = repeat;
-
-            const handleEnded = () => {
-                if (currentTrackIndex !== null) {
-                    if (currentTrackIndex < activePlaylist.length - 1) {
-                        dispatch(
-                            setCurrentTrack({
-                                track: activePlaylist[currentTrackIndex + 1],
-                                tracksData: activePlaylist,
-                            })
-                        );
-                    } else {
-                        audio.pause();
-                        dispatch(setIsPlaying(false));
-                        dispatch(
-                            setCurrentTrack({
-                                track: activePlaylist[0],
-                                tracksData: activePlaylist,
-                            })
-                        );
-                    }
-                }
-            };
-
-            audio.addEventListener("ended", handleEnded);
-
-            const playAudio = async () => {
-                try {
-                    await audio.play();
-                } catch (error) {
-                    console.error("Ошибка воспроизведения трека: ", error);
-                }
-            };
-
-            playAudio();
-
-            return () => {
-                audio.removeEventListener("ended", handleEnded);
-                audio.pause();
-            };
-        }
-    }, [currentTrackIndex, activePlaylist, repeat, dispatch]);
-
     return (
         <>
             {currentTrack && (
@@ -170,14 +161,9 @@ export default function TimeScale() {
                         <audio
                             ref={audioRef}
                             src={currentTrack.track_file}
-                            onTimeUpdate={(e) =>
-                                dispatch(
-                                    setCurrentTime(e.currentTarget.currentTime)
-                                )
-                            }
                         ></audio>
                         <ProgressBar
-                            max={duration}
+                            max={audioRef.current?.duration || 0}
                             value={currentTime}
                             step={0.1}
                             onChange={handleSeek}
