@@ -70,7 +70,7 @@ export default function SignIn() {
             <div className={styles.containerEnter}>
                 <div className={styles.modalBlock}>
                     <form className={styles.modalFormLogin} action="#">
-                        <Link href="/">
+                        <Link href="/tracks">
                             <div className={styles.modalLogo}>
                                 <Image
                                     src="/img/logo_modal.png"

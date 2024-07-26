@@ -27,7 +27,7 @@ export default function Header() {
         <>
             <nav className={classNames(styles.mainNav, styles.nav)}>
                 <div className={classNames(styles.navLogo, styles.logo)}>
-                    <Link href="/">
+                    <Link href="/tracks">
                         <Image
                             className={styles.logoImage}
                             src="/img/logo.png"
@@ -50,7 +50,7 @@ export default function Header() {
                     <div className={classNames(styles.navMenu, styles.menu)}>
                         <ul className={styles.menuList}>
                             <li className={styles.menuItem}>
-                                <a href="/" className={styles.menuLink}>
+                                <a href="/tracks" className={styles.menuLink}>
                                     Главное
                                 </a>
                             </li>

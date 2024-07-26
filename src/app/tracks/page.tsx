@@ -12,12 +12,12 @@ export default function MainTracks() {
     const dispatch = useAppDispatch();
     const track = useAppSelector((el) => el.playlist.playlist);
 
-    useEffect(() => {
-        getTrackList().then((response) => {
+    getTrackList().then((response) => {
+        if (track.length === 0) {
             dispatch(setCurrentTrack({ tracksData: response }));
             dispatch(setFilterPlaylist({ tracksData: response }));
-        });
-    }, [dispatch]);
+        }
+    });
 
     return (
         <>
