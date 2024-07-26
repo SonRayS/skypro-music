@@ -10,18 +10,12 @@ import { useAppSelector } from "@/hooks";
 
 type getTrackType = {
     tracksData: trackType[];
-    isFavorite?: boolean;
     params?: string;
 };
 
-export default function BodyGetTrack({
-    tracksData,
-    isFavorite,
-    params,
-}: getTrackType) {
+export default function BodyGetTrack({ tracksData, params }: getTrackType) {
     const newTrack = useAppSelector((el) => el.playlist.filterList);
     const newTracksData = newTrack.length > 0 ? newTrack : tracksData;
-    const isFavoriteStatus = isFavorite ? tracksData : newTracksData;
 
     let mainTitle: string = "";
     if (params) {
@@ -54,7 +48,7 @@ export default function BodyGetTrack({
                     )}
                 >
                     <TrackHeader />
-                    {isFavoriteStatus.map((el) => (
+                    {newTracksData.map((el) => (
                         <TrackComponent
                             key={el.id}
                             track={el}
