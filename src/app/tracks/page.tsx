@@ -1,5 +1,4 @@
 "use client";
-import { useEffect } from "react";
 import getTrackList from "../components/api/getTrackList/getTrackList";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import {
