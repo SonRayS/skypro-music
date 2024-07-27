@@ -9,20 +9,27 @@ import { setDislike, setLike } from "@/app/components/api/likes/likes";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { setAuthState, setUserData } from "@/store/features/authSlice";
-import { getFavoritesTracks } from "@/app/components/api/getMyTrackList/getMyTrackList";
 
 type trackTypes = {
     track: trackType;
     tracksData: trackType[];
+    isFavorite?: boolean;
 };
 
-export default function TrackComponent({ track, tracksData }: trackTypes) {
+export default function TrackComponent({
+    track,
+    tracksData,
+    isFavorite,
+}: trackTypes) {
     const dispatch = useAppDispatch();
     const router = useRouter();
     const userData = useAppSelector((state) => state.auth.userData);
     const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
     const [isLiked, setIsLiked] = useState(false);
     const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
+    const { stared_user } = track;
+    const isLikedByUser =
+        isFavorite || stared_user.find((u) => u.id === userData?.id);
 
     function handleTrackClick() {
         isPlaying && currentTrack === null
@@ -40,9 +47,9 @@ export default function TrackComponent({ track, tracksData }: trackTypes) {
     };
 
     const handleLikeClick = () => {
-        if (track) {
+        if (currentTrack) {
             isLiked
-                ? setDislike(userData?.access, currentTrack!.id)
+                ? setDislike(userData?.access, currentTrack.id)
                       .then(() => {})
                       .catch((error) => {
                           if (error) {
@@ -53,7 +60,7 @@ export default function TrackComponent({ track, tracksData }: trackTypes) {
                               }
                           }
                       })
-                : setLike(userData?.access, currentTrack!.id)
+                : setLike(userData?.access, currentTrack.id)
                       .then(() => {})
                       .catch((error) => {
                           if (error) {
@@ -65,10 +72,12 @@ export default function TrackComponent({ track, tracksData }: trackTypes) {
                           }
                       });
             setIsLiked(!isLiked);
-        } else {
-            alert("Выберите трек");
         }
     };
+
+    useEffect(() => {
+        setIsLiked(!!isLikedByUser);
+    }, [track, isFavorite, userData, isLikedByUser]);
 
     return (
         <>

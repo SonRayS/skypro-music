@@ -12,7 +12,7 @@ export default function MainTracks() {
     const track = useAppSelector((el) => el.playlist.playlist);
 
     getTrackList().then((response) => {
-        if (track.length === 0) {
+        if (track.length < response.length) {
             dispatch(setCurrentTrack({ tracksData: response }));
             dispatch(setFilterPlaylist({ tracksData: response }));
         }

@@ -2,41 +2,43 @@
 
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import BodyGetTrack from "../components/body/bodyMainComponent/bodyGetTrack/bodyGetTrack";
-import { useCallback, useEffect, useState } from "react";
 import { getFavoritesTracks } from "../components/api/getMyTrackList/getMyTrackList";
 import { setAuthState } from "@/store/features/authSlice";
-import { trackType } from "../components/types";
 import { useRouter } from "next/navigation";
+import {
+    setCurrentTrack,
+    setFilterPlaylist,
+} from "@/store/features/playlistSlice";
 
 export default function MainTracks() {
     const pageTracks = "myTracks";
+    const Favorite = true;
     const token = useAppSelector((state) => state.auth.userData.access);
-    const [tracksData, setTracksData] = useState<trackType[]>([]);
     const dispatch = useAppDispatch();
     const router = useRouter();
+    const track = useAppSelector((el) => el.playlist.playlist);
 
-    const getMyTracks = useCallback(() => {
-        getFavoritesTracks(token)
-            .then((data) => {
-                setTracksData(data);
-            })
-            .catch((error) => {
-                if (error.message === "401") {
-                    dispatch(setAuthState(false));
-                    router.push("/tracks");
-                } else {
-                    alert(error.message);
-                }
-            });
-    }, [dispatch, token, router]);
-
-    useEffect(() => {
-        getMyTracks();
-    }, [getMyTracks]);
+    getFavoritesTracks(token)
+        .then((data) => {
+            dispatch(setCurrentTrack({ tracksData: data }));
+            dispatch(setFilterPlaylist({ tracksData: data }));
+        })
+        .catch((error) => {
+            if (error.message === "401") {
+                dispatch(setAuthState(false));
+                router.push("/tracks");
+            } else {
+                alert(error.message);
+            }
+        });
 
     return (
         <>
-            <BodyGetTrack tracksData={tracksData} params={pageTracks} />
+            <BodyGetTrack
+                tracksData={track}
+                params={pageTracks}
+                isFavorite={Favorite}
+            />
         </>
     );
 }
