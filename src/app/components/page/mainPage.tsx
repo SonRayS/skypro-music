@@ -1,15 +1,18 @@
+"use client";
+
+import Image from "next/image";
 import Header from "../headerMenu/headerMenu";
-import Body from "../body/bodyMainComponent/bodyMainComponent";
 import RightBar from "../rightBar/rightBar";
 import Selector from "../selector/selector";
+import gifLoading from "./NsNE.gif";
 
 function MainPage() {
     return (
         <>
             <Selector>
                 <Header />
-                <Body />
                 <RightBar />
+                <Image src={gifLoading} alt="loading..." />
             </Selector>
         </>
     );

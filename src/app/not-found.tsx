@@ -7,7 +7,7 @@ export default function NotFoundPage() {
     const router = useRouter();
 
     const click = () => {
-        router.push("/");
+        router.push("/tracks");
     };
     return (
         <>

@@ -1,40 +1,41 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+const apiUrlLogin =
+    "https://webdev-music-003b5b991590.herokuapp.com/user/login/";
 
-const api_loginUrl = "https://skypro-music-api.skyeng.tech/user/login/";
-
-type authType = {
+type SigninType = {
     email: string;
     password: string;
 };
 
-const accessToken = "token";
-
-// Создание асинхронного экшена для получения данных пользователя
-const getUser = createAsyncThunk(
-    api_loginUrl, // Тип экшена
-    async ({ email, password }: authType) => {
-        // Асинхронная функция
-        // Отправка POST-запроса к API для авторизации
-        const response = await fetch(api_loginUrl, {
+export async function postAuthUser({ email, password }: SigninType) {
+    try {
+        const res = await fetch(apiUrlLogin, {
             method: "POST",
-            body: JSON.stringify({ email, password }), // Передача данных пользователя
+            body: JSON.stringify({
+                email: email,
+                password: password,
+            }),
             headers: {
-                "Content-Type": "application/json", // Установка заголовков
-                Authorization: `Bearer ${accessToken}`,
+                "content-type": "application/json",
             },
         });
 
-        // Преобразование ответа в JSON
-        const date = await response.json();
-
-        // Проверка успешности запроса
-        if (response.status === 401) {
-            alert(`Error 401 :${date.detail}`);
-            throw new Error(date.detail); // В случае ошибки выбрасывается исключение
+        if (!res.ok) {
+            if (res.status === 400) {
+                const errorData = await res.json();
+                throw new Error(JSON.stringify(errorData));
+            } else if (res.status === 401) {
+                const errorData = await res.json();
+                throw new Error(errorData.detail || "Ошибка авторизации");
+            } else if (res.status === 500) {
+                throw new Error("Сервер сломался");
+            } else {
+                throw new Error("Неизвестная ошибка");
+            }
         }
 
-        return date; // Возвращение данных пользователя
+        const data = await res.json();
+        return data;
+    } catch (error: any) {
+        throw new Error(error.message);
     }
-);
-
-export default getUser;
+}

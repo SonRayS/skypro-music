@@ -4,22 +4,73 @@ import classNames from "classnames";
 import { trackType } from "@/app/components/types";
 import TimeFormat from "@/app/components/setTime/setTime";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import { setCurrentTrack } from "@/store/features/playlistSlice";
+import { setCurrentTrack, setIsPlaying } from "@/store/features/playlistSlice";
+import { setDislike, setLike } from "@/app/components/api/likes/likes";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { setAuthState, setUserData } from "@/store/features/authSlice";
 
 type trackTypes = {
     track: trackType;
     tracksData: trackType[];
 };
 
-function TrackComponent({ track, tracksData }: trackTypes) {
+export default function TrackComponent({ track, tracksData }: trackTypes) {
     const dispatch = useAppDispatch();
+    const router = useRouter();
+    const userData = useAppSelector((state) => state.auth.userData);
+    const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
+    const [isLiked, setIsLiked] = useState(false);
+    const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
 
     function handleTrackClick() {
-        dispatch(setCurrentTrack({ track, tracksData }));
+        isPlaying && currentTrack === null
+            ? (dispatch(setCurrentTrack({ track, tracksData })),
+              dispatch(setIsPlaying(false)))
+            : (dispatch(setCurrentTrack({ track, tracksData })),
+              dispatch(setIsPlaying(true)));
     }
 
-    const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
-    const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
+    const logout = () => {
+        dispatch(setAuthState(false));
+        dispatch(setUserData(null));
+    };
+
+    const handleLikeClick = () => {
+        if (userData) {
+            setIsLiked((prevState) => !prevState);
+            if (isLiked && currentTrack?.id) {
+                setDislike(userData?.access, currentTrack.id)
+                    .then(() => {})
+                    .catch((error) => {
+                        if (error) {
+                            const errorData = JSON.parse(error.message);
+                            if (errorData.status === 401) {
+                                logout();
+                                router.push("/signin");
+                            }
+                        }
+                    });
+            } else if (!isLiked && currentTrack?.id) {
+                setLike(userData?.access, currentTrack.id)
+                    .then(() => {})
+                    .catch((error) => {
+                        if (error) {
+                            const errorData = JSON.parse(error.message);
+                            if (errorData.status === 401) {
+                                logout();
+                                router.push("/signin");
+                            }
+                        }
+                    });
+            } else {
+                throw new Error("Что то идет не так");
+            }
+        } else {
+            alert("Функция доступна только авторизованным пользователям");
+            return;
+        }
+    };
 
     return (
         <>
@@ -42,11 +93,11 @@ function TrackComponent({ track, tracksData }: trackTypes) {
                                 <div className={styles.trackTitleImage}>
                                     {isPlaying ? (
                                         <svg className={styles.trackActiveSvg}>
-                                            <use href="img/icon/sprite.svg#icon-isPlaying" />
+                                            <use href="/img/icon/sprite.svg#icon-isPlaying" />
                                         </svg>
                                     ) : (
                                         <svg className={styles.trackTitleSvg}>
-                                            <use href="img/icon/sprite.svg#icon-isPlaying" />
+                                            <use href="/img/icon/sprite.svg#icon-isPlaying" />
                                         </svg>
                                     )}
                                 </div>
@@ -71,7 +122,19 @@ function TrackComponent({ track, tracksData }: trackTypes) {
                             </div>
                             <div className={styles.trackTime}>
                                 <svg className={styles.trackTimeSvg}>
-                                    <use href="img/icon/sprite.svg#icon-like" />
+                                    <use
+                                        className={classNames(
+                                            `${styles.useLike} ${
+                                                isLiked && styles.iconLikeActive
+                                            }`
+                                        )}
+                                        onClick={handleLikeClick}
+                                        href={`/img/icon/sprite.svg#${
+                                            isLiked
+                                                ? "icon-like-active"
+                                                : "icon-like"
+                                        }`}
+                                    />
                                 </svg>
                                 <span className={styles.trackTimeText}>
                                     <TimeFormat
@@ -100,7 +163,7 @@ function TrackComponent({ track, tracksData }: trackTypes) {
                             <div className={styles.trackTitle}>
                                 <div className={styles.trackTitleImage}>
                                     <svg className={styles.trackTitleSvg}>
-                                        <use href="img/icon/sprite.svg#icon-note" />
+                                        <use href="/img/icon/sprite.svg#icon-note" />
                                     </svg>
                                 </div>
                                 <div className={styles.trackTitleText}>
@@ -124,7 +187,15 @@ function TrackComponent({ track, tracksData }: trackTypes) {
                             </div>
                             <div className={styles.trackTime}>
                                 <svg className={styles.trackTimeSvg}>
-                                    <use href="img/icon/sprite.svg#icon-like" />
+                                    <use
+                                        className={styles.useLike}
+                                        onClick={handleLikeClick}
+                                        href={`/img/icon/sprite.svg#${
+                                            isLiked
+                                                ? "icon-like-active"
+                                                : "icon-like"
+                                        }`}
+                                    />
                                 </svg>
                                 <span className={styles.trackTimeText}>
                                     <TimeFormat
@@ -139,5 +210,3 @@ function TrackComponent({ track, tracksData }: trackTypes) {
         </>
     );
 }
-
-export default TrackComponent;
