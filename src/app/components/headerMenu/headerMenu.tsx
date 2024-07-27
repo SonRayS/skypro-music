@@ -50,9 +50,12 @@ export default function Header() {
                     <div className={classNames(styles.navMenu, styles.menu)}>
                         <ul className={styles.menuList}>
                             <li className={styles.menuItem}>
-                                <a href="/tracks" className={styles.menuLink}>
+                                <Link
+                                    href="/tracks"
+                                    className={styles.menuLink}
+                                >
                                     Главное
-                                </a>
+                                </Link>
                             </li>
                             <li className={styles.menuItem}>
                                 {logged ? (

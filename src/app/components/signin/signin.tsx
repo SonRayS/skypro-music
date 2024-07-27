@@ -104,13 +104,16 @@ export default function SignIn() {
                             className={styles.modalBtnEnter}
                             onClick={handleSignin}
                         >
-                            <a>Войти</a>
+                            <p>Войти</p>
                         </button>
 
                         <button className={styles.modalBtnSignUp}>
-                            <a className={styles.modalBtnText} href="/signup">
+                            <Link
+                                className={styles.modalBtnText}
+                                href="/signup"
+                            >
                                 Зарегистрироваться
-                            </a>
+                            </Link>
                         </button>
                     </form>
                 </div>
