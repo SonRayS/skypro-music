@@ -5,10 +5,8 @@ import BodyGetTrack from "../components/body/bodyMainComponent/bodyGetTrack/body
 import { getFavoritesTracks } from "../components/api/getMyTrackList/getMyTrackList";
 import { setAuthState } from "@/store/features/authSlice";
 import { useRouter } from "next/navigation";
-import {
-    setCurrentTrack,
-    setFilterPlaylist,
-} from "@/store/features/playlistSlice";
+import { useEffect, useState } from "react";
+import { trackType } from "../components/types";
 
 export default function MainTracks() {
     const pageTracks = "myTracks";
@@ -16,26 +14,27 @@ export default function MainTracks() {
     const token = useAppSelector((state) => state.auth.userData.access);
     const dispatch = useAppDispatch();
     const router = useRouter();
-    const track = useAppSelector((el) => el.playlist.playlist);
+    const [tracksData, setTracksData] = useState<trackType[]>([]);
 
-    getFavoritesTracks(token)
-        .then((data) => {
-            dispatch(setCurrentTrack({ tracksData: data }));
-            dispatch(setFilterPlaylist({ tracksData: data }));
-        })
-        .catch((error) => {
-            if (error.message === "401") {
-                dispatch(setAuthState(false));
-                router.push("/tracks");
-            } else {
-                alert(error.message);
-            }
-        });
+    useEffect(() => {
+        getFavoritesTracks(token)
+            .then((data) => {
+                setTracksData(data);
+            })
+            .catch((error) => {
+                if (error.message === "401") {
+                    dispatch(setAuthState(false));
+                    router.push("/signin");
+                } else {
+                    alert(error.message);
+                }
+            });
+    }, [dispatch, router, token]);
 
     return (
         <>
             <BodyGetTrack
-                tracksData={track}
+                tracksData={tracksData}
                 params={pageTracks}
                 isFavorite={Favorite}
             />

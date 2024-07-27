@@ -29,7 +29,7 @@ export default function TrackComponent({
     const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
     const { stared_user } = track;
     const isLikedByUser =
-        isFavorite || stared_user.find((u) => u.id === userData?.id);
+        isFavorite || stared_user.find((el) => el.id === userData.id);
 
     function handleTrackClick() {
         isPlaying && currentTrack === null

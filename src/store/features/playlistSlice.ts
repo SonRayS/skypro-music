@@ -14,6 +14,7 @@ type playlistStateType = {
     isPlaying: boolean;
     volume: number;
     currentTime: number;
+    searchValue: string;
 };
 
 const initialState: playlistStateType = {
@@ -29,6 +30,7 @@ const initialState: playlistStateType = {
     isPlaying: false,
     volume: 0.5, // Начальное значение громкости
     currentTime: 0,
+    searchValue: "", // Начальное значение поискового запроса
 };
 
 const playlistSlice = createSlice({
@@ -76,6 +78,7 @@ const playlistSlice = createSlice({
             state.currentTrackIndex = action.payload.tracksData.indexOf(
                 action.payload.track!
             );
+            state.isPlaying = true;
         },
         setNextTrack: (state) => {
             const playlist = state.isShuffle
@@ -118,6 +121,25 @@ const playlistSlice = createSlice({
         setCurrentTime: (state, action: PayloadAction<number>) => {
             state.currentTime = action.payload;
         },
+        setSearchFilters: (
+            state,
+            action: PayloadAction<{ searchValue: string }>
+        ) => {
+            const { searchValue } = action.payload;
+            state.searchValue = searchValue;
+            state.filterPlaylist = state.playlist.filter(
+                (track) =>
+                    track.album
+                        .toLowerCase()
+                        .includes(searchValue.toLowerCase()) ||
+                    track.author
+                        .toLowerCase()
+                        .includes(searchValue.toLowerCase()) ||
+                    track.genre
+                        .toLowerCase()
+                        .includes(searchValue.toLowerCase())
+            );
+        },
     },
 });
 
@@ -125,6 +147,7 @@ export const {
     setActiveTitle,
     setFilterList,
     setFilterPlaylist,
+    setSearchFilters,
     setCurrentTrack,
     setNextTrack,
     setPreviousTrack,
@@ -133,4 +156,5 @@ export const {
     setVolume,
     setCurrentTime,
 } = playlistSlice.actions;
+
 export const playlistReducer = playlistSlice.reducer;
