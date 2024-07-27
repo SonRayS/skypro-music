@@ -23,10 +23,6 @@ export default function SignIn() {
         password: "",
     });
 
-    const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-    console.log(errorMessage);
-
     const router = useRouter();
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

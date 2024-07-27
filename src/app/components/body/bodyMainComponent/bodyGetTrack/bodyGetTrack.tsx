@@ -17,8 +17,6 @@ export default function BodyGetTrack({ tracksData, params }: getTrackType) {
     const newTrack = useAppSelector((el) => el.playlist.filterList);
     const newTracksData = newTrack.length > 0 ? newTrack : tracksData;
 
-    console.log(newTracksData);
-
     let mainTitle: string = "";
     if (params) {
         if (params === "1") {
