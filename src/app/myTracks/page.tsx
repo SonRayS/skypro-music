@@ -31,7 +31,7 @@ export default function MainTracks() {
     }, [dispatch, token, router]);
 
     useEffect(() => {
-        getMyTracks;
+        getMyTracks();
     }, [getMyTracks]);
 
     return (
