@@ -2,7 +2,7 @@
 
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import BodyGetTrack from "../components/body/bodyMainComponent/bodyGetTrack/bodyGetTrack";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getFavoritesTracks } from "../components/api/getMyTrackList/getMyTrackList";
 import { setAuthState } from "@/store/features/authSlice";
 import { trackType } from "../components/types";
@@ -15,7 +15,7 @@ export default function MainTracks() {
     const dispatch = useAppDispatch();
     const router = useRouter();
 
-    useEffect(() => {
+    const getMyTracks = useCallback(() => {
         getFavoritesTracks(token)
             .then((data) => {
                 setTracksData(data);
@@ -29,6 +29,10 @@ export default function MainTracks() {
                 }
             });
     }, [dispatch, token, router]);
+
+    useEffect(() => {
+        getMyTracks;
+    }, [getMyTracks]);
 
     return (
         <>
