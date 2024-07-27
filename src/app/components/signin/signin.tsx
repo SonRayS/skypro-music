@@ -42,7 +42,7 @@ export default function SignIn() {
                     setUserData({
                         username: data.username,
                         email: data.email,
-                        id: data._id,
+                        id: data.id,
                     })
                 );
 

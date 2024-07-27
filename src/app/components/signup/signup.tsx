@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 type SignupType = {
     email: string;
     username: string;
-    passwordfirst: string;
+    password: string;
     passwordrepeat: string;
 };
 
@@ -25,7 +25,7 @@ export default function SignUp() {
     const [loginData, setLoginData] = useState<SignupType>({
         email: "",
         username: "",
-        passwordfirst: "",
+        password: "",
         passwordrepeat: "",
     });
 
@@ -41,7 +41,7 @@ export default function SignUp() {
             }
         }
 
-        if (name === "passwordfirst") {
+        if (name === "password") {
             if (
                 value.length > 7 &&
                 /[a-zA-z]/.test(value) &&
@@ -69,8 +69,7 @@ export default function SignUp() {
         setIsSubmitted(true);
         if (
             loginData.email === "" ||
-            (loginData.passwordfirst === "" &&
-                loginData.passwordfirst.length < 8) ||
+            (loginData.password === "" && loginData.password.length < 8) ||
             loginData.passwordrepeat === ""
         ) {
             setIsNotFilled(true);
@@ -78,7 +77,7 @@ export default function SignUp() {
         }
         if (
             loginData.email !== "" &&
-            loginData.passwordfirst === loginData.passwordrepeat
+            loginData.password === loginData.passwordrepeat
         ) {
             setIsNotFilled(false);
         }
@@ -128,10 +127,10 @@ export default function SignUp() {
                                 onChange={hanleInputChange}
                                 className={classNames(
                                     styles.modalInput,
-                                    styles.passwordFirst
+                                    styles.password
                                 )}
                                 type="password"
-                                name="passwordfirst"
+                                name="password"
                                 placeholder="Пароль"
                             />
                             {passwordActive && (

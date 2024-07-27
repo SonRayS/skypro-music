@@ -1,9 +1,9 @@
 import { userType } from "../../types";
 
-const apiUrlToken =
-    "https://webdev-music-003b5b991590.herokuapp.com/user/token/";
-const apiUtlTokenRefresh =
-    "https://webdev-music-003b5b991590.herokuapp.com/user/token/refresh/";
+const apiUrlUser = "https://skypro-music-api.skyeng.tech/user/";
+
+const token = "token/";
+const tokenRefresh = "token/refresh/";
 
 type SigninType = {
     email: string;
@@ -13,7 +13,7 @@ type SigninType = {
 //Получить токен
 
 export async function postToken({ email, password }: SigninType) {
-    const res = await fetch(apiUrlToken, {
+    const res = await fetch(apiUrlUser + token, {
         method: "POST",
         body: JSON.stringify({
             email: email,
@@ -33,7 +33,7 @@ export async function postToken({ email, password }: SigninType) {
 //Обновить токен
 
 export async function postRefreshToken({ refresh }: userType) {
-    const res = await fetch(apiUtlTokenRefresh, {
+    const res = await fetch(apiUrlUser + tokenRefresh, {
         method: "POST",
         body: JSON.stringify({
             refresh: refresh,

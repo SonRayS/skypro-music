@@ -1,5 +1,4 @@
-const apiUrlLogin =
-    "https://webdev-music-003b5b991590.herokuapp.com/user/login/";
+const apiUrlUser = "https://skypro-music-api.skyeng.tech/user/login/";
 
 type SigninType = {
     email: string;
@@ -8,7 +7,7 @@ type SigninType = {
 
 export async function postAuthUser({ email, password }: SigninType) {
     try {
-        const res = await fetch(apiUrlLogin, {
+        const res = await fetch(apiUrlUser, {
             method: "POST",
             body: JSON.stringify({
                 email: email,
