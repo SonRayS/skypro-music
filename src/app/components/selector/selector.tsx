@@ -1,7 +1,7 @@
 import styles from "./selector.module.css";
 import TimeScale from "../timeScale/timeScaleBar/timeScaleBar";
 
-function Selector({ children }: { children: React.ReactNode }) {
+export default function Selector({ children }: { children: React.ReactNode }) {
     return (
         <>
             <meta charSet="UTF-8" />
@@ -21,5 +21,3 @@ function Selector({ children }: { children: React.ReactNode }) {
         </>
     );
 }
-
-export default Selector;

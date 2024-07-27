@@ -17,6 +17,38 @@
     margin-bottom: 12px;
 }
 
+.useLike {
+    cursor: pointer;
+}
+
+.trackTimeSvg {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    transition: transform 0.3s, fill 0.3s;
+}
+
+.trackTimeSvg:active {
+    transform: scale(1.2);
+}
+
+.icon-like-active {
+    fill: red;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
 .trackTitle {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -29,6 +61,7 @@
     -ms-flex-align: center;
     align-items: center;
     width: 447px;
+    cursor: pointer;
 }
 
 .trackTitleImage {

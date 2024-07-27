@@ -1,7 +1,7 @@
 import styles from "./bodySearch.module.css";
 import classNames from "classnames";
 
-function Search() {
+export default function Search() {
     return (
         <div className={classNames(styles.centerBlockSearch, styles.search)}>
             <svg className={styles.searchSvg}>
@@ -16,5 +16,3 @@ function Search() {
         </div>
     );
 }
-
-export default Search;

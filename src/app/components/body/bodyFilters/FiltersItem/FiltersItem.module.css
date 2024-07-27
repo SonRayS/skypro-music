@@ -10,6 +10,42 @@
     margin-right: 10px;
 }
 
+.activeFilter {
+    border-color: #ffffff;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.activeFilter:active {
+    border-color: #ad61ff;
+    color: #ad61ff;
+    cursor: pointer;
+}
+
+.filterNumber {
+    position: absolute;
+    right: 0px;
+    bottom: 26px;
+    width: 26px;
+    height: 26px;
+    border-radius: 13px;
+    background: #ad61ff;
+    font-family: "Montserrat";
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 13px;
+    text-align: center;
+    padding: 6px;
+}
+
+.trackListElement {
+}
+
+.trackListElement.selectedItem {
+    border-color: #ad61ff;
+    color: #ad61ff;
+}
+
 .trackList {
     background-color: #313131;
     border: none;
@@ -68,8 +104,9 @@
 }
 
 .btnText:hover {
-    border-color: #d9b6ff;
-    color: #d9b6ff;
+    border-color: #ad61ff;
+    color: #ad61ff;
+    cursor: pointer;
 }
 
 .btnTextIsOpen {

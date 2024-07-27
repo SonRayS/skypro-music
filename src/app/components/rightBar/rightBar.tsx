@@ -1,59 +1,102 @@
+"use client";
+
 import Image from "next/image";
 import styles from "./rightBar.module.css";
 import classNames from "classnames";
-import playList01 from "./playlist01.png";
-import playList02 from "./playlist01.png";
-import playList03 from "./playlist01.png";
+import { setAuthState, setUserData } from "@/store/features/authSlice";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 
-function RightBar() {
+export default function RightBar() {
+    const logged = useAppSelector((state) => state.auth.authState);
+    const userName = useAppSelector((state) => state.auth.userData);
+    const dispatch = useAppDispatch();
+    const [isLogged, setIsLogged] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsLogged(logged);
+    }, [logged]);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    const logout = () => {
+        dispatch(setAuthState(false));
+        dispatch(setUserData(null));
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+    };
+
+    if (!isMounted) {
+        return null; // Пока компонент не смонтирован, ничего не рендерим
+    }
+
     return (
-        <>
-            <div className={classNames(styles.mainSidebar, styles.sidebar)}>
-                <div className={styles.sidebarPersonal}>
-                    <p className={styles.sidebarPersonalName}>Sergey.Ivanov</p>
-                    <div className={styles.sidebarIcon}>
-                        <svg>
+        <div className={classNames(styles.mainSidebar, styles.sidebar)}>
+            <div className={styles.sidebarPersonal}>
+                {isLogged && (
+                    <>
+                        <div>
+                            <p className={styles.sidebarPersonalName}>
+                                {userName?.email}
+                            </p>
+                        </div>
+
+                        <svg onClick={logout} className={styles.sidebarIcon}>
                             <use xlinkHref="img/icon/sprite.svg#logout" />
                         </svg>
+                    </>
+                )}
+            </div>
+            <div className={styles.sidebarBlock}>
+                <div className={styles.sidebarList}>
+                    <div className={styles.sidebarItem}>
+                        <Link
+                            className={styles.sidebarLink}
+                            href="/tracks/category/1"
+                        >
+                            <Image
+                                className={styles.sidebarImg}
+                                src="/img/playlist01.png"
+                                alt="Плейлист дня"
+                                width={250}
+                                height={150}
+                            />
+                        </Link>
                     </div>
-                </div>
-                <div className={styles.sidebarBlock}>
-                    <div className={styles.sidebarList}>
-                        <div className={styles.sidebarItem}>
-                            <a className={styles.sidebarLink} href="#">
-                                <Image
-                                    src={playList01}
-                                    alt="day's playlist"
-                                    width={250}
-                                    height={170}
-                                />
-                            </a>
-                        </div>
-                        <div className={styles.sidebarItem}>
-                            <a className={styles.sidebarLink} href="#">
-                                <Image
-                                    src={playList02}
-                                    alt="day's playlist"
-                                    width={250}
-                                    height={170}
-                                />
-                            </a>
-                        </div>
-                        <div className={styles.sidebarItem}>
-                            <a className={styles.sidebarLink} href="#">
-                                <Image
-                                    src={playList03}
-                                    alt="day's playlist"
-                                    width={250}
-                                    height={170}
-                                />
-                            </a>
-                        </div>
+                    <div className={styles.sidebarItem}>
+                        <Link
+                            className={styles.sidebarLink}
+                            href="/tracks/category/2"
+                        >
+                            <Image
+                                className={styles.sidebarImg}
+                                src="/img/playlist02.png"
+                                alt="100 танцевальных хитов"
+                                width={250}
+                                height={150}
+                            />
+                        </Link>
+                    </div>
+                    <div className={styles.sidebarItem}>
+                        <Link
+                            className={styles.sidebarLink}
+                            href="/tracks/category/3"
+                        >
+                            <Image
+                                className={styles.sidebarImg}
+                                src="/img/playlist03.png"
+                                alt="Инди заряд"
+                                width={250}
+                                height={150}
+                            />
+                        </Link>
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
-
-export default RightBar;
