@@ -2,7 +2,7 @@ import Header from "../components/headerMenu/headerMenu";
 import RightBar from "../components/rightBar/rightBar";
 import Selector from "../components/selector/selector";
 
-/* isMain */
+/* isFavorite */
 
 export default function TracksLayout({
     children,

@@ -10,12 +10,14 @@ import { useAppSelector } from "@/hooks";
 
 type getTrackType = {
     tracksData: trackType[];
-    params?: string;
+    params?: string | boolean;
 };
 
 export default function BodyGetTrack({ tracksData, params }: getTrackType) {
     const newTrack = useAppSelector((el) => el.playlist.filterList);
     const newTracksData = newTrack.length > 0 ? newTrack : tracksData;
+
+    console.log(newTracksData);
 
     let mainTitle: string = "";
     if (params) {
@@ -23,8 +25,10 @@ export default function BodyGetTrack({ tracksData, params }: getTrackType) {
             mainTitle = "Плейлист дня";
         } else if (params === "2") {
             mainTitle = "100 танцевальных хитов";
-        } else {
+        } else if (params === "3") {
             mainTitle = "Инди-заряд";
+        } else {
+            mainTitle = "Мой плейлист";
         }
     } else {
         mainTitle = "Треки";

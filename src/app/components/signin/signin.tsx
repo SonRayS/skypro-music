@@ -4,7 +4,7 @@ import Link from "next/link";
 import styles from "./signin.module.css";
 import Image from "next/image";
 import classNames from "classnames";
-import { useAppDispatch } from "@/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 import { useState } from "react";
 import { postAuthUser } from "../api/login/login";
 import { postToken } from "../api/token/token";
@@ -38,31 +38,33 @@ export default function SignIn() {
         });
     };
 
-    const handleSignin = async (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-        setErrorMessage(null);
-
-        await postAuthUser(loginData).then((data) => {
-            dispatch(setAuthState(true));
-            dispatch(
-                setUserData({
-                    username: data.username,
-                    email: data.email,
-                })
-            );
-            localStorage.setItem("user", JSON.stringify(data));
-            postToken(loginData).then((data) => {
-                localStorage.setItem("token", JSON.stringify(data.access));
+    const handleSignin = async () => {
+        await postAuthUser(loginData)
+            .then((data) => {
+                dispatch(setAuthState(true));
                 dispatch(
                     setUserData({
-                        refresh: data.refresh,
-                        access: data.access,
+                        username: data.username,
+                        email: data.email,
+                        id: data._id,
                     })
                 );
-                console.log(data);
-                router.push("/tracks");
+
+                localStorage.setItem("user", JSON.stringify(data));
+                postToken(loginData).then((data) => {
+                    localStorage.setItem("token", JSON.stringify(data.access));
+                    dispatch(
+                        setUserData({
+                            refresh: data.refresh,
+                            access: data.access,
+                        })
+                    );
+                    router.push("/tracks");
+                });
+            })
+            .catch((error) => {
+                alert(error);
             });
-        });
     };
 
     return (

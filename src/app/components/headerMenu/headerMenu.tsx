@@ -59,12 +59,12 @@ export default function Header() {
                             </li>
                             <li className={styles.menuItem}>
                                 {logged ? (
-                                    <a
-                                        href="/myPlaylist"
+                                    <Link
+                                        href="/myTracks"
                                         className={styles.menuLink}
                                     >
                                         Мой плейлист
-                                    </a>
+                                    </Link>
                                 ) : (
                                     <Link
                                         href="/signin"
@@ -78,7 +78,7 @@ export default function Header() {
                                 {logged ? (
                                     <Link
                                         onClick={logout}
-                                        href="/signin"
+                                        href="/tracks"
                                         className={styles.menuLink}
                                     >
                                         Выйти

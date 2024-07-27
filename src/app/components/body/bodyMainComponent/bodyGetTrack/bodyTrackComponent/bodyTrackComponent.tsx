@@ -7,8 +7,9 @@ import { useAppDispatch, useAppSelector } from "@/hooks";
 import { setCurrentTrack, setIsPlaying } from "@/store/features/playlistSlice";
 import { setDislike, setLike } from "@/app/components/api/likes/likes";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { setAuthState, setUserData } from "@/store/features/authSlice";
+import { getFavoritesTracks } from "@/app/components/api/getMyTrackList/getMyTrackList";
 
 type trackTypes = {
     track: trackType;
@@ -34,41 +35,38 @@ export default function TrackComponent({ track, tracksData }: trackTypes) {
     const logout = () => {
         dispatch(setAuthState(false));
         dispatch(setUserData(null));
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
     };
 
     const handleLikeClick = () => {
-        if (userData) {
-            setIsLiked((prevState) => !prevState);
-            if (isLiked && currentTrack?.id) {
-                setDislike(userData?.access, currentTrack.id)
-                    .then(() => {})
-                    .catch((error) => {
-                        if (error) {
-                            const errorData = JSON.parse(error.message);
-                            if (errorData.status === 401) {
-                                logout();
-                                router.push("/signin");
-                            }
-                        }
-                    });
-            } else if (!isLiked && currentTrack?.id) {
-                setLike(userData?.access, currentTrack.id)
-                    .then(() => {})
-                    .catch((error) => {
-                        if (error) {
-                            const errorData = JSON.parse(error.message);
-                            if (errorData.status === 401) {
-                                logout();
-                                router.push("/signin");
-                            }
-                        }
-                    });
-            } else {
-                throw new Error("Что то идет не так");
-            }
+        if (track) {
+            isLiked
+                ? setDislike(userData?.access, currentTrack!.id)
+                      .then(() => {})
+                      .catch((error) => {
+                          if (error) {
+                              const errorData = JSON.parse(error.message);
+                              if (errorData.status === 401) {
+                                  logout();
+                                  router.push("/signin");
+                              }
+                          }
+                      })
+                : setLike(userData?.access, currentTrack!.id)
+                      .then(() => {})
+                      .catch((error) => {
+                          if (error) {
+                              const errorData = JSON.parse(error.message);
+                              if (errorData.status === 401) {
+                                  logout();
+                                  router.push("/signin");
+                              }
+                          }
+                      });
+            setIsLiked(!isLiked);
         } else {
-            alert("Функция доступна только авторизованным пользователям");
-            return;
+            alert("Выберите трек");
         }
     };
 
