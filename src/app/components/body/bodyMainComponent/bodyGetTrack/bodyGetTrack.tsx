@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks";
 import {
     resetSearchFilters,
     setFilterPlaylist,
+    setSearchFilters,
 } from "@/store/features/playlistSlice";
 import { useEffect } from "react";
 
@@ -27,18 +28,17 @@ export default function BodyGetTrack({
     const dispatch = useAppDispatch();
     const filterList = useAppSelector((state) => state.playlist.filterList);
     const searchValue = useAppSelector((state) => state.playlist.searchValue);
-    const filteredTracks =
-        filterList.length > 0 && searchValue.length !== 0
-            ? filterList
-            : tracksData;
+    const filtersName = useAppSelector((state) => state.playlist.filtersName);
+    let filteredTracks = filtersName.length > 0 ? filterList : tracksData;
+
+    console.log(filtersName, filtersName.length);
 
     useEffect(() => {
         dispatch(setFilterPlaylist({ tracksData }));
         dispatch(resetSearchFilters());
-        filteredTracks;
-    }, [dispatch, tracksData, filteredTracks]);
+    }, [dispatch, tracksData]);
 
-    const searchedTracks = searchValue
+    filteredTracks = searchValue
         ? filteredTracks.filter(
               (track) =>
                   track.album
@@ -51,7 +51,7 @@ export default function BodyGetTrack({
           )
         : filteredTracks;
 
-    let mainTitle: string = "";
+    let mainTitle = "";
 
     if (params) {
         if (params === "1") {
@@ -68,36 +68,28 @@ export default function BodyGetTrack({
     }
 
     return (
-        <>
+        <div className={classNames(styles.mainCenterBlock, styles.centerBlock)}>
+            <Search />
+            <h2 className={styles.centerBlockH2}>{mainTitle}</h2>
+            <Filters tracks={tracksData} />
             <div
                 className={classNames(
-                    styles.mainCenterBlock,
-                    styles.centerBlock
+                    styles.centerBlockContent,
+                    styles.playlistContent
                 )}
             >
-                <Search />
-                <h2 className={styles.centerBlockH2}>{mainTitle}</h2>
-                <Filters tracks={tracksData} />
-                <div
-                    className={classNames(
-                        styles.centerBlockContent,
-                        styles.playlistContent
-                    )}
-                >
-                    <TrackHeader />
-                    {searchedTracks.length === 0
-                        ? "Нет треков, удовлетворяющих условиям фильтра"
-                        : ""}
-                    {searchedTracks.map((el) => (
-                        <TrackComponent
-                            key={el.id}
-                            track={el}
-                            tracksData={tracksData}
-                            isFavorite={isFavorite}
-                        />
-                    ))}
-                </div>
+                <TrackHeader />
+                {filteredTracks.length === 0
+                    ? "Нет треков, удовлетворяющих условиям фильтра"
+                    : filteredTracks.map((el) => (
+                          <TrackComponent
+                              key={el.id}
+                              track={el}
+                              tracksData={tracksData}
+                              isFavorite={isFavorite}
+                          />
+                      ))}
             </div>
-        </>
+        </div>
     );
 }

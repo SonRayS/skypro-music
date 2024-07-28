@@ -11,7 +11,16 @@ export default function Search() {
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         setSearchValue(value);
-        dispatch(setSearchFilters({ searchValue: value }));
+        if (value === "") {
+            dispatch(setSearchFilters({ searchValue: "", filtersName: [] }));
+        } else {
+            dispatch(
+                setSearchFilters({
+                    searchValue: value,
+                    filtersName: ["Search"],
+                })
+            );
+        }
     };
 
     return (

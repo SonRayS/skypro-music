@@ -122,10 +122,14 @@ const playlistSlice = createSlice({
         },
         setSearchFilters: (
             state,
-            action: PayloadAction<{ searchValue: string }>
+            action: PayloadAction<{
+                searchValue: string;
+                filtersName: string[];
+            }>
         ) => {
-            const { searchValue } = action.payload;
+            const { searchValue, filtersName } = action.payload;
             state.searchValue = searchValue;
+            state.filtersName = filtersName;
             state.filterList = state.playlist.filter(
                 (track) =>
                     track.album
