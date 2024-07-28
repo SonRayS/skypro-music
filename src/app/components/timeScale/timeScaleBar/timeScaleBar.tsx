@@ -96,8 +96,14 @@ export default function TimeScale() {
     const togglePlay = () => {
         if (currentTrack && audioRef.current) {
             const audio = audioRef.current;
+            if (isPlaying) {
+                audio.pause();
+            } else {
+                audio.play().catch((error) => {
+                    console.error("Ошибка воспроизведения трека: ", error);
+                });
+            }
             dispatch(setIsPlaying(!isPlaying));
-            audio.pause();
         }
     };
 

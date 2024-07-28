@@ -9,7 +9,7 @@ import BodyGetTrack from "../components/body/bodyMainComponent/bodyGetTrack/body
 
 export default function MainTracks() {
     const dispatch = useAppDispatch();
-    const Favorite = false;
+
     const track = useAppSelector((el) => el.playlist.playlist);
 
     getTrackList().then((response) => {
@@ -21,7 +21,7 @@ export default function MainTracks() {
 
     return (
         <>
-            <BodyGetTrack tracksData={track} isFavorite={Favorite} />
+            <BodyGetTrack tracksData={track} />
         </>
     );
 }
