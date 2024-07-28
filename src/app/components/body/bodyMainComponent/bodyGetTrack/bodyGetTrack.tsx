@@ -32,8 +32,6 @@ export default function BodyGetTrack({
             ? filterList
             : tracksData;
 
-    console.log(searchValue);
-
     useEffect(() => {
         dispatch(setFilterPlaylist({ tracksData }));
         dispatch(resetSearchFilters());

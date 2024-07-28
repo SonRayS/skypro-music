@@ -33,9 +33,19 @@ export default function TrackComponent({
 
     function handleTrackClick() {
         isPlaying && currentTrack === null
-            ? (dispatch(setCurrentTrack({ track, tracksData })),
+            ? (dispatch(
+                  setCurrentTrack({
+                      track: { ...track, isFavorite },
+                      tracksData,
+                  })
+              ),
               dispatch(setIsPlaying(false)))
-            : (dispatch(setCurrentTrack({ track, tracksData })),
+            : (dispatch(
+                  setCurrentTrack({
+                      track: { ...track, isFavorite },
+                      tracksData,
+                  })
+              ),
               dispatch(setIsPlaying(true)));
     }
 
