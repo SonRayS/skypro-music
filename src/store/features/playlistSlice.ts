@@ -1,14 +1,14 @@
-import { trackType } from "@/app/components/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { trackType } from "@/app/components/types";
 
 type playlistStateType = {
     currentTrack: trackType | null | undefined;
     playlist: trackType[];
     filterList: trackType[];
     filtersName: string[];
-    activeTitle: string | null;
     filterPlaylist: trackType[];
     shuffledPlaylist: trackType[];
+    activeTitle: null | string;
     isShuffle: boolean;
     currentTrackIndex: number | null;
     isPlaying: boolean;
@@ -28,20 +28,22 @@ const initialState: playlistStateType = {
     isShuffle: false,
     currentTrackIndex: null,
     isPlaying: false,
-    volume: 0.5, // Начальное значение громкости
+    volume: 0.5,
     currentTime: 0,
-    searchValue: "", // Начальное значение поискового запроса
+    searchValue: "",
 };
 
 const playlistSlice = createSlice({
     name: "playlist",
     initialState,
     reducers: {
+        resetSearchFilters: (state) => {
+            state.searchValue = "";
+            state.filterPlaylist = state.playlist;
+        },
         setActiveTitle: (
             state,
-            action: PayloadAction<{
-                activeTitle: string | null;
-            }>
+            action: PayloadAction<{ activeTitle: string | null }>
         ) => {
             state.activeTitle = action.payload.activeTitle;
         },
@@ -57,9 +59,7 @@ const playlistSlice = createSlice({
         },
         setFilterPlaylist: (
             state,
-            action: PayloadAction<{
-                tracksData: trackType[];
-            }>
+            action: PayloadAction<{ tracksData: trackType[] }>
         ) => {
             state.filterPlaylist = action.payload.tracksData;
         },
@@ -108,7 +108,6 @@ const playlistSlice = createSlice({
                 state.currentTrackIndex = previousTrackIndex;
             }
         },
-
         toggleShuffle: (state) => {
             state.isShuffle = !state.isShuffle;
         },
@@ -127,7 +126,7 @@ const playlistSlice = createSlice({
         ) => {
             const { searchValue } = action.payload;
             state.searchValue = searchValue;
-            state.filterPlaylist = state.playlist.filter(
+            state.filterList = state.playlist.filter(
                 (track) =>
                     track.album
                         .toLowerCase()
@@ -144,6 +143,7 @@ const playlistSlice = createSlice({
 });
 
 export const {
+    resetSearchFilters,
     setActiveTitle,
     setFilterList,
     setFilterPlaylist,

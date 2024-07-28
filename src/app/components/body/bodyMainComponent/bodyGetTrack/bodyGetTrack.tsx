@@ -6,7 +6,12 @@ import styles from "./bodyGetTrack.module.css";
 import classNames from "classnames";
 import TrackComponent from "./bodyTrackComponent/bodyTrackComponent";
 import { trackType } from "@/app/components/types";
-import { useAppSelector } from "@/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import {
+    resetSearchFilters,
+    setFilterPlaylist,
+} from "@/store/features/playlistSlice";
+import { useEffect } from "react";
 
 type getTrackType = {
     tracksData: trackType[];
@@ -19,10 +24,37 @@ export default function BodyGetTrack({
     params,
     isFavorite,
 }: getTrackType) {
-    const newTrack = useAppSelector((el) => el.playlist.filterList);
-    const newTracksData = newTrack.length > 0 ? newTrack : tracksData;
+    const dispatch = useAppDispatch();
+    const filterList = useAppSelector((state) => state.playlist.filterList);
+    const searchValue = useAppSelector((state) => state.playlist.searchValue);
+    const filteredTracks =
+        filterList.length > 0 && searchValue.length !== 0
+            ? filterList
+            : tracksData;
+
+    console.log(searchValue);
+
+    useEffect(() => {
+        dispatch(setFilterPlaylist({ tracksData }));
+        dispatch(resetSearchFilters());
+        filteredTracks;
+    }, [dispatch, tracksData, filteredTracks]);
+
+    const searchedTracks = searchValue
+        ? filteredTracks.filter(
+              (track) =>
+                  track.album
+                      .toLowerCase()
+                      .includes(searchValue.toLowerCase()) ||
+                  track.author
+                      .toLowerCase()
+                      .includes(searchValue.toLowerCase()) ||
+                  track.genre.toLowerCase().includes(searchValue.toLowerCase())
+          )
+        : filteredTracks;
 
     let mainTitle: string = "";
+
     if (params) {
         if (params === "1") {
             mainTitle = "Плейлист дня";
@@ -55,7 +87,10 @@ export default function BodyGetTrack({
                     )}
                 >
                     <TrackHeader />
-                    {newTracksData.map((el) => (
+                    {searchedTracks.length === 0
+                        ? "Нет треков, удовлетворяющих условиям фильтра"
+                        : ""}
+                    {searchedTracks.map((el) => (
                         <TrackComponent
                             key={el.id}
                             track={el}
