@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useAppDispatch } from "@/hooks";
 import { setSearchFilters } from "@/store/features/playlistSlice";
 import styles from "./bodySearch.module.css";
@@ -8,19 +8,22 @@ export default function Search() {
     const [searchValue, setSearchValue] = useState("");
     const dispatch = useAppDispatch();
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        setSearchValue(value);
-        if (value === "") {
+    useEffect(() => {
+        if (searchValue === "") {
             dispatch(setSearchFilters({ searchValue: "", filtersName: [] }));
         } else {
             dispatch(
                 setSearchFilters({
-                    searchValue: value,
+                    searchValue: searchValue,
                     filtersName: ["Search"],
                 })
             );
         }
+    }, [dispatch, searchValue]);
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setSearchValue(value);
     };
 
     return (

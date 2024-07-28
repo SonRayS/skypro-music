@@ -31,8 +31,6 @@ export default function BodyGetTrack({
     const filtersName = useAppSelector((state) => state.playlist.filtersName);
     let filteredTracks = filtersName.length > 0 ? filterList : tracksData;
 
-    console.log(filtersName, filtersName.length);
-
     useEffect(() => {
         dispatch(setFilterPlaylist({ tracksData }));
         dispatch(resetSearchFilters());
