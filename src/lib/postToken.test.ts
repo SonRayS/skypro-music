@@ -16,8 +16,8 @@ describe("postToken", () => {
         // Задаем мок-данные
         const mockResponse: TokenResponse = {
             refresh:
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY5MTA0NjUzMSwiaWF0IjoxNjkwOTYwMTMxLCJqdGkiOiI2YTFhODg4Zjg5NjY0NjgyYTBmYWYyNjk4ZjZiNjViZSIsInVzZXJfaWQiOjc5Mn0.idHYiVKZqSxPCpNIvYpFgEs6nRTJ3FuPS60RAKV8XC8",
-            access: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkwOTYwNDMxLCJpYXQiOjE2OTA5NjAxMzEsImp0aSI6ImE4NDAwZjRkNWUzMTQ4NGJiMzE4YzUzMjE3Y2NhNWZmIiwidXNlcl9pZCI6NzkyfQ.SfvLYWbz72DQqWK7SyF4Yx9Zxx8hGsNxHEcwOU0RTk4",
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIyMjU0MDAyLCJpYXQiOjE3MjIyNTM3MDIsImp0aSI6ImUzMzQ2NTk1YjIwOTQ3OGM5YjY2NzdkNjQ5Njc1ZDc4IiwidXNlcl9pZCI6NDIxMH0.-gCsPgusZhpuiM6TEqZLZZjazlf0mezp6FX9-hufjNc",
+            access: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyMjM0MDEwMiwiaWF0IjoxNzIyMjUzNzAyLCJqdGkiOiIyZmNjNjgyNTJkZjU0N2M1ODIzMzQyY2I0MTAyZGFlMiIsInVzZXJfaWQiOjQyMTB9.JaTPSaKJeNHnKq0f8Zwyd-x_KrUG_E5YhOzl0Yqf-vg",
         };
 
         fetchMock.mockResponseOnce(JSON.stringify(mockResponse), {
@@ -25,7 +25,7 @@ describe("postToken", () => {
         });
 
         const response = await postToken({
-            email: "gladiato2010@gmail.com",
+            email: "biopop@gmail.com",
             password: "9831azha-47",
         });
 
