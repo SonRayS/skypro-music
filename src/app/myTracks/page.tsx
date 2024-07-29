@@ -6,6 +6,7 @@ import { getFavoritesTracks } from "../components/api/getMyTrackList/getMyTrackL
 import { trackType } from "../components/types";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Loading from "../components/loading/loading";
 
 export default function MyTracks() {
     const pageTracks = "myTracks";
@@ -35,17 +36,17 @@ export default function MyTracks() {
         }
     }, [token, router]);
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
     return (
         <>
-            <BodyGetTrack
-                tracksData={tracksData}
-                params={pageTracks}
-                isFavorite={Favorite}
-            />
+            {loading ? (
+                <Loading isLoading={loading} />
+            ) : (
+                <BodyGetTrack
+                    tracksData={tracksData}
+                    params={pageTracks}
+                    isFavorite={Favorite}
+                />
+            )}
         </>
     );
 }

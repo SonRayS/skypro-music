@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import getTrackList from "../components/api/getTrackList/getTrackList";
 import BodyGetTrack from "../components/body/bodyMainComponent/bodyGetTrack/bodyGetTrack";
 import { trackType } from "../components/types";
+import Loading from "../components/loading/loading";
 
 export default function MainTracks() {
     const [tracksData, setTracksData] = useState<trackType[]>([]);
@@ -24,13 +25,13 @@ export default function MainTracks() {
         fetchTracks();
     }, []);
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
     return (
         <>
-            <BodyGetTrack tracksData={tracksData} />
+            {loading ? (
+                <Loading isLoading={loading} />
+            ) : (
+                <BodyGetTrack tracksData={tracksData} />
+            )}
         </>
     );
 }

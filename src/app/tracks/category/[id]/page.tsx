@@ -4,6 +4,7 @@ import BodyGetTrack from "@/app/components/body/bodyMainComponent/bodyGetTrack/b
 import { getPlaylist } from "@/app/components/api/getPlaylistId/getPlaylistId";
 import { useEffect, useState } from "react";
 import { trackType } from "@/app/components/types";
+import Loading from "@/app/components/loading/loading";
 
 type paramsCategory = {
     params: { id: string };
@@ -31,13 +32,13 @@ export default function CategoryPage({ params }: paramsCategory) {
         }
     }, [params.id]);
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
     return (
         <>
-            <BodyGetTrack tracksData={tracksData} params={params.id} />
+            {loading ? (
+                <Loading isLoading={loading} />
+            ) : (
+                <BodyGetTrack tracksData={tracksData} params={params.id} />
+            )}
         </>
     );
 }
