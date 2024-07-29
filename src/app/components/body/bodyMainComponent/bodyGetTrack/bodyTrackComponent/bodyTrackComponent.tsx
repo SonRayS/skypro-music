@@ -4,18 +4,27 @@ import classNames from "classnames";
 import { trackType } from "@/app/components/types";
 import TimeFormat from "@/app/components/setTime/setTime";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import { setCurrentTrack, setIsPlaying } from "@/store/features/playlistSlice";
+import {
+    setCurrentTrack,
+    setIsPlaying,
+    setLikesData,
+} from "@/store/features/playlistSlice";
 import { setDislike, setLike } from "@/app/components/api/likes/likes";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { setAuthState, setUserData } from "@/store/features/authSlice";
 
 type trackTypes = {
     track: trackType;
     tracksData: trackType[];
+    isFavorite?: boolean;
 };
 
-export default function TrackComponent({ track, tracksData }: trackTypes) {
+export default function TrackComponent({
+    track,
+    tracksData,
+    isFavorite,
+}: trackTypes) {
     const dispatch = useAppDispatch();
     const router = useRouter();
     const userData = useAppSelector((state) => state.auth.userData);
@@ -34,43 +43,62 @@ export default function TrackComponent({ track, tracksData }: trackTypes) {
     const logout = () => {
         dispatch(setAuthState(false));
         dispatch(setUserData(null));
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
     };
 
     const handleLikeClick = () => {
-        if (userData) {
-            setIsLiked((prevState) => !prevState);
-            if (isLiked && currentTrack?.id) {
-                setDislike(userData?.access, currentTrack.id)
-                    .then(() => {})
-                    .catch((error) => {
-                        if (error) {
-                            const errorData = JSON.parse(error.message);
-                            if (errorData.status === 401) {
-                                logout();
-                                router.push("/signin");
-                            }
-                        }
-                    });
-            } else if (!isLiked && currentTrack?.id) {
-                setLike(userData?.access, currentTrack.id)
-                    .then(() => {})
-                    .catch((error) => {
-                        if (error) {
-                            const errorData = JSON.parse(error.message);
-                            if (errorData.status === 401) {
-                                logout();
-                                router.push("/signin");
-                            }
-                        }
-                    });
-            } else {
-                throw new Error("Что то идет не так");
-            }
-        } else {
-            alert("Функция доступна только авторизованным пользователям");
-            return;
+        if (currentTrack) {
+            isLiked
+                ? setDislike(userData?.access, currentTrack.id)
+                      .then(() => {
+                          dispatch(
+                              setLikesData({
+                                  isLiked: false,
+                                  track: currentTrack,
+                              })
+                          );
+                      })
+                      .catch((error) => {
+                          if (error) {
+                              const errorData = JSON.parse(error.message);
+                              if (errorData.status === 401) {
+                                  logout();
+                                  router.push("/signin");
+                              }
+                          }
+                      })
+                : setLike(userData?.access, currentTrack.id)
+                      .then(() => {
+                          dispatch(
+                              setLikesData({
+                                  isLiked: true,
+                                  track: currentTrack,
+                              })
+                          );
+                      })
+                      .catch((error) => {
+                          if (error) {
+                              const errorData = JSON.parse(error.message);
+                              if (errorData.status === 401) {
+                                  logout();
+                                  router.push("/signin");
+                              }
+                          }
+                      });
+
+            setIsLiked(!isLiked);
         }
     };
+
+    useEffect(() => {
+        if (track && userData) {
+            const isLikedByUser =
+                isFavorite ||
+                track.stared_user.some((user) => user.id === userData.id);
+            setIsLiked(isLikedByUser);
+        }
+    }, [track, userData, dispatch, isFavorite]);
 
     return (
         <>

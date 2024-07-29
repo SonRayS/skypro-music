@@ -5,6 +5,7 @@ import { postAuthUser } from "@/app/components/api/login/login";
 type AuthUserResponse = {
     username: string;
     email: string;
+    id: number;
 };
 
 // Настраиваем fetch-mock
@@ -18,8 +19,9 @@ describe("postAuthUser", () => {
     it("должен успешно авторизовать пользователя и вернуть данные", async () => {
         // Задаем мок-данные
         const mockResponse: AuthUserResponse = {
-            username: "gladiato2010@gmail.com",
-            email: "gladiato2010@gmail.com",
+            username: "biopop@gmail.com",
+            email: "biopop@gmail.com",
+            id: 4210,
         };
 
         fetchMock.mockResponseOnce(JSON.stringify(mockResponse), {
@@ -27,13 +29,14 @@ describe("postAuthUser", () => {
         });
 
         const response = await postAuthUser({
-            email: "gladiato2010@gmail.com",
+            email: "biopop@gmail.com",
             password: "9831azha-47",
         });
 
         // Проверяем, что полученные данные соответствуют типу AuthUserResponse
         expect(response).toEqual(mockResponse);
-        expect(response).toHaveProperty("username", "gladiato2010@gmail.com");
-        expect(response).toHaveProperty("email", "gladiato2010@gmail.com");
+        expect(response).toHaveProperty("username", "biopop@gmail.com");
+        expect(response).toHaveProperty("email", "biopop@gmail.com");
+        expect(response).toHaveProperty("id", 4210);
     });
 });

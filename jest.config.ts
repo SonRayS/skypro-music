@@ -9,13 +9,12 @@ const config: Config = {
     coverageProvider: "v8",
     testEnvironment: "jsdom",
     preset: "ts-jest",
-    setupFilesAfterEnv: ["@testing-library/jest-dom/extend-expect"],
+    setupFilesAfterEnv: ["@testing-library/jest-dom"],
 
     moduleNameMapper: {
         "^@/components/(.*)$": "<rootDir>/components/$1",
         "^@/(.*)$": "<rootDir>/src/$1",
     },
-    setupFiles: ["./jest.setup.ts"],
 };
 
 export default createJestConfig(config);

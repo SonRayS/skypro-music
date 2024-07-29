@@ -28,7 +28,6 @@ export default function FiltersItem({
     );
     const filterList = useAppSelector((state) => state.playlist.filterList);
     const filtersName = useAppSelector((state) => state.playlist.filtersName);
-    const activeTitle = useAppSelector((state) => state.playlist.activeTitle);
 
     function extractYearsFromObject(dateObj: string): number {
         const date = new Date(dateObj);

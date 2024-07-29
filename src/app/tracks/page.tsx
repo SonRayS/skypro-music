@@ -1,26 +1,37 @@
 "use client";
+
+import { useEffect, useState } from "react";
 import getTrackList from "../components/api/getTrackList/getTrackList";
-import { useAppDispatch, useAppSelector } from "@/hooks";
-import {
-    setCurrentTrack,
-    setFilterPlaylist,
-} from "@/store/features/playlistSlice";
 import BodyGetTrack from "../components/body/bodyMainComponent/bodyGetTrack/bodyGetTrack";
+import { trackType } from "../components/types";
+import Loading from "../components/loading/loading";
 
 export default function MainTracks() {
-    const dispatch = useAppDispatch();
-    const track = useAppSelector((el) => el.playlist.playlist);
+    const [tracksData, setTracksData] = useState<trackType[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
 
-    getTrackList().then((response) => {
-        if (track.length === 0) {
-            dispatch(setCurrentTrack({ tracksData: response }));
-            dispatch(setFilterPlaylist({ tracksData: response }));
-        }
-    });
+    useEffect(() => {
+        const fetchTracks = async () => {
+            setLoading(true);
+            try {
+                const data = await getTrackList();
+                setTracksData(data);
+            } catch (error) {
+                console.error("Failed to fetch tracks", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchTracks();
+    }, []);
 
     return (
         <>
-            <BodyGetTrack tracksData={track} />
+            {loading ? (
+                <Loading isLoading={loading} />
+            ) : (
+                <BodyGetTrack tracksData={tracksData} />
+            )}
         </>
     );
 }
