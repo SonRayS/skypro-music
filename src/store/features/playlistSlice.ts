@@ -15,9 +15,13 @@ type playlistStateType = {
     volume: number;
     currentTime: number;
     searchValue: string;
+    isLiked: boolean;
+    track: trackType | null;
 };
 
 const initialState: playlistStateType = {
+    track: null,
+    isLiked: false,
     currentTrack: null,
     playlist: [],
     filterList: [],
@@ -143,10 +147,21 @@ const playlistSlice = createSlice({
                         .includes(searchValue.toLowerCase())
             );
         },
+        setLikesData: (
+            state,
+            action: PayloadAction<{
+                isLiked: boolean;
+                track: trackType;
+            }>
+        ) => {
+            state.isLiked = action.payload.isLiked;
+            state.track = action.payload.track;
+        },
     },
 });
 
 export const {
+    setLikesData,
     resetSearchFilters,
     setActiveTitle,
     setFilterList,

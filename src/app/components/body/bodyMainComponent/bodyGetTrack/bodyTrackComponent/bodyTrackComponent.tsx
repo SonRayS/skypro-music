@@ -4,7 +4,11 @@ import classNames from "classnames";
 import { trackType } from "@/app/components/types";
 import TimeFormat from "@/app/components/setTime/setTime";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import { setCurrentTrack, setIsPlaying } from "@/store/features/playlistSlice";
+import {
+    setCurrentTrack,
+    setIsPlaying,
+    setLikesData,
+} from "@/store/features/playlistSlice";
 import { setDislike, setLike } from "@/app/components/api/likes/likes";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -27,9 +31,6 @@ export default function TrackComponent({
     const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
     const [isLiked, setIsLiked] = useState(false);
     const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
-    const { stared_user } = track;
-    const isLikedByUser =
-        isFavorite || stared_user.find((el) => el.id === userData.id);
 
     function handleTrackClick() {
         isPlaying && currentTrack === null
@@ -50,7 +51,14 @@ export default function TrackComponent({
         if (currentTrack) {
             isLiked
                 ? setDislike(userData?.access, currentTrack.id)
-                      .then(() => {})
+                      .then(() => {
+                          dispatch(
+                              setLikesData({
+                                  isLiked: false,
+                                  track: currentTrack,
+                              })
+                          );
+                      })
                       .catch((error) => {
                           if (error) {
                               const errorData = JSON.parse(error.message);
@@ -61,7 +69,14 @@ export default function TrackComponent({
                           }
                       })
                 : setLike(userData?.access, currentTrack.id)
-                      .then(() => {})
+                      .then(() => {
+                          dispatch(
+                              setLikesData({
+                                  isLiked: true,
+                                  track: currentTrack,
+                              })
+                          );
+                      })
                       .catch((error) => {
                           if (error) {
                               const errorData = JSON.parse(error.message);
@@ -71,13 +86,19 @@ export default function TrackComponent({
                               }
                           }
                       });
+
             setIsLiked(!isLiked);
         }
     };
 
     useEffect(() => {
-        setIsLiked(!!isLikedByUser);
-    }, [track, isFavorite, userData, isLikedByUser]);
+        if (track && userData) {
+            const isLikedByUser =
+                isFavorite ||
+                track.stared_user.some((user) => user.id === userData.id);
+            setIsLiked(isLikedByUser);
+        }
+    }, [track, userData, dispatch, isFavorite]);
 
     return (
         <>

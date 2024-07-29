@@ -1,4 +1,5 @@
 "use client";
+
 import styles from "./timeScaleBar.module.css";
 import GetTimeControls from "../timePlayerControls/timePlayerControls";
 import classNames from "classnames";
@@ -13,15 +14,21 @@ import {
     setCurrentTrack,
     setVolume,
     setCurrentTime,
+    setLikesData,
 } from "@/store/features/playlistSlice";
+import { setAuthState, setUserData } from "@/store/features/authSlice";
+import { setDislike, setLike } from "../../api/likes/likes";
+import { useRouter } from "next/navigation";
 
 export default function TimeScale() {
+    const router = useRouter();
     const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
     const currentTime = useAppSelector((state) => state.playlist.currentTime);
     const volume = useAppSelector((state) => state.playlist.volume);
     const [repeat, setRepeat] = useState<boolean>(false);
     const [audioSrc, setAudioSrc] = useState<string | null>(null);
     const audioRef = useRef<null | HTMLAudioElement>(null);
+    const userData = useAppSelector((state) => state.auth.userData);
     const dispatch = useAppDispatch();
     const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
     const playlist = useAppSelector((state) => state.playlist.playlist);
@@ -29,6 +36,78 @@ export default function TimeScale() {
         (state) => state.playlist.currentTrackIndex
     );
     const isShuffle = useAppSelector((state) => state.playlist.isShuffle);
+    const track = useAppSelector((state) => state.playlist.track);
+    const isLiked = useAppSelector((state) => state.playlist.isLiked);
+
+    const logout = () => {
+        dispatch(setAuthState(false));
+        dispatch(setUserData(null));
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+    };
+
+    const handleLikeClick = () => {
+        if (currentTrack) {
+            isLiked
+                ? setDislike(userData?.access, currentTrack.id)
+                      .then(() => {
+                          dispatch(
+                              setLikesData({
+                                  isLiked: false,
+                                  track: currentTrack,
+                              })
+                          );
+                      })
+                      .catch((error) => {
+                          if (error) {
+                              const errorData = JSON.parse(error.message);
+                              if (errorData.status === 401) {
+                                  logout();
+                                  router.push("/signin");
+                              }
+                          }
+                      })
+                : setLike(userData?.access, currentTrack.id)
+                      .then(() => {
+                          dispatch(
+                              setLikesData({
+                                  isLiked: true,
+                                  track: currentTrack,
+                              })
+                          );
+                      })
+                      .catch((error) => {
+                          if (error) {
+                              const errorData = JSON.parse(error.message);
+                              if (errorData.status === 401) {
+                                  logout();
+                                  router.push("/signin");
+                              }
+                          }
+                      });
+
+            dispatch(
+                setLikesData({
+                    isLiked: !isLiked,
+                    track: currentTrack,
+                })
+            );
+        }
+    };
+
+    useEffect(() => {
+        if (track && userData) {
+            const isLikedByUser =
+                isLiked ||
+                track.stared_user.some((user) => user.id === userData.id);
+            dispatch(
+                setLikesData({
+                    isLiked: !!isLikedByUser,
+                    track: currentTrack!,
+                })
+            );
+        }
+    }, [track, userData, dispatch, isLiked, currentTrack]);
 
     useEffect(() => {
         if (currentTrackIndex !== null) {
@@ -212,20 +291,6 @@ export default function TimeScale() {
                                     <div className={styles.trackPlayLikeDis}>
                                         <div
                                             className={classNames(
-                                                styles.trackPlayLike,
-                                                styles._btnIcon
-                                            )}
-                                        >
-                                            <svg
-                                                className={
-                                                    styles.trackPlayLikeSvg
-                                                }
-                                            >
-                                                <use href="img/icon/sprite.svg#iconLike" />
-                                            </svg>
-                                        </div>
-                                        <div
-                                            className={classNames(
                                                 styles.trackPlayDislike,
                                                 styles._btnIcon
                                             )}
@@ -234,8 +299,15 @@ export default function TimeScale() {
                                                 className={
                                                     styles.trackPlayDislikeSvg
                                                 }
+                                                onClick={handleLikeClick}
                                             >
-                                                <use href="/img/icon/sprite.svg#icon-dislike" />
+                                                <use
+                                                    href={`/img/icon/sprite.svg#${
+                                                        isLiked
+                                                            ? "icon-like-active"
+                                                            : "icon-dislike"
+                                                    }`}
+                                                />
                                             </svg>
                                         </div>
                                     </div>
