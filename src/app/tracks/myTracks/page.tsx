@@ -11,7 +11,7 @@ import Loading from "@/app/components/loading/loading";
 export default function MyTracks() {
     const pageTracks = "myTracks";
     const Favorite = true;
-    const token = useAppSelector((state) => state.auth.userData.access);
+    const token = useAppSelector((state) => state.auth.userData?.access || "");
     const [tracksData, setTracksData] = useState<trackType[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const router = useRouter();
