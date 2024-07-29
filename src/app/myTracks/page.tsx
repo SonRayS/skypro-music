@@ -1,35 +1,43 @@
 "use client";
 
-import { useAppDispatch, useAppSelector } from "@/hooks";
+import { useAppSelector } from "@/hooks";
 import BodyGetTrack from "../components/body/bodyMainComponent/bodyGetTrack/bodyGetTrack";
 import { getFavoritesTracks } from "../components/api/getMyTrackList/getMyTrackList";
-import { setAuthState } from "@/store/features/authSlice";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { trackType } from "../components/types";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
-export default function MainTracks() {
+export default function MyTracks() {
     const pageTracks = "myTracks";
     const Favorite = true;
     const token = useAppSelector((state) => state.auth.userData.access);
-    const dispatch = useAppDispatch();
-    const router = useRouter();
     const [tracksData, setTracksData] = useState<trackType[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const router = useRouter();
 
     useEffect(() => {
-        getFavoritesTracks(token)
-            .then((data) => {
-                setTracksData(data);
-            })
-            .catch((error) => {
-                if (error.message === "401") {
-                    dispatch(setAuthState(false));
-                    router.push("/signin");
-                } else {
-                    alert(error.message);
+        if (token) {
+            const fetchTracks = async () => {
+                setLoading(true);
+                try {
+                    const data = await getFavoritesTracks(token);
+                    setTracksData(data);
+                } catch (error) {
+                    console.error("Failed to fetch tracks", error);
+                } finally {
+                    setLoading(false);
                 }
-            });
-    }, [dispatch, router, token]);
+            };
+
+            fetchTracks();
+        } else {
+            router.push("/signin");
+        }
+    }, [token, router]);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <>
