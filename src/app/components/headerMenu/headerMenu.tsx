@@ -60,7 +60,7 @@ export default function Header() {
                             <li className={styles.menuItem}>
                                 {logged ? (
                                     <Link
-                                        href="/myTracks"
+                                        href="/tracks/myTracks"
                                         className={styles.menuLink}
                                     >
                                         Мой плейлист

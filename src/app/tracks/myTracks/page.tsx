@@ -1,12 +1,12 @@
 "use client";
 
 import { useAppSelector } from "@/hooks";
-import BodyGetTrack from "../components/body/bodyMainComponent/bodyGetTrack/bodyGetTrack";
-import { getFavoritesTracks } from "../components/api/getMyTrackList/getMyTrackList";
-import { trackType } from "../components/types";
+import BodyGetTrack from "@/app/components/body/bodyMainComponent/bodyGetTrack/bodyGetTrack";
+import { getFavoritesTracks } from "@/app/components/api/getMyTrackList/getMyTrackList";
+import { trackType } from "@/app/components/types";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Loading from "../components/loading/loading";
+import Loading from "@/app/components/loading/loading";
 
 export default function MyTracks() {
     const pageTracks = "myTracks";
