@@ -18,8 +18,6 @@ type SignupType = {
 export default function SignUp() {
     const router = useRouter();
     const [emailActive, setEmailActive] = useState<boolean>(false);
-    const [passwordActive, setPasswordActive] = useState<boolean>(false);
-    const [passwordCorrect, setPasswordCorrect] = useState<boolean>(false);
     const [loginData, setLoginData] = useState<SignupType>({
         email: "",
         username: "",
@@ -30,9 +28,11 @@ export default function SignUp() {
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
 
+        const cleanedValue = value.replace(/\s+/g, "");
+
         setLoginData({
             ...loginData,
-            [name]: value,
+            [name]: cleanedValue,
         });
     };
 

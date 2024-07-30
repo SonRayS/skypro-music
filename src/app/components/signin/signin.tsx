@@ -28,11 +28,15 @@ export default function SignIn() {
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
 
+        const cleanedValue = value.replace(/\s+/g, "");
+
         setLoginData({
             ...loginData,
-            [name]: value,
+            [name]: cleanedValue,
         });
     };
+
+    console.log(loginData.email, loginData.password);
 
     const handleSignin = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
