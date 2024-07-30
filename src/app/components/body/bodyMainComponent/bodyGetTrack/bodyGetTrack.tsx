@@ -35,8 +35,6 @@ export default function BodyGetTrack({
 
     let filteredTracks = filtersName.length > 0 ? filterList : tracksData;
 
-    console.log(filteredTracks, filterList, filtersName);
-
     let mainTitle = "";
 
     if (params) {

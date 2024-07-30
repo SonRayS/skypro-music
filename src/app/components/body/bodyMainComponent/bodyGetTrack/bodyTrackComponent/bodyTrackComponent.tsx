@@ -28,8 +28,10 @@ export default function TrackComponent({
     const [isLiked, setIsLiked] = useState(false);
     const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
     const { stared_user } = track;
-    const isLikedByUser =
-        isFavorite || stared_user.find((el) => el.id === userData.id);
+    const logged = useAppSelector((state) => state.auth.authState);
+    const isLikedByUser = userData
+        ? stared_user.find((el) => el.id === userData.id)
+        : undefined;
 
     function handleTrackClick() {
         isPlaying && currentTrack === null
@@ -48,36 +50,47 @@ export default function TrackComponent({
 
     const handleLikeClick = (event: React.MouseEvent<SVGUseElement>) => {
         event.stopPropagation();
-
-        isLiked
-            ? setDislike(userData?.access, track.id)
-                  .then(() => {})
-                  .catch((error) => {
-                      if (error) {
-                          const errorData = JSON.parse(error.message);
-                          if (errorData.status === 401) {
-                              logout();
-                              router.push("/signin");
-                          }
-                      }
-                  })
-            : setLike(userData?.access, track.id)
-                  .then(() => {})
-                  .catch((error) => {
-                      if (error) {
-                          const errorData = JSON.parse(error.message);
-                          if (errorData.status === 401) {
-                              logout();
-                              router.push("/signin");
-                          }
-                      }
-                  });
-        setIsLiked(!isLiked);
+        if (logged) {
+            if (isLiked) {
+                setDislike(userData?.access, track.id)
+                    .then(() => {})
+                    .catch((error) => {
+                        if (error) {
+                            const errorData = JSON.parse(error.message);
+                            if (errorData.status === 401) {
+                                logout();
+                                router.push("/signin");
+                            }
+                        }
+                    });
+            } else {
+                setLike(userData?.access, track.id)
+                    .then(() => {})
+                    .catch((error) => {
+                        if (error) {
+                            const errorData = JSON.parse(error.message);
+                            if (errorData.status === 401) {
+                                logout();
+                                router.push("/signin");
+                            }
+                        }
+                    });
+                setIsLiked(!isLiked);
+            }
+        } else {
+            router.push("/signin");
+        }
     };
 
     useEffect(() => {
         setIsLiked(!!isLikedByUser);
     }, [track, isFavorite, userData, isLikedByUser]);
+
+    useEffect(() => {
+        if (!logged) {
+            setIsLiked(false);
+        }
+    }, [logged]);
 
     return (
         <>

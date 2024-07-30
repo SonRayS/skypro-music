@@ -30,8 +30,6 @@ export default function TimeScale() {
     );
     const isShuffle = useAppSelector((state) => state.playlist.isShuffle);
 
-    console.log(playlist);
-
     useEffect(() => {
         if (currentTrackIndex !== null) {
             const track = playlist[currentTrackIndex];

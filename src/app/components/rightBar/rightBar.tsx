@@ -45,9 +45,11 @@ export default function RightBar() {
                             </p>
                         </div>
 
-                        <svg onClick={logout} className={styles.sidebarIcon}>
-                            <use xlinkHref="img/icon/sprite.svg#logout" />
-                        </svg>
+                        <div onClick={logout} className={styles.sidebarIcon}>
+                            <svg>
+                                <use xlinkHref="img/icon/sprite.svg#logout" />
+                            </svg>
+                        </div>
                     </>
                 )}
             </div>

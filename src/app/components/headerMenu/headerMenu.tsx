@@ -11,7 +11,7 @@ export default function Header() {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const logged = useAppSelector((state) => state.auth.authState);
     const dispatch = useAppDispatch();
-
+    const userData = useAppSelector((state) => state.auth.userData);
     const logout = () => {
         dispatch(setAuthState(false));
         dispatch(setUserData(null));
@@ -76,13 +76,12 @@ export default function Header() {
                             </li>
                             <li className={styles.menuItem}>
                                 {logged ? (
-                                    <Link
+                                    <div
                                         onClick={logout}
-                                        href="/tracks"
                                         className={styles.menuLink}
                                     >
                                         Выйти
-                                    </Link>
+                                    </div>
                                 ) : (
                                     <Link
                                         href="/signin"
