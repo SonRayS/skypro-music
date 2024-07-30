@@ -11,7 +11,10 @@ export default function Search() {
     const filteredName = useAppSelector((state) => state.playlist.filtersName);
 
     useEffect(() => {
-        if (filteredName.length > 1) {
+        if (
+            filteredName.length > 1 &&
+            filteredName.find((el) => el === "Search")
+        ) {
             setSearchValue("");
             if (inputRef.current) {
                 inputRef.current.value = "";
