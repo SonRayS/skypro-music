@@ -22,7 +22,8 @@ export default function Search() {
     }, [dispatch, searchValue]);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
+        const value = e.target.value.trim();
+
         setSearchValue(value);
     };
 

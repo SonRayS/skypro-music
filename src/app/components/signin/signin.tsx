@@ -37,6 +37,7 @@ export default function SignIn() {
     const handleSignin = async () => {
         await postAuthUser(loginData)
             .then((data) => {
+                localStorage.setItem("user", JSON.stringify(data));
                 dispatch(setAuthState(true));
                 dispatch(
                     setUserData({
@@ -46,15 +47,14 @@ export default function SignIn() {
                     })
                 );
 
-                localStorage.setItem("user", JSON.stringify(data));
                 postToken(loginData).then((data) => {
-                    localStorage.setItem("token", JSON.stringify(data.access));
                     dispatch(
                         setUserData({
                             refresh: data.refresh,
                             access: data.access,
                         })
                     );
+                    localStorage.setItem("token", JSON.stringify(data.access));
                     router.push("/tracks");
                 });
             })
