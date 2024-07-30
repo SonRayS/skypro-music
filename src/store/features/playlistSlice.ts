@@ -1,5 +1,14 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { trackType } from "@/app/components/types";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { trackType, userType } from "@/app/components/types";
+import { getFavoritesTracks } from "@/app/components/api/getMyTrackList/getMyTrackList";
+
+export const getFavoriteTracks = createAsyncThunk(
+    "playlist/getFavoriteTracks",
+    async (access: string) => {
+        const favoriteTracks = await getFavoritesTracks(access);
+        return favoriteTracks;
+    }
+);
 
 type playlistStateType = {
     currentTrack: trackType | null | undefined;
@@ -15,13 +24,20 @@ type playlistStateType = {
     volume: number;
     currentTime: number;
     searchValue: string;
-    isLiked: boolean;
-    track: trackType | null;
+    isLiked: userType | boolean | undefined;
+    likedTracks: trackType[];
 };
 
 const initialState: playlistStateType = {
-    track: null,
-    isLiked: false,
+    isLiked: {
+        id: 0,
+        username: "",
+        first_name: "",
+        last_name: "",
+        email: "",
+        password: "",
+        refresh: "",
+    },
     currentTrack: null,
     playlist: [],
     filterList: [],
@@ -35,6 +51,7 @@ const initialState: playlistStateType = {
     volume: 0.5,
     currentTime: 0,
     searchValue: "",
+    likedTracks: [],
 };
 
 const playlistSlice = createSlice({
@@ -150,21 +167,34 @@ const playlistSlice = createSlice({
                         .includes(searchValue.toLowerCase())
             );
         },
-        setLikesData: (
-            state,
-            action: PayloadAction<{
-                isLiked: boolean;
-                track: trackType;
-            }>
-        ) => {
-            state.isLiked = action.payload.isLiked;
-            state.track = action.payload.track;
+        likeTrack: (state, action: PayloadAction<trackType>) => {
+            if (
+                !state.likedTracks.find(
+                    (track) => track.id === action.payload.id
+                )
+            )
+                state.likedTracks.push(action.payload);
         },
+        dislike: (state, action: PayloadAction<trackType>) => {
+            state.likedTracks = state.likedTracks.filter(
+                (track) => track.id !== action.payload.id
+            );
+        },
+        setLikedTracks: (state, action: PayloadAction<trackType[]>) => {
+            state.likedTracks = action.payload;
+        },
+    },
+    extraReducers(builder) {
+        builder.addCase(
+            getFavoriteTracks.fulfilled,
+            (state, action: PayloadAction<trackType[]>) => {
+                state.likedTracks = action.payload;
+            }
+        );
     },
 });
 
 export const {
-    setLikesData,
     resetSearchFilters,
     setActiveTitle,
     setFilterList,
@@ -177,6 +207,9 @@ export const {
     toggleShuffle,
     setVolume,
     setCurrentTime,
+    likeTrack,
+    dislike,
+    setLikedTracks,
 } = playlistSlice.actions;
 
 export const playlistReducer = playlistSlice.reducer;

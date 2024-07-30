@@ -14,6 +14,7 @@ import {
     setVolume,
     setCurrentTime,
 } from "@/store/features/playlistSlice";
+import { useLikeTrack } from "../../hooks.ts/useLikeTrack";
 
 export default function TimeScale() {
     const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
@@ -29,6 +30,7 @@ export default function TimeScale() {
         (state) => state.playlist.currentTrackIndex
     );
     const isShuffle = useAppSelector((state) => state.playlist.isShuffle);
+    const { isLiked, handleLike } = useLikeTrack(currentTrack!);
 
     useEffect(() => {
         if (currentTrackIndex !== null) {
@@ -231,11 +233,17 @@ export default function TimeScale() {
                                             )}
                                         >
                                             <svg
-                                                className={
-                                                    styles.trackPlayDislikeSvg
-                                                }
+                                                className={styles.trackTimeSvg}
+                                                onClick={handleLike}
                                             >
-                                                <use href="/img/icon/sprite.svg#icon-dislike" />
+                                                <use
+                                                    className={styles.useLike}
+                                                    href={`/img/icon/sprite.svg#${
+                                                        isLiked
+                                                            ? "icon-like-active"
+                                                            : "icon-like"
+                                                    }`}
+                                                />
                                             </svg>
                                         </div>
                                     </div>

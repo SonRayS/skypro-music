@@ -36,8 +36,6 @@ export default function SignIn() {
         });
     };
 
-    console.log(loginData.email, loginData.password);
-
     const handleSignin = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (loginData.email === "") {
