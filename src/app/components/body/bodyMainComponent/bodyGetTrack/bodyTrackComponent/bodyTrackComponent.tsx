@@ -48,32 +48,31 @@ export default function TrackComponent({
 
     const handleLikeClick = (event: React.MouseEvent<SVGUseElement>) => {
         event.stopPropagation();
-        if (currentTrack) {
-            isLiked
-                ? setDislike(userData?.access, currentTrack.id)
-                      .then(() => {})
-                      .catch((error) => {
-                          if (error) {
-                              const errorData = JSON.parse(error.message);
-                              if (errorData.status === 401) {
-                                  logout();
-                                  router.push("/signin");
-                              }
+
+        isLiked
+            ? setDislike(userData?.access, track.id)
+                  .then(() => {})
+                  .catch((error) => {
+                      if (error) {
+                          const errorData = JSON.parse(error.message);
+                          if (errorData.status === 401) {
+                              logout();
+                              router.push("/signin");
                           }
-                      })
-                : setLike(userData?.access, currentTrack.id)
-                      .then(() => {})
-                      .catch((error) => {
-                          if (error) {
-                              const errorData = JSON.parse(error.message);
-                              if (errorData.status === 401) {
-                                  logout();
-                                  router.push("/signin");
-                              }
+                      }
+                  })
+            : setLike(userData?.access, track.id)
+                  .then(() => {})
+                  .catch((error) => {
+                      if (error) {
+                          const errorData = JSON.parse(error.message);
+                          if (errorData.status === 401) {
+                              logout();
+                              router.push("/signin");
                           }
-                      });
-            setIsLiked(!isLiked);
-        }
+                      }
+                  });
+        setIsLiked(!isLiked);
     };
 
     useEffect(() => {
