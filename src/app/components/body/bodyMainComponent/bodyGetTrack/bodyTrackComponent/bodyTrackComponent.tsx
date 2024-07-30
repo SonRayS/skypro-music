@@ -25,23 +25,13 @@ export default function TrackComponent({
     const router = useRouter();
     const userData = useAppSelector((state) => state.auth.userData);
     const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
-    const [isLiked, setIsLiked] = useState(false);
+
     const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
     const { stared_user } = track;
     const logged = useAppSelector((state) => state.auth.authState);
-    const isLikedByUser = userData
-        ? (isFavorite ||
-              (stared_user &&
-                  Array.isArray(stared_user) &&
-                  stared_user.find((el) => el.id === userData.id))) !==
-          undefined
-        : undefined;
-
-    useEffect(() => {
-        if (userData) {
-            setIsLiked(isLikedByUser !== undefined);
-        }
-    }, [userData, isLikedByUser]);
+    const isLikedByUser =
+        isFavorite || stared_user.find((u) => u.id === userData?.id);
+    const [isLiked, setIsLiked] = useState(!!isLikedByUser);
 
     function handleTrackClick() {
         isPlaying && currentTrack === null
@@ -58,7 +48,7 @@ export default function TrackComponent({
         localStorage.removeItem("token");
     };
 
-    const handleLikeClick = (event: React.MouseEvent<SVGUseElement>) => {
+    const handleLikeClick = (event: React.MouseEvent<SVGSVGElement>) => {
         event.stopPropagation();
         if (logged) {
             if (isLiked) {
@@ -85,8 +75,8 @@ export default function TrackComponent({
                             }
                         }
                     });
-                setIsLiked(!isLiked);
             }
+            setIsLiked(!isLiked);
         } else {
             router.push("/signin");
         }
@@ -151,14 +141,16 @@ export default function TrackComponent({
                                 </span>
                             </div>
                             <div className={styles.trackTime}>
-                                <svg className={styles.trackTimeSvg}>
+                                <svg
+                                    className={styles.trackTimeSvg}
+                                    onClick={handleLikeClick}
+                                >
                                     <use
                                         className={classNames(
                                             `${styles.useLike} ${
                                                 isLiked && styles.iconLikeActive
                                             }`
                                         )}
-                                        onClick={handleLikeClick}
                                         href={`/img/icon/sprite.svg#${
                                             isLiked
                                                 ? "icon-like-active"
@@ -216,10 +208,12 @@ export default function TrackComponent({
                                 </span>
                             </div>
                             <div className={styles.trackTime}>
-                                <svg className={styles.trackTimeSvg}>
+                                <svg
+                                    className={styles.trackTimeSvg}
+                                    onClick={handleLikeClick}
+                                >
                                     <use
                                         className={styles.useLike}
-                                        onClick={handleLikeClick}
                                         href={`/img/icon/sprite.svg#${
                                             isLiked
                                                 ? "icon-like-active"
