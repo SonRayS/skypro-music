@@ -12,7 +12,7 @@ import {
     setFilterPlaylist,
     setSearchFilters,
 } from "@/store/features/playlistSlice";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 
 type getTrackType = {
     tracksData: trackType[];
@@ -65,17 +65,6 @@ export default function BodyGetTrack({
         mainTitle = "Треки";
     }
 
-    const expensiveList = useMemo(() => {
-        return filteredTracks.map((el) => (
-            <TrackComponent
-                key={el.id}
-                track={el}
-                tracksData={tracksData}
-                isFavorite={isFavorite}
-            />
-        ));
-    }, [filteredTracks, isFavorite, tracksData]);
-
     return (
         <div className={classNames(styles.mainCenterBlock, styles.centerBlock)}>
             <Search />
@@ -90,7 +79,14 @@ export default function BodyGetTrack({
                 <TrackHeader />
                 {filteredTracks.length === 0
                     ? "Нет треков, удовлетворяющих условиям фильтра"
-                    : expensiveList}
+                    : filteredTracks.map((el) => (
+                          <TrackComponent
+                              key={el.id}
+                              track={el}
+                              tracksData={tracksData}
+                              isFavorite={isFavorite}
+                          />
+                      ))}
             </div>
         </div>
     );
