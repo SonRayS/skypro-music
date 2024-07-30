@@ -20,8 +20,6 @@ export default function SignUp() {
     const [emailActive, setEmailActive] = useState<boolean>(false);
     const [passwordActive, setPasswordActive] = useState<boolean>(false);
     const [passwordCorrect, setPasswordCorrect] = useState<boolean>(false);
-    const [isNotFilled, setIsNotFilled] = useState<boolean>(true);
-    const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
     const [loginData, setLoginData] = useState<SignupType>({
         email: "",
         username: "",
@@ -29,34 +27,8 @@ export default function SignUp() {
         passwordrepeat: "",
     });
 
-    const hanleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
-        setIsSubmitted(false);
-        setIsNotFilled(false);
-
-        if (name === "email") {
-            setEmailActive(true);
-            if (value === "") {
-                setEmailActive(false);
-            }
-        }
-
-        if (name === "password") {
-            if (
-                value.length > 7 &&
-                /[a-zA-z]/.test(value) &&
-                /[0-9]/.test(value)
-            ) {
-                setPasswordCorrect(true);
-            } else {
-                setPasswordCorrect(false);
-            }
-            setPasswordActive(true);
-
-            if (value === "") {
-                setPasswordActive(false);
-            }
-        }
 
         setLoginData({
             ...loginData,
@@ -64,31 +36,83 @@ export default function SignUp() {
         });
     };
 
-    const handleSignup = async (event: any) => {
+    const validatePassword = (password: string): string | null => {
+        const minLength = 8;
+
+        const hasUpperCase = /[A-Z]/.test(password);
+        const hasLowerCase = /[a-z]/.test(password);
+        const hasDigit = /\d/.test(password);
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+        const isLongEnough = password.length >= minLength;
+
+        if (!isLongEnough) return "Пароль должен быть не менее 8 символов.";
+        if (!hasUpperCase)
+            return "Пароль должен содержать хотя бы одну заглавную букву.";
+        if (!hasLowerCase)
+            return "Пароль должен содержать хотя бы одну строчную букву.";
+        if (!hasDigit) return "Пароль должен содержать хотя бы одну цифру.";
+        if (!hasSpecialChar)
+            return "Пароль должен содержать хотя бы один специальный символ.";
+
+        const commonPasswords = ["password", "123456", "qwerty", "abc123"];
+        if (commonPasswords.includes(password.toLowerCase())) {
+            return "Пароль слишком прост.";
+        }
+
+        return null;
+    };
+
+    const handleSignup = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        setIsSubmitted(true);
+        const validationResult = validatePassword(loginData.password);
+
         if (
-            loginData.email === "" ||
-            (loginData.password === "" && loginData.password.length < 8) ||
+            loginData.email === "" &&
+            loginData.password === "" &&
             loginData.passwordrepeat === ""
         ) {
-            setIsNotFilled(true);
+            alert("Зарегистрироваться не заполнив поля не выйдет :C");
             return;
         }
-        if (
-            loginData.email !== "" &&
-            loginData.password === loginData.passwordrepeat
-        ) {
-            setIsNotFilled(false);
+
+        if (loginData.email === "") {
+            alert("Заполните поле email");
+            return;
         }
-        if (!isNotFilled) {
-            await postRegUser(loginData)
-                .then(() => {
-                    router.push("/signin");
-                })
-                .catch((error) => {
-                    alert(error);
-                });
+
+        if (loginData.password === "") {
+            alert("Заполните поле password");
+            return;
+        }
+
+        if (loginData.passwordrepeat === "") {
+            alert("Заполните поле passwordrepeat");
+            return;
+        }
+
+        if (loginData.password !== loginData.passwordrepeat) {
+            alert("У вас не совпадают поля password/passwordrepeat");
+            return;
+        }
+
+        if (validationResult) {
+            alert(validationResult);
+            return;
+        } else {
+            try {
+                await postRegUser(loginData)
+                    .then(() => {
+                        router.push("/signin");
+                    })
+                    .catch((error) => {
+                        alert(error);
+                    });
+            } catch (error) {
+                console.error("Произошла ошибка:", error);
+                alert(error);
+            } finally {
+                router.push("/signin");
+            }
         }
     };
 
@@ -97,7 +121,10 @@ export default function SignUp() {
             <div className={styles.wrapper}>
                 <div className={styles.containerSignup}>
                     <div className={styles.modalBlock}>
-                        <form className={styles.modalFormLogin}>
+                        <form
+                            className={styles.modalFormLogin}
+                            onSubmit={handleSignup}
+                        >
                             <Link href="/tracks">
                                 <div className={styles.modalLogo}>
                                     <Image
@@ -109,7 +136,7 @@ export default function SignUp() {
                                 </div>
                             </Link>
                             <input
-                                onChange={hanleInputChange}
+                                onChange={handleInputChange}
                                 className={classNames(
                                     styles.modalInput,
                                     styles.login
@@ -124,7 +151,7 @@ export default function SignUp() {
                                 </div>
                             )}
                             <input
-                                onChange={hanleInputChange}
+                                onChange={handleInputChange}
                                 className={classNames(
                                     styles.modalInput,
                                     styles.password
@@ -133,24 +160,8 @@ export default function SignUp() {
                                 name="password"
                                 placeholder="Пароль"
                             />
-                            {passwordActive && (
-                                <div
-                                    className={classNames(
-                                        {
-                                            [styles.passwordClueRed]:
-                                                !passwordCorrect,
-                                        },
-                                        {
-                                            [styles.passwordClueGreen]:
-                                                passwordCorrect,
-                                        }
-                                    )}
-                                >
-                                    Минимум 8 символов из букв латиницей и цифр
-                                </div>
-                            )}
                             <input
-                                onChange={hanleInputChange}
+                                onChange={handleInputChange}
                                 className={classNames(
                                     styles.modalInput,
                                     styles.passwordDouble
@@ -161,17 +172,12 @@ export default function SignUp() {
                             />
                             <button
                                 className={styles.modalBtnSignupEnt}
-                                onClick={handleSignup}
+                                type="submit"
                             >
                                 <a className={styles.modalBtnText}>
                                     Зарегистрироваться
                                 </a>
                             </button>
-                            {isNotFilled && isSubmitted && (
-                                <div className={styles.notFilled}>
-                                    Нужно заполнить все поля корректно
-                                </div>
-                            )}
                         </form>
                     </div>
                 </div>

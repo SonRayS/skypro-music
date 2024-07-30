@@ -34,40 +34,63 @@ export default function SignIn() {
         });
     };
 
-    const handleSignin = async () => {
-        await postAuthUser(loginData)
-            .then((data) => {
-                localStorage.setItem("user", JSON.stringify(data));
-                dispatch(setAuthState(true));
-                dispatch(
-                    setUserData({
-                        username: data.username,
-                        email: data.email,
-                        id: data.id,
-                    })
-                );
+    const handleSignin = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        if (loginData.email === "") {
+            alert("Введите email");
+            return;
+        }
+        if (loginData.password === "") {
+            alert("Введите password");
+            return;
+        }
 
-                postToken(loginData).then((data) => {
+        try {
+            await postAuthUser(loginData)
+                .then((data) => {
+                    localStorage.setItem("user", JSON.stringify(data));
+                    dispatch(setAuthState(true));
                     dispatch(
                         setUserData({
-                            refresh: data.refresh,
-                            access: data.access,
+                            username: data.username,
+                            email: data.email,
+                            id: data.id,
                         })
                     );
-                    localStorage.setItem("token", JSON.stringify(data.access));
-                    router.push("/tracks");
+
+                    postToken(loginData).then((data) => {
+                        dispatch(
+                            setUserData({
+                                refresh: data.refresh,
+                                access: data.access,
+                            })
+                        );
+                        localStorage.setItem(
+                            "token",
+                            JSON.stringify(data.access)
+                        );
+                    });
+                })
+                .catch((error) => {
+                    alert(error);
                 });
-            })
-            .catch((error) => {
-                alert(error);
-            });
+        } catch (error) {
+            console.error("Произошла ошибка:", error);
+            alert(error);
+        } finally {
+            router.push("/tracks");
+        }
     };
 
     return (
         <div className={styles.wrapper}>
             <div className={styles.containerEnter}>
                 <div className={styles.modalBlock}>
-                    <form className={styles.modalFormLogin} action="#">
+                    <form
+                        className={styles.modalFormLogin}
+                        action="#"
+                        onSubmit={handleSignin}
+                    >
                         <Link href="/tracks">
                             <div className={styles.modalLogo}>
                                 <Image
@@ -98,10 +121,7 @@ export default function SignIn() {
                             name="password"
                             placeholder="Пароль"
                         />
-                        <button
-                            className={styles.modalBtnEnter}
-                            onClick={handleSignin}
-                        >
+                        <button className={styles.modalBtnEnter} type="submit">
                             <p>Войти</p>
                         </button>
 
