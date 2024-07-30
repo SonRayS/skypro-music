@@ -161,11 +161,11 @@ export default function TimeScale() {
                                     handleClickRepeat={() => setRepeat(!repeat)}
                                     handleNextClick={() => {
                                         dispatch(setNextTrack());
-                                        dispatch(setIsPlaying(false));
+                                        dispatch(setIsPlaying(true));
                                     }}
                                     handlePreviousClick={() => {
                                         dispatch(setPreviousTrack());
-                                        dispatch(setIsPlaying(false));
+                                        dispatch(setIsPlaying(true));
                                     }}
                                     handleShuffleClick={() => {
                                         dispatch(toggleShuffle());
