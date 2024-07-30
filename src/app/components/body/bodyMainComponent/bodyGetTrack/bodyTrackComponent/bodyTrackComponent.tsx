@@ -30,8 +30,18 @@ export default function TrackComponent({
     const { stared_user } = track;
     const logged = useAppSelector((state) => state.auth.authState);
     const isLikedByUser = userData
-        ? stared_user.find((el) => el.id === userData.id)
+        ? (isFavorite ||
+              (stared_user &&
+                  Array.isArray(stared_user) &&
+                  stared_user.find((el) => el.id === userData.id))) !==
+          undefined
         : undefined;
+
+    useEffect(() => {
+        if (userData) {
+            setIsLiked(isLikedByUser !== undefined);
+        }
+    }, [userData, isLikedByUser]);
 
     function handleTrackClick() {
         isPlaying && currentTrack === null
