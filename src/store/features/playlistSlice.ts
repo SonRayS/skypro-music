@@ -41,9 +41,12 @@ const playlistSlice = createSlice({
     name: "playlist",
     initialState,
     reducers: {
-        resetSearchFilters: (state) => {
+        resetSearchFilters: (
+            state,
+            action: PayloadAction<{ filterPlaylist: trackType[] }>
+        ) => {
             state.searchValue = "";
-            state.filterPlaylist = state.playlist;
+            state.filterPlaylist = action.payload.filterPlaylist;
         },
         setActiveTitle: (
             state,
@@ -63,9 +66,9 @@ const playlistSlice = createSlice({
         },
         setFilterPlaylist: (
             state,
-            action: PayloadAction<{ tracksData: trackType[] }>
+            action: PayloadAction<{ filterPlaylist: trackType[] }>
         ) => {
-            state.filterPlaylist = action.payload.tracksData;
+            state.filterPlaylist = action.payload.filterPlaylist;
         },
         setCurrentTrack: (
             state,

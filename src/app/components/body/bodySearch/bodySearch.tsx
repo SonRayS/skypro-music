@@ -14,7 +14,7 @@ export default function Search() {
         } else {
             dispatch(
                 setSearchFilters({
-                    searchValue: searchValue,
+                    searchValue: searchValue.trim(),
                     filtersName: ["Search"],
                 })
             );
@@ -22,7 +22,7 @@ export default function Search() {
     }, [dispatch, searchValue]);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value.trim();
+        const value = e.target.value;
 
         setSearchValue(value);
     };

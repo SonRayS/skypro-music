@@ -29,25 +29,29 @@ export default function BodyGetTrack({
     const filterList = useAppSelector((state) => state.playlist.filterList);
     const searchValue = useAppSelector((state) => state.playlist.searchValue);
     const filtersName = useAppSelector((state) => state.playlist.filtersName);
-    let filteredTracks = filtersName.length > 0 ? filterList : tracksData;
 
     useEffect(() => {
-        dispatch(setFilterPlaylist({ tracksData }));
-        dispatch(resetSearchFilters());
+        dispatch(setFilterPlaylist({ filterPlaylist: tracksData }));
+        dispatch(resetSearchFilters({ filterPlaylist: tracksData }));
     }, [dispatch, tracksData]);
 
-    filteredTracks = searchValue
-        ? filteredTracks.filter(
-              (track) =>
-                  track.album
-                      .toLowerCase()
-                      .includes(searchValue.toLowerCase()) ||
-                  track.author
-                      .toLowerCase()
-                      .includes(searchValue.toLowerCase()) ||
-                  track.genre.toLowerCase().includes(searchValue.toLowerCase())
-          )
-        : filteredTracks;
+    let filteredTracks = filtersName.length > 0 ? filterList : tracksData;
+
+    filteredTracks =
+        searchValue.length > 0
+            ? tracksData.filter(
+                  (track) =>
+                      track.album
+                          .toLowerCase()
+                          .includes(searchValue.toLowerCase()) ||
+                      track.author
+                          .toLowerCase()
+                          .includes(searchValue.toLowerCase()) ||
+                      track.genre
+                          .toLowerCase()
+                          .includes(searchValue.toLowerCase())
+              )
+            : tracksData;
 
     let mainTitle = "";
 

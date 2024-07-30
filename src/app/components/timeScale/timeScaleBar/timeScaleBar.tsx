@@ -30,6 +30,8 @@ export default function TimeScale() {
     );
     const isShuffle = useAppSelector((state) => state.playlist.isShuffle);
 
+    console.log(playlist);
+
     useEffect(() => {
         if (currentTrackIndex !== null) {
             const track = playlist[currentTrackIndex];
@@ -43,8 +45,7 @@ export default function TimeScale() {
             const audio = audioRef.current;
             audio.loop = repeat;
 
-            const handleEnded = (e: Event) => {
-                e.stopPropagation();
+            const handleEnded = () => {
                 if (isShuffle) {
                     const randomIndex = Math.floor(
                         Math.random() * playlist.length
