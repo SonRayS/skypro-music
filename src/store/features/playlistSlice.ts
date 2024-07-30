@@ -137,7 +137,7 @@ const playlistSlice = createSlice({
             const { searchValue, filtersName } = action.payload;
             state.searchValue = searchValue;
             state.filtersName = filtersName;
-            state.filterList = state.playlist.filter(
+            state.filterList = state.filterPlaylist.filter(
                 (track) =>
                     track.album
                         .toLowerCase()

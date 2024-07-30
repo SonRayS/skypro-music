@@ -10,7 +10,6 @@ import { useAppDispatch, useAppSelector } from "@/hooks";
 import {
     resetSearchFilters,
     setFilterPlaylist,
-    setSearchFilters,
 } from "@/store/features/playlistSlice";
 import { useEffect } from "react";
 
@@ -27,7 +26,6 @@ export default function BodyGetTrack({
 }: getTrackType) {
     const dispatch = useAppDispatch();
     const filterList = useAppSelector((state) => state.playlist.filterList);
-    const searchValue = useAppSelector((state) => state.playlist.searchValue);
     const filtersName = useAppSelector((state) => state.playlist.filtersName);
 
     useEffect(() => {
@@ -37,21 +35,7 @@ export default function BodyGetTrack({
 
     let filteredTracks = filtersName.length > 0 ? filterList : tracksData;
 
-    filteredTracks =
-        searchValue.length > 0
-            ? tracksData.filter(
-                  (track) =>
-                      track.album
-                          .toLowerCase()
-                          .includes(searchValue.toLowerCase()) ||
-                      track.author
-                          .toLowerCase()
-                          .includes(searchValue.toLowerCase()) ||
-                      track.genre
-                          .toLowerCase()
-                          .includes(searchValue.toLowerCase())
-              )
-            : tracksData;
+    console.log(filteredTracks, filterList, filtersName);
 
     let mainTitle = "";
 

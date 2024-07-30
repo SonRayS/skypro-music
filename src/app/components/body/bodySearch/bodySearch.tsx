@@ -1,5 +1,5 @@
-import { ChangeEvent, useEffect, useState } from "react";
-import { useAppDispatch } from "@/hooks";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 import { setSearchFilters } from "@/store/features/playlistSlice";
 import styles from "./bodySearch.module.css";
 import classNames from "classnames";
@@ -7,6 +7,18 @@ import classNames from "classnames";
 export default function Search() {
     const [searchValue, setSearchValue] = useState("");
     const dispatch = useAppDispatch();
+    const inputRef = useRef<HTMLInputElement>(null);
+    const filteredName = useAppSelector((state) => state.playlist.filtersName);
+
+    useEffect(() => {
+        if (filteredName.length > 1) {
+            setSearchValue("");
+            if (inputRef.current) {
+                inputRef.current.value = "";
+            }
+            dispatch(setSearchFilters({ searchValue: "", filtersName: [] }));
+        }
+    }, [filteredName, dispatch]);
 
     useEffect(() => {
         if (searchValue === "") {
@@ -23,7 +35,6 @@ export default function Search() {
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
-
         setSearchValue(value);
     };
 
@@ -37,6 +48,7 @@ export default function Search() {
                 type="search"
                 placeholder="Поиск"
                 name="search"
+                ref={inputRef}
                 value={searchValue}
                 onChange={handleChange}
             />
