@@ -46,7 +46,8 @@ export default function TrackComponent({
         localStorage.removeItem("token");
     };
 
-    const handleLikeClick = () => {
+    const handleLikeClick = (e: Event) => {
+        e.stopPropagation();
         if (currentTrack) {
             isLiked
                 ? setDislike(userData?.access, currentTrack.id)

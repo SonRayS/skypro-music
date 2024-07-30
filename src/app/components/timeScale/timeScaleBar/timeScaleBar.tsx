@@ -43,7 +43,8 @@ export default function TimeScale() {
             const audio = audioRef.current;
             audio.loop = repeat;
 
-            const handleEnded = () => {
+            const handleEnded = (e: Event) => {
+                e.stopPropagation();
                 if (isShuffle) {
                     const randomIndex = Math.floor(
                         Math.random() * playlist.length
