@@ -25,7 +25,6 @@ export default function TrackComponent({
     const router = useRouter();
     const userData = useAppSelector((state) => state.auth.userData);
     const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
-
     const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
     const { stared_user } = track;
     const logged = useAppSelector((state) => state.auth.authState);
@@ -40,6 +39,8 @@ export default function TrackComponent({
             : (dispatch(setCurrentTrack({ track, tracksData })),
               dispatch(setIsPlaying(true)));
     }
+
+    console.log(currentTrack);
 
     const logout = () => {
         dispatch(setAuthState(false));
@@ -94,7 +95,7 @@ export default function TrackComponent({
 
     return (
         <>
-            {currentTrack === track ? (
+            {currentTrack?.name === track.name ? (
                 <div
                     onClick={handleTrackClick}
                     className={classNames(
@@ -112,11 +113,17 @@ export default function TrackComponent({
                             <div className={styles.trackTitle}>
                                 <div className={styles.trackTitleImage}>
                                     {isPlaying ? (
-                                        <svg className={styles.trackActiveSvg}>
+                                        <svg
+                                            className={styles.trackActiveSvg}
+                                            key="playing"
+                                        >
                                             <use href="/img/icon/sprite.svg#icon-isPlaying" />
                                         </svg>
                                     ) : (
-                                        <svg className={styles.trackTitleSvg}>
+                                        <svg
+                                            className={styles.trackTitleSvg}
+                                            key="not-playing"
+                                        >
                                             <use href="/img/icon/sprite.svg#icon-isPlaying" />
                                         </svg>
                                     )}
