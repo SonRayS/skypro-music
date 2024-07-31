@@ -33,7 +33,7 @@ export default function BodyGetTrack({
         dispatch(resetSearchFilters({ filterPlaylist: tracksData }));
     }, [dispatch, tracksData]);
 
-    let filteredTracks = filtersName.length > 0 ? filterList : tracksData;
+    const filteredTracks = filtersName.length > 0 ? filterList : tracksData;
 
     let mainTitle = "";
 
@@ -64,7 +64,7 @@ export default function BodyGetTrack({
             >
                 <TrackHeader />
                 {filteredTracks.length === 0
-                    ? "Нет треков, удовлетворяющих условиям фильтра"
+                    ? "Нет треков :C"
                     : filteredTracks.map((el) => (
                           <TrackComponent
                               key={el.id}
