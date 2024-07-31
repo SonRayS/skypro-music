@@ -10,18 +10,13 @@ import { useLikeTrack } from "@/app/components/hooks.ts/useLikeTrack";
 type trackTypes = {
     track: trackType;
     tracksData: trackType[];
-    isFavorite?: boolean;
 };
 
-export default function TrackComponent({
-    track,
-    tracksData,
-    isFavorite,
-}: trackTypes) {
+export default function TrackComponent({ track, tracksData }: trackTypes) {
     const dispatch = useAppDispatch();
     const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
     const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
-    const { isLiked, handleLike } = useLikeTrack(track, isFavorite);
+    const { isLiked, handleLike } = useLikeTrack(track);
 
     function handleTrackClick() {
         isPlaying && currentTrack === null

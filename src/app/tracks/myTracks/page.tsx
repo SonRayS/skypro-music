@@ -10,7 +10,6 @@ import Loading from "@/app/components/loading/loading";
 
 export default function MyTracks() {
     const pageTracks = "myTracks";
-    const Favorite = true;
     const token = useAppSelector((state) => state.auth.userData?.access || "");
     const [tracksData, setTracksData] = useState<trackType[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -41,11 +40,7 @@ export default function MyTracks() {
             {loading ? (
                 <Loading isLoading={loading} />
             ) : (
-                <BodyGetTrack
-                    tracksData={tracksData}
-                    params={pageTracks}
-                    isFavorite={Favorite}
-                />
+                <BodyGetTrack tracksData={tracksData} params={pageTracks} />
             )}
         </>
     );
