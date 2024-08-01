@@ -167,30 +167,28 @@ const playlistSlice = createSlice({
                         .includes(searchValue.toLowerCase())
             );
         },
-        likeTrack: (state, action: PayloadAction<trackType>) => {
+        likeTrack(state, action) {
             if (
                 !state.likedTracks.find(
                     (track) => track.id === action.payload.id
                 )
-            )
+            ) {
                 state.likedTracks.push(action.payload);
+            }
         },
-        dislike: (state, action: PayloadAction<trackType>) => {
+        dislike(state, action) {
             state.likedTracks = state.likedTracks.filter(
                 (track) => track.id !== action.payload.id
             );
         },
-        setLikedTracks: (state, action: PayloadAction<trackType[]>) => {
+        setLikedTracks(state, action) {
             state.likedTracks = action.payload;
         },
     },
-    extraReducers(builder) {
-        builder.addCase(
-            getFavoriteTracks.fulfilled,
-            (state, action: PayloadAction<trackType[]>) => {
-                state.likedTracks = action.payload;
-            }
-        );
+    extraReducers: (builder) => {
+        builder.addCase(getFavoriteTracks.fulfilled, (state, action) => {
+            state.likedTracks = action.payload;
+        });
     },
 });
 

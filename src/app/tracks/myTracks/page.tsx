@@ -14,6 +14,7 @@ export default function MyTracks() {
     const [tracksData, setTracksData] = useState<trackType[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const router = useRouter();
+    const isFavorite = true;
 
     useEffect(() => {
         if (token) {
@@ -40,7 +41,11 @@ export default function MyTracks() {
             {loading ? (
                 <Loading isLoading={loading} />
             ) : (
-                <BodyGetTrack tracksData={tracksData} params={pageTracks} />
+                <BodyGetTrack
+                    tracksData={tracksData}
+                    params={pageTracks}
+                    isFavorite={isFavorite}
+                />
             )}
         </>
     );

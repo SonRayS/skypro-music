@@ -16,9 +16,14 @@ import { useEffect } from "react";
 type getTrackType = {
     tracksData: trackType[];
     params?: string | boolean;
+    isFavorite?: boolean;
 };
 
-export default function BodyGetTrack({ tracksData, params }: getTrackType) {
+export default function BodyGetTrack({
+    tracksData,
+    params,
+    isFavorite,
+}: getTrackType) {
     const dispatch = useAppDispatch();
     const filterList = useAppSelector((state) => state.playlist.filterList);
     const filtersName = useAppSelector((state) => state.playlist.filtersName);
@@ -65,6 +70,7 @@ export default function BodyGetTrack({ tracksData, params }: getTrackType) {
                               key={el.id}
                               track={el}
                               tracksData={tracksData}
+                              isFavorite={isFavorite}
                           />
                       ))}
             </div>

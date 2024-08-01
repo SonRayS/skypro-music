@@ -6,15 +6,13 @@ import { useRouter } from "next/navigation";
 import { setAuthState, setUserData } from "@/store/features/authSlice";
 import { useCallback } from "react";
 
-export function useLikeTrack(track: trackType) {
+export function useLikeTrack(track: trackType, isFavorite?: boolean) {
     const dispatch = useAppDispatch();
     const logged = useAppSelector((state) => state.auth.authState);
     const userData = useAppSelector((state) => state.auth.userData);
     const likedTrack = useAppSelector((state) => state.playlist.likedTracks);
-    const isLiked =
-        track && likedTrack.length !== 0
-            ? likedTrack.find((user) => user.id === track.id)
-            : false;
+    const isLiked = likedTrack.some((user) => user.id === track?.id);
+
     const router = useRouter();
 
     const logout = useCallback(() => {
@@ -28,18 +26,17 @@ export function useLikeTrack(track: trackType) {
         async (event: React.MouseEvent) => {
             event.stopPropagation();
 
-            if (!track) return;
+            if (!track || !userData) return;
 
             if (logged) {
                 try {
                     if (isLiked) {
-                        await setDislike(userData?.access, track.id);
+                        await setDislike(userData.access, track.id);
+                        dispatch(dislike(track));
                     } else {
-                        await setLike(userData?.access, track.id);
+                        await setLike(userData.access, track.id);
+                        dispatch(likeTrack(track));
                     }
-                    isLiked
-                        ? dispatch(dislike(track))
-                        : dispatch(likeTrack(track));
                 } catch (error) {
                     if (error instanceof Error) {
                         const errorData = JSON.parse(error.message);
@@ -59,7 +56,7 @@ export function useLikeTrack(track: trackType) {
     );
 
     return {
-        isLiked,
+        isLiked: isFavorite || isLiked,
         handleLike,
     };
 }
