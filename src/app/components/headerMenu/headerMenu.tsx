@@ -80,7 +80,7 @@ export default function Header() {
                                         onClick={logout}
                                         className={styles.menuLink}
                                     >
-                                        Выйти
+                                        <p>Выйти</p>
                                     </div>
                                 ) : (
                                     <Link
