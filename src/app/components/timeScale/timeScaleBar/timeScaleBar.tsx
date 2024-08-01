@@ -187,7 +187,7 @@ export default function TimeScale() {
                                     <div className={styles.trackPlayContain}>
                                         <div className={styles.trackPlayImage}>
                                             <svg
-                                                className={styles.trackPlaySvg}
+                                                className={styles.trackTimeSvg}
                                             >
                                                 <use href="img/icon/sprite.svg#icon-note" />
                                             </svg>

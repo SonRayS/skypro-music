@@ -107,11 +107,10 @@
 }
 
 .trackTimeSvg {
-    width: 14px;
-    height: 12px;
-    margin-right: 17px;
+    width: 18px;
+    height: 17px;
     fill: transparent;
-    stroke: #696969;
+    stroke: #4e4e4e;
 }
 
 .trackPlayAuthor {
