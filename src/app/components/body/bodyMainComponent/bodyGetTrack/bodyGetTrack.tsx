@@ -1,4 +1,3 @@
-"use client";
 import Search from "../../bodySearch/bodySearch";
 import Filters from "../../bodyFilters/Filters";
 import TrackHeader from "../../bodyTrackHeder/bodyTrackHeder";
@@ -17,12 +16,14 @@ type getTrackType = {
     tracksData: trackType[];
     params?: string | boolean;
     isFavorite?: boolean;
+    onTrackUpdate?: () => void;
 };
 
 export default function BodyGetTrack({
     tracksData,
     params,
     isFavorite,
+    onTrackUpdate,
 }: getTrackType) {
     const dispatch = useAppDispatch();
     const filterList = useAppSelector((state) => state.playlist.filterList);
@@ -71,6 +72,7 @@ export default function BodyGetTrack({
                               track={el}
                               tracksData={tracksData}
                               isFavorite={isFavorite}
+                              onTrackUpdate={onTrackUpdate}
                           />
                       ))}
             </div>

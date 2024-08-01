@@ -1,4 +1,3 @@
-"use client";
 import styles from "./bodyTrackComponent.module.css";
 import classNames from "classnames";
 import { trackType } from "@/app/components/types";
@@ -11,18 +10,20 @@ import {
     setIsPlaying,
 } from "@/store/features/playlistSlice";
 import { useLikeTrack } from "@/app/components/hooks.ts/useLikeTrack";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 type trackTypes = {
     track: trackType;
     tracksData: trackType[];
     isFavorite?: boolean;
+    onTrackUpdate?: () => void;
 };
 
 export default function TrackComponent({
     track,
     tracksData,
     isFavorite,
+    onTrackUpdate,
 }: trackTypes) {
     const dispatch = useAppDispatch();
     const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
@@ -45,7 +46,10 @@ export default function TrackComponent({
 
     async function handleLikeClick(event: React.MouseEvent) {
         event.stopPropagation();
-        handleLike(event);
+        await handleLike(event);
+        if (onTrackUpdate) {
+            onTrackUpdate();
+        }
     }
 
     useEffect(() => {
