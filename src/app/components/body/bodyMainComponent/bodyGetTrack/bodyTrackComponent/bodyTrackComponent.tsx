@@ -31,7 +31,7 @@ export default function TrackComponent({
     const logged = useAppSelector((state) => state.auth.authState);
     const likedTracks = useAppSelector((state) => state.playlist.likedTracks);
     const isLiked = likedTracks.some((t) => t.id === track.id);
-    const access = useAppSelector((state) => state.auth.userData.access);
+    const access = useAppSelector((state) => state.auth.userData?.access || "");
 
     const { handleLike } = useLikeTrack(track, isFavorite);
 
