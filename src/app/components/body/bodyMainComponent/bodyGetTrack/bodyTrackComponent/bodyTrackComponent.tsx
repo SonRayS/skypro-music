@@ -28,22 +28,11 @@ export default function TrackComponent({
     const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
     const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
     const logged = useAppSelector((state) => state.auth.authState);
-    const { isLiked: initialIsLiked, handleLike } = useLikeTrack(
-        track,
-        isFavorite
-    );
-    const [isLiked, setIsLiked] = useState(initialIsLiked);
-    const access = useAppSelector((state) => state.auth.userData?.access);
+    const likedTracks = useAppSelector((state) => state.playlist.likedTracks);
+    const isLiked = likedTracks.some((t) => t.id === track.id);
+    const access = useAppSelector((state) => state.auth.userData.access);
 
-    useEffect(() => {
-        if (logged && access) {
-            dispatch(getFavoriteTracks(access));
-        }
-    }, [access, dispatch, logged]);
-
-    useEffect(() => {
-        setIsLiked(initialIsLiked);
-    }, [initialIsLiked]);
+    const { handleLike } = useLikeTrack(track, isFavorite);
 
     function handleTrackClick(event: React.MouseEvent) {
         event.stopPropagation();
@@ -57,11 +46,13 @@ export default function TrackComponent({
     async function handleLikeClick(event: React.MouseEvent) {
         event.stopPropagation();
         handleLike(event);
-        setIsLiked((prev) => !prev); // Update local state after like/dislike
-        if (isFavorite && isLiked) {
-            dispatch(dislike(track)); // Удаляем трек из избранных
-        }
     }
+
+    useEffect(() => {
+        if (logged) {
+            dispatch(getFavoriteTracks(access));
+        }
+    }, [logged, dispatch, access]);
 
     return (
         <div

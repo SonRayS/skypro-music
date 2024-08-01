@@ -20,23 +20,24 @@ export default function TimeScale() {
     const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
     const currentTime = useAppSelector((state) => state.playlist.currentTime);
     const volume = useAppSelector((state) => state.playlist.volume);
-    const [repeat, setRepeat] = useState<boolean>(false);
-    const [audioSrc, setAudioSrc] = useState<string | null>(null);
-    const audioRef = useRef<null | HTMLAudioElement>(null);
-    const dispatch = useAppDispatch();
-    const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
     const playlist = useAppSelector((state) => state.playlist.playlist);
+    const logged = useAppSelector((state) => state.auth.authState);
+    const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
     const currentTrackIndex = useAppSelector(
         (state) => state.playlist.currentTrackIndex
     );
     const isShuffle = useAppSelector((state) => state.playlist.isShuffle);
     const { isLiked, handleLike } = useLikeTrack(currentTrack!);
+    const [repeat, setRepeat] = useState<boolean>(false);
+    const [audioSrc, setAudioSrc] = useState<string | null>(null);
+    const audioRef = useRef<null | HTMLAudioElement>(null);
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         if (currentTrackIndex !== null) {
             const track = playlist[currentTrackIndex];
             dispatch(setCurrentTrack({ track, tracksData: playlist }));
-            setAudioSrc(playlist[currentTrackIndex!]?.track_file);
+            setAudioSrc(track.track_file);
         }
     }, [currentTrackIndex, playlist, dispatch]);
 
@@ -239,7 +240,7 @@ export default function TimeScale() {
                                                 <use
                                                     className={styles.useLike}
                                                     href={`/img/icon/sprite.svg#${
-                                                        isLiked
+                                                        logged && isLiked
                                                             ? "icon-like-active"
                                                             : "icon-like"
                                                     }`}
