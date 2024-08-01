@@ -16,6 +16,7 @@ export default function TrackComponent({ track, tracksData }: trackTypes) {
     const dispatch = useAppDispatch();
     const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
     const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
+    const authState = useAppSelector((state) => state.auth.authState);
     const { isLiked, handleLike } = useLikeTrack(track);
 
     function handleTrackClick() {
@@ -159,7 +160,7 @@ export default function TrackComponent({ track, tracksData }: trackTypes) {
                                             }`
                                         )}
                                         href={`/img/icon/sprite.svg#${
-                                            isLiked
+                                            isLiked && authState
                                                 ? "icon-like-active"
                                                 : "icon-like"
                                         }`}
