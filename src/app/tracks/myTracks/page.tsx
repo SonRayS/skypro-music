@@ -7,6 +7,7 @@ import { trackType } from "@/app/components/types";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Loading from "@/app/components/loading/loading";
+import useLogoutOnPageUnload from "@/app/components/authoCheckPage/autoCheckPage";
 
 export default function MyTracks() {
     const pageTracks = "myTracks";
@@ -15,6 +16,8 @@ export default function MyTracks() {
     const [loading, setLoading] = useState<boolean>(true);
     const router = useRouter();
     const isFavorite = true;
+
+    useLogoutOnPageUnload();
 
     useEffect(() => {
         if (token) {
