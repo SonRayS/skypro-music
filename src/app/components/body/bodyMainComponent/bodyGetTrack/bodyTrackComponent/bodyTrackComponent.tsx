@@ -53,6 +53,14 @@ export default function TrackComponent({
     }
 
     useEffect(() => {
+        if (isFavorite && isLiked === false) {
+            if (onTrackUpdate) {
+                onTrackUpdate();
+            }
+        }
+    }, [isLiked, isFavorite, onTrackUpdate]);
+
+    useEffect(() => {
         if (logged) {
             dispatch(getFavoriteTracks(access));
         }
