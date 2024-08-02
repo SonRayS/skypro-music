@@ -31,13 +31,24 @@ export default function TimeScale() {
     const [repeat, setRepeat] = useState<boolean>(false);
     const [audioSrc, setAudioSrc] = useState<string | null>(null);
     const audioRef = useRef<null | HTMLAudioElement>(null);
+    const isFavorite = useAppSelector((el) => el.playlist.isFavorite);
     const dispatch = useAppDispatch();
 
+    if (isFavorite && !isLiked) {
+        const track = null;
+        dispatch(setCurrentTrack({ track, tracksData: playlist }));
+    }
+
     useEffect(() => {
-        if (currentTrackIndex !== null) {
+        if (currentTrackIndex !== null && playlist[currentTrackIndex]) {
             const track = playlist[currentTrackIndex];
-            dispatch(setCurrentTrack({ track, tracksData: playlist }));
-            setAudioSrc(track.track_file);
+
+            if (track && track.track_file) {
+                dispatch(setCurrentTrack({ track, tracksData: playlist }));
+                setAudioSrc(track.track_file);
+            } else {
+                console.warn("Track or track_file is undefined");
+            }
         }
     }, [currentTrackIndex, playlist, dispatch]);
 

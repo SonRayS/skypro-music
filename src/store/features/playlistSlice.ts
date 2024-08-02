@@ -26,6 +26,7 @@ type playlistStateType = {
     searchValue: string;
     isLiked: userType | boolean | undefined;
     likedTracks: trackType[];
+    isFavorite: boolean | undefined;
 };
 
 const initialState: playlistStateType = {
@@ -52,6 +53,7 @@ const initialState: playlistStateType = {
     currentTime: 0,
     searchValue: "",
     likedTracks: [],
+    isFavorite: undefined,
 };
 
 const playlistSlice = createSlice({
@@ -184,6 +186,14 @@ const playlistSlice = createSlice({
         setLikedTracks(state, action) {
             state.likedTracks = action.payload;
         },
+        setIsFavorite(
+            state,
+            action: PayloadAction<{
+                isFavorite: boolean | undefined;
+            }>
+        ) {
+            state.isFavorite = action.payload.isFavorite;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(getFavoriteTracks.fulfilled, (state, action) => {
@@ -193,6 +203,7 @@ const playlistSlice = createSlice({
 });
 
 export const {
+    setIsFavorite,
     resetSearchFilters,
     setActiveTitle,
     setFilterList,

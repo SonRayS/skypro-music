@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks";
 import {
     resetSearchFilters,
     setFilterPlaylist,
+    setIsFavorite,
 } from "@/store/features/playlistSlice";
 import { useEffect } from "react";
 
@@ -30,9 +31,10 @@ export default function BodyGetTrack({
     const filtersName = useAppSelector((state) => state.playlist.filtersName);
 
     useEffect(() => {
+        dispatch(setIsFavorite({ isFavorite }));
         dispatch(setFilterPlaylist({ filterPlaylist: tracksData }));
         dispatch(resetSearchFilters({ filterPlaylist: tracksData }));
-    }, [dispatch, tracksData]);
+    }, [dispatch, tracksData, isFavorite]);
 
     const filteredTracks = filtersName.length > 0 ? filterList : tracksData;
 
