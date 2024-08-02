@@ -76,13 +76,14 @@ export default function Header() {
                             </li>
                             <li className={styles.menuItem}>
                                 {logged ? (
-                                    <Link
-                                        onClick={logout}
-                                        href="/tracks"
-                                        className={styles.menuLink}
-                                    >
-                                        Выйти
-                                    </Link>
+                                    <div onClick={logout}>
+                                        <Link
+                                            href="/signin"
+                                            className={styles.menuLink}
+                                        >
+                                            Выйти
+                                        </Link>
+                                    </div>
                                 ) : (
                                     <Link
                                         href="/signin"

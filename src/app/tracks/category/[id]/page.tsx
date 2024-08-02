@@ -5,6 +5,7 @@ import { getPlaylist } from "@/app/components/api/getPlaylistId/getPlaylistId";
 import { useEffect, useState } from "react";
 import { trackType } from "@/app/components/types";
 import Loading from "@/app/components/loading/loading";
+import useLogoutOnPageUnload from "@/app/components/authoCheckPage/autoCheckPage";
 
 type paramsCategory = {
     params: { id: string };
@@ -13,6 +14,8 @@ type paramsCategory = {
 export default function CategoryPage({ params }: paramsCategory) {
     const [tracksData, setTracksData] = useState<trackType[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+
+    useLogoutOnPageUnload();
 
     useEffect(() => {
         const fetchTracks = async () => {

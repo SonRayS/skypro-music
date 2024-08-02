@@ -34,7 +34,7 @@
 
 .icon-like-active {
     fill: red;
-    animation: pulse 1s infinite;
+    animation: pulse 3s infinite;
 }
 
 @keyframes pulse {

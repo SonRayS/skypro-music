@@ -5,10 +5,13 @@ import getTrackList from "../components/api/getTrackList/getTrackList";
 import BodyGetTrack from "../components/body/bodyMainComponent/bodyGetTrack/bodyGetTrack";
 import { trackType } from "../components/types";
 import Loading from "../components/loading/loading";
+import useLogoutOnPageUnload from "../components/authoCheckPage/autoCheckPage";
 
 export default function MainTracks() {
     const [tracksData, setTracksData] = useState<trackType[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+
+    useLogoutOnPageUnload();
 
     useEffect(() => {
         const fetchTracks = async () => {

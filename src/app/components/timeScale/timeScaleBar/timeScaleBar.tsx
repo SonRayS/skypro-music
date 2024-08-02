@@ -1,5 +1,4 @@
 "use client";
-
 import styles from "./timeScaleBar.module.css";
 import GetTimeControls from "../timePlayerControls/timePlayerControls";
 import classNames from "classnames";
@@ -14,106 +13,42 @@ import {
     setCurrentTrack,
     setVolume,
     setCurrentTime,
-    setLikesData,
 } from "@/store/features/playlistSlice";
-import { setAuthState, setUserData } from "@/store/features/authSlice";
-import { setDislike, setLike } from "../../api/likes/likes";
-import { useRouter } from "next/navigation";
+import { useLikeTrack } from "../../hooks.ts/useLikeTrack";
 
 export default function TimeScale() {
-    const router = useRouter();
     const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
     const currentTime = useAppSelector((state) => state.playlist.currentTime);
     const volume = useAppSelector((state) => state.playlist.volume);
-    const [repeat, setRepeat] = useState<boolean>(false);
-    const [audioSrc, setAudioSrc] = useState<string | null>(null);
-    const audioRef = useRef<null | HTMLAudioElement>(null);
-    const userData = useAppSelector((state) => state.auth.userData);
-    const dispatch = useAppDispatch();
-    const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
     const playlist = useAppSelector((state) => state.playlist.playlist);
+    const logged = useAppSelector((state) => state.auth.authState);
+    const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
     const currentTrackIndex = useAppSelector(
         (state) => state.playlist.currentTrackIndex
     );
     const isShuffle = useAppSelector((state) => state.playlist.isShuffle);
-    const track = useAppSelector((state) => state.playlist.track);
-    const isLiked = useAppSelector((state) => state.playlist.isLiked);
+    const { isLiked, handleLike } = useLikeTrack(currentTrack!);
+    const [repeat, setRepeat] = useState<boolean>(false);
+    const [audioSrc, setAudioSrc] = useState<string | null>(null);
+    const audioRef = useRef<null | HTMLAudioElement>(null);
+    const isFavorite = useAppSelector((el) => el.playlist.isFavorite);
+    const dispatch = useAppDispatch();
 
-    const logout = () => {
-        dispatch(setAuthState(false));
-        dispatch(setUserData(null));
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
-    };
-
-    const handleLikeClick = () => {
-        if (currentTrack) {
-            isLiked
-                ? setDislike(userData?.access, currentTrack.id)
-                      .then(() => {
-                          dispatch(
-                              setLikesData({
-                                  isLiked: false,
-                                  track: currentTrack,
-                              })
-                          );
-                      })
-                      .catch((error) => {
-                          if (error) {
-                              const errorData = JSON.parse(error.message);
-                              if (errorData.status === 401) {
-                                  logout();
-                                  router.push("/signin");
-                              }
-                          }
-                      })
-                : setLike(userData?.access, currentTrack.id)
-                      .then(() => {
-                          dispatch(
-                              setLikesData({
-                                  isLiked: true,
-                                  track: currentTrack,
-                              })
-                          );
-                      })
-                      .catch((error) => {
-                          if (error) {
-                              const errorData = JSON.parse(error.message);
-                              if (errorData.status === 401) {
-                                  logout();
-                                  router.push("/signin");
-                              }
-                          }
-                      });
-
-            dispatch(
-                setLikesData({
-                    isLiked: !isLiked,
-                    track: currentTrack,
-                })
-            );
-        }
-    };
+    if (isFavorite && !isLiked) {
+        const track = null;
+        dispatch(setCurrentTrack({ track, tracksData: playlist }));
+    }
 
     useEffect(() => {
-        if (track && userData) {
-            const isLikedByUser =
-                isLiked ||
-                track.stared_user.some((user) => user.id === userData.id);
-            dispatch(
-                setLikesData({
-                    isLiked: !!isLikedByUser,
-                    track: currentTrack!,
-                })
-            );
-        }
-    }, [track, userData, dispatch, isLiked, currentTrack]);
-
-    useEffect(() => {
-        if (currentTrackIndex !== null) {
+        if (currentTrackIndex !== null && playlist[currentTrackIndex]) {
             const track = playlist[currentTrackIndex];
-            dispatch(setCurrentTrack({ track, tracksData: playlist }));
-            setAudioSrc(playlist[currentTrackIndex!]?.track_file);
+
+            if (track && track.track_file) {
+                dispatch(setCurrentTrack({ track, tracksData: playlist }));
+                setAudioSrc(track.track_file);
+            } else {
+                console.warn("Track or track_file is undefined");
+            }
         }
     }, [currentTrackIndex, playlist, dispatch]);
 
@@ -239,11 +174,11 @@ export default function TimeScale() {
                                     handleClickRepeat={() => setRepeat(!repeat)}
                                     handleNextClick={() => {
                                         dispatch(setNextTrack());
-                                        dispatch(setIsPlaying(false));
+                                        dispatch(setIsPlaying(true));
                                     }}
                                     handlePreviousClick={() => {
                                         dispatch(setPreviousTrack());
-                                        dispatch(setIsPlaying(false));
+                                        dispatch(setIsPlaying(true));
                                     }}
                                     handleShuffleClick={() => {
                                         dispatch(toggleShuffle());
@@ -264,7 +199,7 @@ export default function TimeScale() {
                                     <div className={styles.trackPlayContain}>
                                         <div className={styles.trackPlayImage}>
                                             <svg
-                                                className={styles.trackPlaySvg}
+                                                className={styles.trackTimeSvg}
                                             >
                                                 <use href="img/icon/sprite.svg#icon-note" />
                                             </svg>
@@ -291,21 +226,34 @@ export default function TimeScale() {
                                     <div className={styles.trackPlayLikeDis}>
                                         <div
                                             className={classNames(
-                                                styles.trackPlayDislike,
+                                                styles.trackPlayLike,
                                                 styles._btnIcon
                                             )}
                                         >
                                             <svg
                                                 className={
-                                                    styles.trackPlayDislikeSvg
+                                                    styles.trackPlayLikeSvg
                                                 }
-                                                onClick={handleLikeClick}
+                                            >
+                                                <use href="img/icon/sprite.svg#iconLike" />
+                                            </svg>
+                                        </div>
+                                        <div
+                                            className={classNames(
+                                                styles.trackPlayDislike,
+                                                styles._btnIcon
+                                            )}
+                                        >
+                                            <svg
+                                                className={styles.trackTimeSvg}
+                                                onClick={handleLike}
                                             >
                                                 <use
+                                                    className={styles.useLike}
                                                     href={`/img/icon/sprite.svg#${
-                                                        isLiked
+                                                        logged && isLiked
                                                             ? "icon-like-active"
-                                                            : "icon-dislike"
+                                                            : "icon-like"
                                                     }`}
                                                 />
                                             </svg>

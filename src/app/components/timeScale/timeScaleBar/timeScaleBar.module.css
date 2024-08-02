@@ -106,7 +106,7 @@
     grid-area: image;
 }
 
-.trackPlaySvg {
+.trackTimeSvg {
     width: 18px;
     height: 17px;
     fill: transparent;
@@ -118,6 +118,10 @@
     grid-column: 2;
     grid-area: author;
     min-width: 49px;
+}
+
+.useLike {
+    cursor: pointer;
 }
 
 .trackPlayAuthorLink {
