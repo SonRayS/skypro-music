@@ -26,6 +26,10 @@ export function useLikeTrack(track: trackType, isFavorite?: boolean) {
         async (event: React.MouseEvent) => {
             event.stopPropagation();
 
+            if (!logged) {
+                router.push("/signin");
+            }
+
             if (!track || !userData) return;
 
             if (logged) {
