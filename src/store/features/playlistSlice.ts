@@ -1,22 +1,27 @@
-import { trackType } from "@/app/components/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { trackType } from "@/app/components/types";
 
 type playlistStateType = {
     currentTrack: trackType | null | undefined;
     playlist: trackType[];
     filterList: trackType[];
     filtersName: string[];
-    activeTitle: string | null;
     filterPlaylist: trackType[];
     shuffledPlaylist: trackType[];
+    activeTitle: null | string;
     isShuffle: boolean;
     currentTrackIndex: number | null;
     isPlaying: boolean;
     volume: number;
     currentTime: number;
+    searchValue: string;
+    isLiked: boolean;
+    track: trackType | null;
 };
 
 const initialState: playlistStateType = {
+    track: null,
+    isLiked: false,
     currentTrack: null,
     playlist: [],
     filterList: [],
@@ -27,19 +32,22 @@ const initialState: playlistStateType = {
     isShuffle: false,
     currentTrackIndex: null,
     isPlaying: false,
-    volume: 0.5, // Начальное значение громкости
+    volume: 0.5,
     currentTime: 0,
+    searchValue: "",
 };
 
 const playlistSlice = createSlice({
     name: "playlist",
     initialState,
     reducers: {
+        resetSearchFilters: (state) => {
+            state.searchValue = "";
+            state.filterPlaylist = state.playlist;
+        },
         setActiveTitle: (
             state,
-            action: PayloadAction<{
-                activeTitle: string | null;
-            }>
+            action: PayloadAction<{ activeTitle: string | null }>
         ) => {
             state.activeTitle = action.payload.activeTitle;
         },
@@ -55,9 +63,7 @@ const playlistSlice = createSlice({
         },
         setFilterPlaylist: (
             state,
-            action: PayloadAction<{
-                tracksData: trackType[];
-            }>
+            action: PayloadAction<{ tracksData: trackType[] }>
         ) => {
             state.filterPlaylist = action.payload.tracksData;
         },
@@ -76,6 +82,7 @@ const playlistSlice = createSlice({
             state.currentTrackIndex = action.payload.tracksData.indexOf(
                 action.payload.track!
             );
+            state.isPlaying = true;
         },
         setNextTrack: (state) => {
             const playlist = state.isShuffle
@@ -105,7 +112,6 @@ const playlistSlice = createSlice({
                 state.currentTrackIndex = previousTrackIndex;
             }
         },
-
         toggleShuffle: (state) => {
             state.isShuffle = !state.isShuffle;
         },
@@ -118,13 +124,49 @@ const playlistSlice = createSlice({
         setCurrentTime: (state, action: PayloadAction<number>) => {
             state.currentTime = action.payload;
         },
+        setSearchFilters: (
+            state,
+            action: PayloadAction<{
+                searchValue: string;
+                filtersName: string[];
+            }>
+        ) => {
+            const { searchValue, filtersName } = action.payload;
+            state.searchValue = searchValue;
+            state.filtersName = filtersName;
+            state.filterList = state.playlist.filter(
+                (track) =>
+                    track.album
+                        .toLowerCase()
+                        .includes(searchValue.toLowerCase()) ||
+                    track.author
+                        .toLowerCase()
+                        .includes(searchValue.toLowerCase()) ||
+                    track.genre
+                        .toLowerCase()
+                        .includes(searchValue.toLowerCase())
+            );
+        },
+        setLikesData: (
+            state,
+            action: PayloadAction<{
+                isLiked: boolean;
+                track: trackType;
+            }>
+        ) => {
+            state.isLiked = action.payload.isLiked;
+            state.track = action.payload.track;
+        },
     },
 });
 
 export const {
+    setLikesData,
+    resetSearchFilters,
     setActiveTitle,
     setFilterList,
     setFilterPlaylist,
+    setSearchFilters,
     setCurrentTrack,
     setNextTrack,
     setPreviousTrack,
@@ -133,4 +175,5 @@ export const {
     setVolume,
     setCurrentTime,
 } = playlistSlice.actions;
+
 export const playlistReducer = playlistSlice.reducer;
