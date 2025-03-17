@@ -1,75 +1,107 @@
-# Музыкальный сервис на Next.js
+Music Service on Next.js
 
-Добро пожаловать в музыкальный сервис, созданный на базе Next.js. Этот проект использует возможности Next.js и современный стек технологий для создания удобного и функционального веб-приложения для прослушивания музыки.
+Welcome to the music service built on Next.js. This project utilizes the capabilities of Next.js and a modern technology stack to create a convenient and functional web application for listening to music.
 
-## О проекте
+About the Project
 
-Этот проект был создан с помощью [create-next-app](https://nextjs.org/docs/api-reference/create-next-app), и включает в себя следующие ключевые страницы и функции:
+This project was created using create-next-app and includes the following key pages and features:
 
-### Страница авторизации
+Authentication Page
 
--   **Макет**: Страница соответствует предоставленному макету.
--   **Проверка данных**: Если введены некорректные данные, доступ к следующему шагу заблокирован.
--   **Корректные данные**: При правильном вводе данных пользователь перенаправляется на главную страницу, данные сохраняются в `localStorage`.
--   **Регистрация**: Если пользователь не зарегистрирован, он может перейти на страницу регистрации.
+Layout: The page follows the provided design.
 
-### Страница регистрации
+Data Validation: If incorrect data is entered, access to the next step is blocked.
 
--   **Макет**: Страница соответствует предоставленному макету (всплывающие сообщения не включены).
--   **Подсказки**:
-    -   При вводе email отображается подсказка с примером (для демонстрации возможностей формы).
-    -   При вводе пароля отображается информация о минимальной длине и допустимых символах.
--   **Валидация**: Регистрация не проходит, если данные введены неверно (пустые поля, пароли не совпадают, длина меньше 8 символов). Отображается сообщение "нужно заполнить все поля корректно".
--   **Успешная регистрация**: При корректном вводе данных регистрация проходит на сервере, пользователь перенаправляется на страницу авторизации.
+Correct Data: When valid data is entered, the user is redirected to the main page, and the data is saved in localStorage.
 
-### Главная страница
+Registration: If the user is not registered, they can proceed to the registration page.
 
--   **Скелетон**: При загрузке страницы отображается скелетон в соответствии с макетом.
--   **Макет**: Страница соответствует макету.
--   **Навигация**:
-    -   Поле "Главная" ведет на главную страницу.
-    -   Поле "Мой плейлист" ведет к избранным трекам.
-    -   Поле "Выйти" очищает данные из `localStorage`, поле меняется на "Войти" и перенаправляет на страницу авторизации при нажатии.
--   **Отображение**:
-    -   В зависимости от логина отображается email пользователя и кнопка для выхода в правом углу.
--   **Поиск**: Поле поиска позволяет искать треки по названию или автору.
--   **Лайки**: Трекам можно ставить лайки, они добавляются на страницу "Мой плейлист". При дизлайке трек убирается.
--   **Плеер**:
-    -   При нажатии на иконку рядом с названием трека начинается воспроизведение, появляется плеер с кнопками пуск, пауза, следующий трек, предыдущий трек, зацикливание и перемешивание.
-    -   Плеер продолжает воспроизводить треки при переходе на страницы "Мой плейлист" и "Подборки".
+Registration Page
 
-### Плеер
+Layout: The page follows the provided design (popup messages are not included).
 
-Плеер реализован с использованием React и Redux для управления состоянием. Вот некоторые из его ключевых особенностей:
+Hints:
 
--   **Управление треками**:
-    -   Воспроизведение треков (пуск/пауза).
-    -   Переключение между треками (следующий/предыдущий).
-    -   Режим перемешивания и зацикливания.
--   **Интерфейс**:
-    -   Отображение текущего трека, его автора и альбома.
-    -   Возможность ставить лайки и дизлайки.
-    -   Управление громкостью и временем воспроизведения с помощью ползунков.
--   **Управление состоянием**:
-    -   Использование Redux для управления состоянием плеера, текущим треком, временем и громкостью.
-    -   Обработка событий аудиоэлемента (`ended`, `timeupdate`, `canplay`).
-    -   Обновление состояния плеера при изменении трека или времени воспроизведения.
+When entering an email, a hint with an example is displayed (to demonstrate form capabilities).
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+When entering a password, information about the minimum length and allowed characters is shown.
 
-## Основные команды
+Validation: Registration does not proceed if incorrect data is entered (empty fields, mismatched passwords, length less than 8 characters). A message "All fields must be filled correctly" is displayed.
 
--   **`dev`**: Запускает локальный сервер для разработки. Это позволяет вам вносить изменения в код и немедленно видеть результаты.
--   **`build`**: Создает оптимизированную версию приложения для продакшена, готовую для развертывания.
--   **`start`**: Запускает приложение в продакшн-режиме после его сборки.
--   **`lint`**: Проверяет код на соответствие стандартам и правилам стиля.
--   **`test`**: Выполняет тесты, проверяя функциональность и корректность кода.
+Successful Registration: When valid data is entered, registration is processed on the server, and the user is redirected to the authentication page.
 
-## Getting Started
+Home Page
+
+Skeleton: A skeleton is displayed while the page is loading, following the design.
+
+Layout: The page follows the provided design.
+
+Navigation:
+
+The "Home" tab leads to the main page.
+
+The "My Playlist" tab leads to the favorite tracks.
+
+The "Logout" button clears the data from localStorage, changes the button to "Login," and redirects to the authentication page when clicked.
+
+Display:
+
+Depending on the login status, the user's email and a logout button are displayed in the top right corner.
+
+Search: The search field allows users to find tracks by title or artist.
+
+Likes: Users can like tracks, adding them to the "My Playlist" page. Disliking removes the track from the playlist.
+
+Player:
+
+Clicking the icon next to the track title starts playback, displaying the player with play, pause, next track, previous track, loop, and shuffle buttons.
+
+The player continues playing tracks when navigating to "My Playlist" and "Collections" pages.
+
+Music Player
+
+The player is implemented using React and Redux for state management. Some key features include:
+
+Track Controls:
+
+Play/Pause tracks.
+
+Switch between tracks (next/previous).
+
+Shuffle and loop modes.
+
+Interface:
+
+Display of the current track, artist, and album.
+
+Ability to like and dislike tracks.
+
+Volume and playback time control using sliders.
+
+State Management:
+
+Using Redux to manage player state, current track, time, and volume.
+
+Handling audio element events (ended, timeupdate, canplay).
+
+Updating the player state when the track or playback time changes.
+
+Main Commands
+
+dev: Starts the local development server. Allows immediate feedback on code changes.
+
+build: Creates an optimized production build, ready for deployment.
+
+start: Runs the application in production mode after building.
+
+lint: Checks code for standard and style compliance.
+
+test: Runs tests to verify functionality and correctness.
+
+Getting Started
 
 First, run the development server:
 
-```bash
 npm run dev
 # or
 yarn dev
@@ -77,25 +109,26 @@ yarn dev
 pnpm dev
 # or
 bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You can start editing the page by modifying app/page.tsx. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+This project uses next/font to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+Learn More
 
-To learn more about Next.js, take a look at the following resources:
+To learn more about Next.js, check out the following resources:
 
--   [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
--   [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Next.js Documentation - learn about Next.js features and API.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Learn Next.js - an interactive Next.js tutorial.
 
-## Deploy on Vercel
+You can check out the Next.js GitHub repository - your feedback and contributions are welcome!
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Deploy on Vercel
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The easiest way to deploy your Next.js app is to use the Vercel Platform from the creators of Next.js.
+
+Check out our Next.js deployment documentation for more details.
+
